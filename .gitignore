@@ -32,9 +32,18 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+!.env.local.example
 
 # vercel
 .vercel
+
+# ignore project documentation file
+DOCUMENTATION.md
+
+# explicitly allow core env files to be committed
+!.env
+!.env.*
 
 # typescript
 *.tsbuildinfo

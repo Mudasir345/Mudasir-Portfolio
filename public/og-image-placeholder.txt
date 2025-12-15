@@ -1,0 +1,2 @@
+Create an og-image.png file (1200x630px) for social media sharing.
+Place it in the public folder as: public/og-image.png

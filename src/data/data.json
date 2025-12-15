@@ -1,0 +1,396 @@
+{
+    "profile": {
+        "name": "Mudasir Choudhry",
+        "roles": [
+            "Full Stack Developer",
+            "Mobile App Developer",
+            "Automation Expert",
+            "UI/UX Designer"
+        ],
+        "bio": "Specializing in Web Development, Mobile Apps, and Automation Bots. Transforming ideas into high-performance digital reality.",
+        "aboutText": "I am a passionate Full Stack Developer who believes that code is art. My journey started with a curiosity for how things work, which evolved into a career of building complex, high-performance systems.\n\nWhether it's architecting a robust **SaaS platform**, optimizing a **trading bot**, or crafting a pixel-perfect **3D website**, I bring the same level of dedication and precision. I don't just write code; I engineer solutions that solve real-world problems.",
+        "stats": {
+            "experienceYears": "5+",
+            "projectsCompleted": "50+",
+            "satisfaction": "100%",
+            "availability": "24/7"
+        },
+        "email": "mudasirchoudhry345@gmail.com",
+        "github": "https://github.com/Mudasir345",
+        "linkedin": "https://www.linkedin.com/in/mudasir345/",
+        "whatsapp": "https://wa.me/923047045345"
+    },
+    "skills": [
+        {
+            "name": "HTML",
+            "category": "Frontend"
+        },
+        {
+            "name": "CSS",
+            "category": "Frontend"
+        },
+        {
+            "name": "JavaScript",
+            "category": "Frontend"
+        },
+        {
+            "name": "React.js",
+            "category": "Frontend"
+        },
+        {
+            "name": "Next.js",
+            "category": "Frontend"
+        },
+        {
+            "name": "Angular",
+            "category": "Frontend"
+        },
+        {
+            "name": "Bootstrap",
+            "category": "Frontend"
+        },
+        {
+            "name": "Tailwind CSS",
+            "category": "Frontend"
+        },
+        {
+            "name": "Node.js",
+            "category": "Backend"
+        },
+        {
+            "name": "PHP",
+            "category": "Backend"
+        },
+        {
+            "name": "Laravel",
+            "category": "Backend"
+        },
+        {
+            "name": "Python",
+            "category": "Backend"
+        },
+        {
+            "name": "C#",
+            "category": "Backend"
+        },
+        {
+            "name": "MongoDB",
+            "category": "Database"
+        },
+        {
+            "name": "MySQL",
+            "category": "Database"
+        },
+        {
+            "name": "Firebase",
+            "category": "Database"
+        },
+        {
+            "name": "Git",
+            "category": "Tools"
+        },
+        {
+            "name": "GitHub",
+            "category": "Tools"
+        },
+        {
+            "name": "AWS",
+            "category": "Tools"
+        },
+        {
+            "name": "CI/CD",
+            "category": "Tools"
+        }
+    ],
+    "experience": [
+        {
+            "id": "exp_1",
+            "title": "Freelance Full Stack Developer",
+            "company": "Upwork / Fiverr",
+            "period": "2023 - Present",
+            "description": "Delivered 20+ custom web applications and automation bots for international clients. Specialized in Next.js, React, and Python automation. Maintained a 5-star rating.",
+            "iconType": "Briefcase"
+        },
+        {
+            "id": "exp_2",
+            "title": "Web Developer Intern",
+            "company": "Tech Solutions Inc.",
+            "period": "2022 - 2023",
+            "description": "Collaborated with senior developers to build responsive frontend interfaces using HTML, CSS, and JavaScript. Improved website load speed by 40%.",
+            "iconType": "Code"
+        }
+    ],
+    "education": [
+        {
+            "id": "edu_1",
+            "degree": "BS Information Technology",
+            "institution": "University",
+            "period": "2021 - 2025",
+            "description": "Specialized in Software Engineering, Web Technologies, and Database Management. Built multiple full-stack projects during the coursework.",
+            "iconType": "GraduationCap"
+        },
+        {
+            "id": "edu_2",
+            "degree": "Intermediate (Computer Science)",
+            "institution": "College",
+            "period": "2019 - 2021",
+            "description": "Focused on Fundamentals of Programming, Computer Networks, and Database Systems. Secured excellent grades.",
+            "iconType": "BookOpen"
+        },
+        {
+            "id": "edu_3",
+            "degree": "Matriculation (Science)",
+            "institution": "School",
+            "period": "2017 - 2019",
+            "description": "Completed secondary education with a major in Computer Science and Mathematics. Laid the foundation for a tech career.",
+            "iconType": "School"
+        }
+    ],
+    "projects": [
+        {
+            "title": "E-Commerce Platform",
+            "description": "Full-stack e-commerce solution with real-time inventory, Stripe payments, and admin dashboard.",
+            "techStack": [
+                "Next.js",
+                "TypeScript",
+                "Stripe",
+                "Prisma"
+            ],
+            "image": "/projects/web1.png",
+            "category": "Web"
+        },
+        {
+            "title": "SaaS Analytics Dashboard",
+            "description": "Real-time analytics platform for SaaS businesses featuring data visualization and user management.",
+            "techStack": [
+                "React.js",
+                "Tailwind CSS",
+                "Recharts",
+                "Node.js"
+            ],
+            "image": "/projects/web2.png",
+            "category": "Web"
+        },
+        {
+            "title": "Corporate Portal",
+            "description": "Enterprise-grade portal with role-based access control and document management system.",
+            "techStack": [
+                "Laravel",
+                "PHP",
+                "MySQL",
+                "Bootstrap"
+            ],
+            "image": "/projects/web3.png",
+            "category": "Web"
+        },
+        {
+            "title": "Fitness Tracker Pro",
+            "description": "Cross-platform mobile app for tracking workouts and nutrition with social features.",
+            "techStack": [
+                "React Native",
+                "Expo",
+                "Firebase",
+                "Redux"
+            ],
+            "image": "/projects/mob1.png",
+            "category": "Mobile"
+        },
+        {
+            "title": "Food Delivery App",
+            "description": "On-demand food delivery application with live GPS tracking and payment integration.",
+            "techStack": [
+                "Flutter",
+                "Dart",
+                "Google Maps API",
+                "Stripe"
+            ],
+            "image": "/projects/mob2.png",
+            "category": "Mobile"
+        },
+        {
+            "title": "Modern File Explorer",
+            "description": "A beautiful, highly customizable file explorer replacement for Windows with tabbed browsing.",
+            "techStack": [
+                "Electron.js",
+                "React",
+                "Node.js",
+                "SCSS"
+            ],
+            "image": "/projects/desk1.png",
+            "category": "Desktop"
+        },
+        {
+            "title": "POS System (Point of Sale)",
+            "description": "Offline-first retail management system for high-volume stores with inventory syncing.",
+            "techStack": [
+                "C#",
+                ".NET Core",
+                "WPF",
+                "SQL Server"
+            ],
+            "image": "/projects/desk2.png",
+            "category": "Desktop"
+        },
+        {
+            "title": "Crypto Trading Bot",
+            "description": "Automated trading bot executing high-frequency strategies on Binance and Coinbase via API.",
+            "techStack": [
+                "Python",
+                "Pandas",
+                "CCXT",
+                "Docker"
+            ],
+            "image": "/projects/bot1.png",
+            "category": "Automation"
+        },
+        {
+            "title": "LinkedIn Lead Scraper",
+            "description": "High-performance scraper to aggregate professional profiles and export to CSV/CRM.",
+            "techStack": [
+                "Puppeteer",
+                "Node.js",
+                "MongoDB",
+                "Express"
+            ],
+            "image": "/projects/bot2.png",
+            "category": "Automation"
+        }
+    ],
+    "services": [
+        {
+            "title": "Web Development",
+            "iconType": "Code",
+            "description": "Building responsive, high-performance websites and web applications using modern frameworks.",
+            "details": [
+                {
+                    "name": "React.js",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                },
+                {
+                    "name": "Next.js",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                },
+                {
+                    "name": "Angular",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"
+                },
+                {
+                    "name": "TypeScript",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                },
+                {
+                    "name": "Tailwind",
+                    "iconUrl": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
+                },
+                {
+                    "name": "Laravel",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg"
+                }
+            ]
+        },
+        {
+            "title": "App Development",
+            "iconType": "Smartphone",
+            "description": "Developing cross-platform mobile applications for iOS and Android. Delivering seamless user experiences.",
+            "details": [
+                {
+                    "name": "React Native",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                },
+                {
+                    "name": "Flutter",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"
+                },
+                {
+                    "name": "Expo",
+                    "iconUrl": "https://cdn.simpleicons.org/expo/white"
+                },
+                {
+                    "name": "iOS",
+                    "iconUrl": "https://cdn.simpleicons.org/apple/white"
+                },
+                {
+                    "name": "Android",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
+                }
+            ]
+        },
+        {
+            "title": "Desktop Development",
+            "iconType": "Monitor",
+            "description": "Creating powerful desktop applications for Windows and macOS. Optimized for performance.",
+            "details": [
+                {
+                    "name": "Electron.js",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg"
+                },
+                {
+                    "name": "C#",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg"
+                },
+                {
+                    "name": "WinForms",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg"
+                },
+                {
+                    "name": "Tauri",
+                    "iconUrl": "https://cdn.simpleicons.org/tauri/24C8D8"
+                }
+            ]
+        },
+        {
+            "title": "Backend & Cloud",
+            "iconType": "Server",
+            "description": "Robust backend architecture design, API development, and cloud deployment on AWS/DigitalOcean.",
+            "details": [
+                {
+                    "name": "Node.js",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                },
+                {
+                    "name": "Python",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                },
+                {
+                    "name": "AWS",
+                    "iconUrl": "https://cdn.simpleicons.org/amazonaws/FF9900"
+                },
+                {
+                    "name": "Firebase",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg"
+                },
+                {
+                    "name": "MongoDB",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                },
+                {
+                    "name": "MySQL",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+                }
+            ]
+        },
+        {
+            "title": "Automation Bots",
+            "iconType": "Bot",
+            "description": "Creating custom automation scripts and bots to streamline workflows. Data scraping and trading bots.",
+            "details": [
+                {
+                    "name": "Python",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                },
+                {
+                    "name": "Selenium",
+                    "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg"
+                },
+                {
+                    "name": "Puppeteer",
+                    "iconUrl": "https://cdn.simpleicons.org/puppeteer/40B5A4"
+                },
+                {
+                    "name": "Scrapy",
+                    "iconUrl": "https://cdn.simpleicons.org/scrapy/60A839"
+                }
+            ]
+        }
+    ]
+}
