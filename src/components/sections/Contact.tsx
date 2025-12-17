@@ -3,10 +3,14 @@
 import React, { useRef, useState } from "react";
 import SectionHeading from "../ui/SectionHeading";
 import { motion } from "framer-motion";
-import { Send, CheckCircle, Smartphone, User, Mail, Loader2 } from "lucide-react";
+import { Send, Smartphone, User, Mail, Loader2 } from "lucide-react";
 import { sendEmail } from "@/actions/sendEmail";
 
-const Contact = () => {
+interface ContactProps {
+    email: string;
+}
+
+const Contact = ({ email }: ContactProps) => {
     const formRef = useRef<HTMLFormElement>(null);
     const [pending, setPending] = useState(false);
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
@@ -40,8 +44,8 @@ const Contact = () => {
                 className="text-gray-300 -mt-6 mb-10"
             >
                 Please contact me directly at{" "}
-                <a className="underline text-cyan-400 font-bold" href="mailto:mudasirchoudhry345@gmail.com">
-                    mudasirchoudhry345@gmail.com
+                <a className="underline text-cyan-400 font-bold" href={`mailto:${email}`}>
+                    {email}
                 </a>{" "}
                 or through this form.
             </motion.p>

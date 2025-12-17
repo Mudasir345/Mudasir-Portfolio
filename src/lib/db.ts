@@ -10,10 +10,21 @@ export interface ProjectData {
     description: string;
     techStack: string[];
     image: string;
+    mediaType?: "image" | "video"; // New field for video support
+    gallery?: { url: string; type: "image" | "video" }[]; // Multi-image support
     category: ProjectCategory;
     link?: string;
     liveUrl?: string;
     githubUrl?: string;
+}
+
+export interface TeamMember {
+    id: string;
+    name: string;
+    role: string;
+    image: string;
+    linkedin?: string;
+    github?: string;
 }
 
 export interface ServiceDetail {
@@ -32,6 +43,7 @@ export interface ServiceData {
 
 export interface ProfileData {
     name: string;
+    image?: string; // Dynamic profile image
     roles: string[]; // For TypeAnimation
     bio: string; // Short bio for Hero
     aboutText: string; // Longer text for About section
@@ -70,6 +82,14 @@ export interface EducationData {
     iconType: "GraduationCap" | "BookOpen" | "School";
 }
 
+export interface TestimonialData {
+    id: string;
+    name: string;
+    role: string;
+    review: string;
+    stars: number;
+}
+
 export interface DBData {
     profile: ProfileData;
     projects: ProjectData[];
@@ -77,6 +97,11 @@ export interface DBData {
     skills: SkillData[];
     experience: ExperienceData[];
     education: EducationData[];
+    testimonials: TestimonialData[];
+    team: TeamMember[];
+    settings: {
+        showTeam: boolean;
+    };
 }
 
 export async function getDB(): Promise<DBData> {
@@ -89,6 +114,7 @@ export async function getDB(): Promise<DBData> {
         return {
             profile: {
                 name: "Mudasir Choudhry",
+                image: "/profile.png",
                 roles: ["Developer"],
                 bio: "",
                 aboutText: "",
@@ -102,7 +128,10 @@ export async function getDB(): Promise<DBData> {
             services: [],
             skills: [],
             experience: [],
-            education: []
+            education: [],
+            testimonials: [],
+            team: [],
+            settings: { showTeam: false }
         };
     }
 }

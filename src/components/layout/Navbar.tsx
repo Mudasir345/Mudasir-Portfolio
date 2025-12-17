@@ -3,8 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { Github, Linkedin, Mail, Smartphone } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { ProfileData } from "@/lib/db";
 
-const Navbar = () => {
+interface NavbarProps {
+    profile: ProfileData;
+}
+
+const Navbar = ({ profile }: NavbarProps) => {
     const pathname = usePathname();
     const [activeSection, setActiveSection] = useState("about-me");
 
@@ -18,7 +23,6 @@ const Navbar = () => {
                 const element = document.getElementById(section);
                 if (element) {
                     const rect = element.getBoundingClientRect();
-                    // Active if top of section is within the top third of viewport
                     return rect.top <= 300 && rect.bottom >= 300;
                 }
                 return false;
@@ -50,7 +54,7 @@ const Navbar = () => {
                     className="h-auto w-auto flex flex-row items-center cursor-pointer group"
                 >
                     <span className="font-bold ml-[10px] hidden md:block text-gray-300 group-hover:text-white transition-colors duration-300 transform group-hover:scale-105">
-                        Mudasir Choudhry
+                        {profile.name}
                     </span>
                 </a>
 
@@ -64,7 +68,6 @@ const Navbar = () => {
                                 className={`cursor-pointer transition-all duration-300 hover:scale-110 relative group ${activeSection === item.id ? "text-cyan-400 scale-110" : "hover:text-cyan-400"}`}
                             >
                                 {item.name}
-                                {/* Active Indicator Line */}
                                 <span className={`absolute -bottom-1 left-0 h-0.5 bg-cyan-400 transition-all duration-300 ${activeSection === item.id ? "w-full" : "w-0 group-hover:w-full"}`}></span>
                             </a>
                         ))}
@@ -72,19 +75,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex flex-row gap-5 items-center">
-                    <a href="https://github.com/Mudasir345" target="_blank" rel="noopener noreferrer" className="hover:-translate-y-1 transition-transform duration-300">
-                        <Github className="text-white cursor-pointer hover:text-[#7042f8] transition-colors" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/mudasir345/" target="_blank" rel="noopener noreferrer" className="hover:-translate-y-1 transition-transform duration-300">
-                        <Linkedin className="text-white cursor-pointer hover:text-[#0077b5] transition-colors" />
-                    </a>
-                    <a href="mailto:mudasirchoudhry345@gmail.com" className="hover:-translate-y-1 transition-transform duration-300">
-                        <Mail className="text-white cursor-pointer hover:text-cyan-400 transition-colors" />
-                    </a>
-                    <a href="https://wa.me/923047045345" target="_blank" rel="noopener noreferrer" className="group relative hover:-translate-y-1 transition-transform duration-300">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-green-600 to-green-400 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-200"></div>
-                        <Smartphone className="relative text-white cursor-pointer hover:text-green-400 transition-colors" />
-                    </a>
+                    {/* Social icons moved to Hero section */}
                 </div>
             </div>
         </div>

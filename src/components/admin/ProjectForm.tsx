@@ -5,6 +5,7 @@ import { addProject, updateProject } from "@/actions/admin";
 import { ProjectCategory, ProjectData } from "@/lib/db";
 import { motion } from "framer-motion";
 import { Plus, X, Globe, Github, ImageIcon, Type, FileText, Layers } from "lucide-react";
+import MediaUploader from "./MediaUploader";
 
 interface ProjectFormProps {
     onSuccess: () => void;
@@ -18,6 +19,8 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
         title: "",
         description: "",
         image: "",
+        mediaType: "image",
+        gallery: [],
         category: "Web",
         techStack: [],
         liveUrl: "",
@@ -33,6 +36,8 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
                 title: "",
                 description: "",
                 image: "",
+                mediaType: "image",
+                gallery: [],
                 category: "Web",
                 techStack: [],
                 liveUrl: "",
@@ -68,6 +73,8 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
                     title: "",
                     description: "",
                     image: "",
+                    mediaType: "image",
+                    gallery: [],
                     category: "Web",
                     techStack: [],
                     liveUrl: "",
@@ -142,17 +149,55 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
                 <h4 className="text-sm font-semibold text-gray-300">Project Links & Media</h4>
 
                 <div className="space-y-4">
-                    {/* Image */}
-                    <div className="relative group">
-                        <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-pink-500 transition-colors" size={18} />
-                        <input
-                            type="text"
-                            required
-                            placeholder="Image URL (e.g. /projects/img1.png)"
-                            value={formData.image}
-                            onChange={e => setFormData({ ...formData, image: e.target.value })}
-                            className="w-full pl-10 pr-4 py-3 bg-[#030014] border border-white/10 rounded-xl text-white focus:border-pink-500 outline-none transition-all focus:ring-1 focus:ring-pink-500"
+                    {/* Image / Video Upload */}
+                    <div className="space-y-2">
+                        <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Main Project Media</label>
+                        <MediaUploader
+                            folder="projects"
+                            currentFile={formData.image}
+                            onUploadComplete={(path, type) => setFormData({ ...formData, image: path, mediaType: type })}
+                            onRemove={() => setFormData({ ...formData, image: "", mediaType: "image" })}
                         />
+                    </div>
+
+                    {/* Gallery Section */}
+                    <div className="space-y-2">
+                        <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Project Gallery (Additional)</label>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                            {formData.gallery?.map((item, index) => (
+                                <div key={index} className="relative group aspect-video rounded-lg overflow-hidden border border-white/10 bg-black/20">
+                                    {item.type === "video" ? (
+                                        <video src={item.url} className="w-full h-full object-cover" />
+                                    ) : (
+                                        <img src={item.url} alt="Gallery" className="w-full h-full object-cover" />
+                                    )}
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const newGallery = [...(formData.gallery || [])];
+                                            newGallery.splice(index, 1);
+                                            setFormData({ ...formData, gallery: newGallery });
+                                        }}
+                                        className="absolute top-1 right-1 p-1 bg-red-500/80 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >
+                                        <X size={14} />
+                                    </button>
+                                </div>
+                            ))}
+                            {/* Add New Gallery Item */}
+                            <div className="aspect-video relative">
+                                <MediaUploader
+                                    folder="projects"
+                                    onUploadComplete={(path, type) => {
+                                        setFormData({
+                                            ...formData,
+                                            gallery: [...(formData.gallery || []), { url: path, type: type }]
+                                        });
+                                    }}
+                                    onRemove={() => { }}
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

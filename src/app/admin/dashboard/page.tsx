@@ -1,27 +1,42 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getProjects, getServices, deleteProject, deleteService } from "@/actions/admin";
-import { ProjectData, ServiceData } from "@/lib/db";
+import { getProfile, getSkills, getExperience, getEducation, getProjects, getServices, getTestimonials, getTeam, deleteProject, deleteExperience, deleteEducation } from "@/actions/admin";
+
+import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, ServiceData, TestimonialData, TeamMember } from "@/lib/db";
+import { LogOut, User, Code2, Briefcase, GraduationCap, FolderKanban, Layers, MessageSquare, Search, Plus, Users, Trash2, Edit2 } from "lucide-react";
+
+import ProfileForm from "@/components/admin/ProfileForm";
+import SkillsManager from "@/components/admin/SkillsManager";
+import ExperienceForm from "@/components/admin/ExperienceForm";
+import EducationForm from "@/components/admin/EducationForm";
 import ProjectForm from "@/components/admin/ProjectForm";
 import ServiceForm from "@/components/admin/ServiceForm";
-import Modal from "@/components/ui/Modal";
-import { Trash2, LogOut, LayoutDashboard, Layers, Edit2, Plus, Briefcase, Zap, Search } from "lucide-react";
-import { motion } from "framer-motion";
+import TestimonialForm from "@/components/admin/TestimonialForm";
+import TeamManager from "@/components/admin/TeamManager";
+
+type TabType = "profile" | "skills" | "experience" | "education" | "projects" | "services" | "testimonials" | "team";
 
 export default function AdminDashboard() {
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState<TabType>("profile");
+    const [searchTerm, setSearchTerm] = useState("");
+
+    // Data States
+    const [profile, setProfile] = useState<ProfileData | null>(null);
+    const [skills, setSkills] = useState<SkillData[]>([]);
+    const [experience, setExperience] = useState<ExperienceData[]>([]);
+    const [education, setEducation] = useState<EducationData[]>([]);
     const [projects, setProjects] = useState<ProjectData[]>([]);
     const [services, setServices] = useState<ServiceData[]>([]);
-    const [activeTab, setActiveTab] = useState<"projects" | "services">("projects");
-    const [loading, setLoading] = useState(true);
+    const [testimonials, setTestimonials] = useState<TestimonialData[]>([]);
+    const [team, setTeam] = useState<TeamMember[]>([]);
 
-    // Modal State
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingProject, setEditingProject] = useState<ProjectData | null>(null);
-    const [editingService, setEditingService] = useState<ServiceData | null>(null);
-    const [searchTerm, setSearchTerm] = useState("");
+    // Modal States for Add/Edit
+    const [showModal, setShowModal] = useState(false);
+    const [editingItem, setEditingItem] = useState<any>(null);
 
     useEffect(() => {
         const checkAuth = () => {
@@ -37,39 +52,22 @@ export default function AdminDashboard() {
 
     const fetchData = async () => {
         setLoading(true);
-        const [pData, sData] = await Promise.all([getProjects(), getServices()]);
-        setProjects(pData);
-        setServices(sData);
-        setLoading(false);
-    };
-
-    const handleOpenAdd = () => {
-        setEditingProject(null);
-        setEditingService(null);
-        setIsModalOpen(true);
-    };
-
-    const handleEditProject = (p: ProjectData) => {
-        setEditingProject(p);
-        setIsModalOpen(true);
-    };
-
-    const handleEditService = (s: ServiceData) => {
-        setEditingService(s);
-        setIsModalOpen(true);
-    };
-
-    const handleDeleteProject = async (title: string) => {
-        if (confirm(`Delete project "${title}"?`)) {
-            await deleteProject(title);
-            fetchData();
-        }
-    };
-
-    const handleDeleteService = async (title: string) => {
-        if (confirm(`Delete service "${title}"?`)) {
-            await deleteService(title);
-            fetchData();
+        try {
+            const [profileData, skillsData, expData, eduData, projData, servData, testData, teamData] = await Promise.all([
+                getProfile(), getSkills(), getExperience(), getEducation(), getProjects(), getServices(), getTestimonials(), getTeam()
+            ]);
+            setProfile(profileData);
+            setSkills(skillsData);
+            setExperience(expData);
+            setEducation(eduData);
+            setProjects(projData);
+            setServices(servData);
+            setTestimonials(testData);
+            setTeam(teamData);
+        } catch (error) {
+            console.error("Failed to fetch data", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -78,220 +76,263 @@ export default function AdminDashboard() {
         router.push("/admin");
     };
 
-    const onFormSuccess = () => {
-        setIsModalOpen(false);
+    // Generic Add/Edit Handlers
+    const handleAddNew = () => {
+        setEditingItem(null);
+        setShowModal(true);
+    };
+
+    const handleEdit = (item: any) => {
+        setEditingItem(item);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setEditingItem(null);
+    };
+
+    const handleSuccess = () => {
+        handleCloseModal();
         fetchData();
     };
 
-    // Filter Logic
+    const handleDeleteProject = async (title: string) => {
+        if (!confirm("Are you sure you want to delete this project?")) return;
+        setLoading(true);
+        try {
+            await deleteProject(title);
+            fetchData();
+        } catch (e) {
+            console.error(e);
+            alert("Failed to delete project: " + e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDeleteExperience = async (id: string) => {
+        if (!confirm("Are you sure?")) return;
+        await deleteExperience(id);
+        fetchData();
+    };
+
+    const handleDeleteEducation = async (id: string) => {
+        if (!confirm("Are you sure?")) return;
+        await deleteEducation(id);
+        fetchData();
+    };
+
+    // Filter projects/services based on search
     const filteredProjects = projects.filter(p => p.title.toLowerCase().includes(searchTerm.toLowerCase()));
     const filteredServices = services.filter(s => s.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredExperience = experience.filter(e => e.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredEducation = education.filter(e => e.degree.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredTestimonials = testimonials.filter(t => t.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    if (loading) return <div className="min-h-screen flex items-center justify-center text-white bg-[#030014]">Loading CMS...</div>;
+    if (loading) {
+        return <div className="min-h-screen bg-[#030014] flex items-center justify-center text-white">Loading Dashboard...</div>;
+    }
 
     return (
-        <div className="min-h-screen bg-[#030014] text-white p-6 md:p-10 relative">
-            {/* Top Navigation Bar */}
-            <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4 max-w-7xl mx-auto border-b border-white/10 pb-6">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
-                        <LayoutDashboard size={20} className="text-white" />
-                    </div>
+        <div className="min-h-screen bg-[#030014] text-white font-sans flex flex-col md:flex-row">
+
+            {/* Sidebar Navigation */}
+            <aside className="w-full md:w-64 bg-white/5 backdrop-blur-md border-r border-white/10 flex flex-col h-auto md:h-screen fixed z-50">
+                <div className="p-6 border-b border-white/10 flex items-center justify-center">
+                    <h1 className="text-xl font-bold bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent">
+                        Admin Panel
+                    </h1>
+                </div>
+
+                <div className="flex-1 overflow-y-auto py-4">
+                    <nav className="space-y-1 px-2">
+                        {[
+                            { id: "profile", label: "Profile", icon: User },
+                            { id: "skills", label: "Skills", icon: Code2 },
+                            { id: "experience", label: "Experience", icon: Briefcase },
+                            { id: "education", label: "Education", icon: GraduationCap },
+                            { id: "projects", label: "Projects", icon: FolderKanban },
+                            { id: "services", label: "Services", icon: Layers },
+                            { id: "testimonials", label: "Testimonials", icon: MessageSquare },
+                            { id: "team", label: "Team", icon: Users },
+                        ].map((tab) => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id as TabType)}
+                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === tab.id ? "bg-purple-600 shadow-lg shadow-purple-500/20 text-white" : "text-gray-400 hover:bg-white/5 hover:text-white"}`}
+                            >
+                                <tab.icon size={20} /> {tab.label}
+                            </button>
+                        ))}
+                    </nav>
+                </div>
+
+                <div className="p-4 border-t border-white/10">
+                    <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-all">
+                        <LogOut size={20} /> Logout
+                    </button>
+                </div>
+            </aside>
+
+            {/* Main Content */}
+            <main className="flex-1 md:ml-64 p-6 md:p-10 ml-0 mt-16 md:mt-0">
+                <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                     <div>
-                        <h1 className="text-2xl font-bold text-white tracking-tight">Admin Console</h1>
-                        <p className="text-xs text-gray-400">Manage your digital empire</p>
+                        <h2 className="text-3xl font-bold text-white capitalize">{activeTab}</h2>
+                        <p className="text-gray-400 text-sm">Manage your {activeTab} section</p>
                     </div>
-                </div>
 
-                <div className="flex items-center gap-4 bg-white/5 p-1 rounded-lg border border-white/10">
-                    <button
-                        onClick={() => setActiveTab("projects")}
-                        className={`flex items-center gap-2 px-6 py-2 rounded-md text-sm font-medium transition-all ${activeTab === "projects" ? "bg-purple-600 text-white shadow-lg" : "text-gray-400 hover:text-white hover:bg-white/5"}`}
-                    >
-                        <Briefcase size={16} /> Projects
-                        <span className="bg-black/20 px-2 py-0.5 rounded-full text-[10px] ml-1">{projects.length}</span>
-                    </button>
-                    <button
-                        onClick={() => setActiveTab("services")}
-                        className={`flex items-center gap-2 px-6 py-2 rounded-md text-sm font-medium transition-all ${activeTab === "services" ? "bg-cyan-600 text-white shadow-lg" : "text-gray-400 hover:text-white hover:bg-white/5"}`}
-                    >
-                        <Zap size={16} /> Services
-                        <span className="bg-black/20 px-2 py-0.5 rounded-full text-[10px] ml-1">{services.length}</span>
-                    </button>
-                </div>
-
-                <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 border border-red-500/50 rounded-lg hover:bg-red-500/20 text-sm transition-colors"
-                >
-                    <LogOut size={16} /> Logout
-                </button>
-            </div>
-
-            {/* Action Toolbar */}
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
-                <div className="relative w-full md:w-96">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-                    <input
-                        type="text"
-                        placeholder={`Search ${activeTab}...`}
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all placeholder-gray-500"
-                    />
-                </div>
-
-                <button
-                    onClick={handleOpenAdd}
-                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-purple-500/20 active:scale-95"
-                >
-                    <Plus size={20} /> Add New {activeTab === "projects" ? "Project" : "Service"}
-                </button>
-            </div>
-
-            {/* Content Grid */}
-            <div className="max-w-7xl mx-auto">
-                <motion.div
-                    layout
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-                >
-                    {activeTab === "projects" ? (
-                        filteredProjects.map((project, i) => (
-                            <motion.div
-                                layout
-                                key={project.title}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.2, delay: i * 0.05 }}
-                                className="bg-[#0f0728] border border-white/10 rounded-2xl overflow-hidden hover:border-purple-500/50 transition-colors group flex flex-col h-full"
-                            >
-                                <div className="h-48 bg-gray-800 relative overflow-hidden">
-                                    <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                    <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-md text-xs border border-white/20">
-                                        {project.category}
-                                    </div>
-                                </div>
-                                <div className="p-5 flex-1 flex flex-col">
-                                    <h3 className="text-lg font-bold text-white mb-2 line-clamp-1" title={project.title}>{project.title}</h3>
-                                    <p className="text-gray-400 text-xs mb-4 line-clamp-2 flex-1">{project.description}</p>
-
-                                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
-                                        <div className="flex -space-x-2">
-                                            {project.techStack.slice(0, 3).map((t, idx) => (
-                                                <div key={idx} className="w-6 h-6 rounded-full bg-gray-700 border border-[#0f0728] flex items-center justify-center text-[8px] text-gray-300" title={t}>
-                                                    {t[0]}
-                                                </div>
-                                            ))}
-                                            {project.techStack.length > 3 && (
-                                                <div className="w-6 h-6 rounded-full bg-gray-800 border border-[#0f0728] flex items-center justify-center text-[8px] text-gray-400">
-                                                    +{project.techStack.length - 3}
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <button
-                                                onClick={() => handleEditProject(project)}
-                                                className="p-2 hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 rounded-lg transition-colors"
-                                            >
-                                                <Edit2 size={16} />
-                                            </button>
-                                            <button
-                                                onClick={() => handleDeleteProject(project.title)}
-                                                className="p-2 hover:bg-red-500/20 text-gray-400 hover:text-red-400 rounded-lg transition-colors"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))
-                    ) : (
-                        filteredServices.map((service, i) => (
-                            <motion.div
-                                layout
-                                key={service.title}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.2, delay: i * 0.05 }}
-                                className="bg-[#0f0728] border border-white/10 rounded-2xl p-6 hover:border-cyan-500/50 transition-colors group flex flex-col h-full relative overflow-hidden"
-                            >
-                                <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                                    <Zap size={100} />
-                                </div>
-
-                                <div className="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-4 border border-cyan-500/20">
-                                    <Zap size={24} />
-                                </div>
-
-                                <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
-                                <p className="text-gray-400 text-xs mb-6 flex-1">{service.description}</p>
-
-                                <div className="space-y-3">
-                                    <div className="flex flex-wrap gap-2">
-                                        {service.details.slice(0, 4).map((d, idx) => (
-                                            <span key={idx} className="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300 border border-white/5">
-                                                {d.name}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    <div className="flex gap-2 justify-end pt-4 border-t border-white/5">
-                                        <button
-                                            onClick={() => handleEditService(service)}
-                                            className="p-2 hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 rounded-lg transition-colors"
-                                        >
-                                            <Edit2 size={16} />
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeleteService(service.title)}
-                                            className="p-2 hover:bg-red-500/20 text-gray-400 hover:text-red-400 rounded-lg transition-colors"
-                                        >
-                                            <Trash2 size={16} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))
+                    {(activeTab === "projects" || activeTab === "services" || activeTab === "experience" || activeTab === "education" || activeTab === "testimonials") && (
+                        <div className="flex gap-4">
+                            {/* Search */}
+                            <div className="relative">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                                <input
+                                    type="text"
+                                    placeholder="Search..."
+                                    value={searchTerm}
+                                    onChange={e => setSearchTerm(e.target.value)}
+                                    className="pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500 outline-none text-sm w-full md:w-64"
+                                />
+                            </div>
+                            <button onClick={handleAddNew} className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-all shadow-lg shadow-purple-500/20">
+                                <Plus size={18} /> Add New
+                            </button>
+                        </div>
                     )}
-                </motion.div>
+                </header>
 
-                {activeTab === "projects" && filteredProjects.length === 0 && (
-                    <div className="text-center py-20 bg-white/5 rounded-2xl border border-white/5 border-dashed">
-                        <p className="text-gray-400">No projects found matching "{searchTerm}"</p>
-                    </div>
-                )}
-                {activeTab === "services" && filteredServices.length === 0 && (
-                    <div className="text-center py-20 bg-white/5 rounded-2xl border border-white/5 border-dashed">
-                        <p className="text-gray-400">No services found matching "{searchTerm}"</p>
-                    </div>
-                )}
-            </div>
+                <div className="max-w-6xl mx-auto">
+                    {/* Content Logic */}
+                    {activeTab === "profile" && profile && (
+                        <ProfileForm initialData={profile} onSuccess={fetchData} />
+                    )}
 
-            {/* Reusable Modal Form */}
-            <Modal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                title={
-                    activeTab === "projects"
-                        ? (editingProject ? "Edit Project" : "New Project")
-                        : (editingService ? "Edit Service" : "New Service")
-                }
-            >
-                {activeTab === "projects" ? (
-                    <ProjectForm
-                        onSuccess={onFormSuccess}
-                        initialData={editingProject}
-                        onCancel={() => setIsModalOpen(false)}
-                    />
-                ) : (
-                    <ServiceForm
-                        onSuccess={onFormSuccess}
-                        initialData={editingService}
-                        onCancel={() => setIsModalOpen(false)}
-                    />
-                )}
-            </Modal>
+                    {activeTab === "skills" && (
+                        <SkillsManager initialSkills={skills} onSuccess={fetchData} />
+                    )}
+
+                    {activeTab === "team" && (
+                        <TeamManager initialTeam={team} />
+                    )}
+
+                    {activeTab === "projects" && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {filteredProjects.map((project, i) => (
+                                <div key={i} className="glass-card p-4 group relative bg-white/5 rounded-xl border border-white/10">
+                                    <div className="aspect-video bg-gray-800 rounded-lg mb-4 overflow-hidden">
+                                        {project.image ? (
+                                            project.image.includes("video") ? (
+                                                <video src={project.image} className="w-full h-full object-cover" />
+                                            ) : (
+                                                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                                            )
+                                        ) : <div className="w-full h-full flex items-center justify-center text-gray-600">No Image</div>}
+                                    </div>
+                                    <h3 className="font-bold text-lg mb-1">{project.title}</h3>
+                                    <p className="text-sm text-gray-400 line-clamp-2">{project.description}</p>
+                                    <div className="flex items-center gap-2 mt-4">
+                                        <button onClick={() => handleEdit(project)} className="text-cyan-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-1"><Edit2 size={16} /> Edit</button>
+                                        <button onClick={() => handleDeleteProject(project.title)} className="text-red-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-1"><Trash2 size={16} /> Delete</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {activeTab === "experience" && (
+                        <div className="space-y-4">
+                            {filteredExperience.map((exp) => (
+                                <div key={exp.id} className="glass-card p-4 flex justify-between items-center bg-white/5 rounded-xl border border-white/10">
+                                    <div>
+                                        <h4 className="font-bold">{exp.title}</h4>
+                                        <p className="text-gray-400">{exp.company}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => handleEdit(exp)} className="p-2 text-cyan-400 hover:bg-white/10 rounded"><Edit2 size={16} /></button>
+                                        <button onClick={() => handleDeleteExperience(exp.id)} className="p-2 text-red-400 hover:bg-white/10 rounded"><Trash2 size={16} /></button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {activeTab === "education" && (
+                        <div className="space-y-4">
+                            {filteredEducation.map((edu) => (
+                                <div key={edu.id} className="glass-card p-4 flex justify-between items-center bg-white/5 rounded-xl border border-white/10">
+                                    <div>
+                                        <h4 className="font-bold">{edu.degree}</h4>
+                                        <p className="text-gray-400">{edu.institution}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => handleEdit(edu)} className="p-2 text-cyan-400 hover:bg-white/10 rounded"><Edit2 size={16} /></button>
+                                        <button onClick={() => handleDeleteEducation(edu.id)} className="p-2 text-red-400 hover:bg-white/10 rounded"><Trash2 size={16} /></button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {activeTab === "services" && (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {filteredServices.map((service, i) => (
+                                <div key={i} className="glass-card p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <h3 className="font-bold mb-2">{service.title}</h3>
+                                    <div className="flex gap-2 mt-2">
+                                        <button onClick={() => handleEdit(service)} className="text-cyan-400 text-sm flex items-center gap-1"><Edit2 size={14} /> Edit</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {activeTab === "testimonials" && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {filteredTestimonials.map((t, i) => (
+                                <div key={i} className="glass-card p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p className="italic text-gray-400 mb-2">"{t.review}"</p>
+                                    <h4 className="font-bold">{t.name}</h4>
+                                    <div className="flex gap-2 mt-2">
+                                        <button onClick={() => handleEdit(t)} className="text-cyan-400 text-sm flex items-center gap-1"><Edit2 size={14} /> Edit</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                </div>
+            </main>
+
+            {/* Modal */}
+            {showModal && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                    <div className="bg-[#0b0518] border border-white/10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl p-6 relative">
+                        <button onClick={handleCloseModal} className="absolute top-4 right-4 text-gray-400 hover:text-white">
+                            <LogOut size={24} className="rotate-180" />
+                        </button>
+
+                        <div className="mt-2">
+                            {activeTab === "projects" && (
+                                <ProjectForm onSuccess={handleSuccess} initialData={editingItem} onCancel={handleCloseModal} />
+                            )}
+                            {activeTab === "experience" && (
+                                <ExperienceForm onSuccess={handleSuccess} initialData={editingItem} onCancel={handleCloseModal} />
+                            )}
+                            {activeTab === "education" && (
+                                <EducationForm onSuccess={handleSuccess} initialData={editingItem} onCancel={handleCloseModal} />
+                            )}
+                            {activeTab === "services" && (
+                                <ServiceForm onSuccess={handleSuccess} initialData={editingItem} onCancel={handleCloseModal} />
+                            )}
+                            {activeTab === "testimonials" && (
+                                <TestimonialForm onSuccess={handleSuccess} initialData={editingItem} onCancel={handleCloseModal} />
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

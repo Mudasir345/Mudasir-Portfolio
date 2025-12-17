@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getDB, saveDB, ProjectData, ServiceData, ProfileData, SkillData, ExperienceData, EducationData } from "@/lib/db";
+import { getDB, saveDB, ProjectData, ServiceData, ProfileData, SkillData, ExperienceData, EducationData, TestimonialData, TeamMember } from "@/lib/db";
 
 // --- Authentication ---
 export async function authenticate(password: string) {
@@ -181,5 +181,95 @@ export async function deleteEducation(id: string) {
     await saveDB(db);
     revalidatePath("/");
     revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+
+// 5. Testimonials
+export async function getTestimonials() {
+    const db = await getDB();
+    return db.testimonials || [];
+}
+
+export async function saveTestimonial(testimonial: TestimonialData) {
+    const db = await getDB();
+    if (!db.testimonials) db.testimonials = [];
+
+    const index = db.testimonials.findIndex(t => t.id === testimonial.id);
+
+    if (index !== -1) {
+        db.testimonials[index] = testimonial;
+    } else {
+        db.testimonials.push(testimonial);
+    }
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+export async function deleteTestimonial(id: string) {
+    const db = await getDB();
+    db.testimonials = (db.testimonials || []).filter(t => t.id !== id);
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+// --- Team & Settings ---
+
+export async function getTeam() {
+    const db = await getDB();
+    return db.team || [];
+}
+
+export async function addTeamMember(member: TeamMember) {
+    const db = await getDB();
+    if (!db.team) db.team = [];
+    db.team.push(member);
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+export async function updateTeamMember(id: string, updatedMember: TeamMember) {
+    const db = await getDB();
+    if (!db.team) return { success: false, error: "No team found" };
+
+    const index = db.team.findIndex(t => t.id === id);
+    if (index !== -1) {
+        db.team[index] = updatedMember;
+        await saveDB(db);
+        revalidatePath("/");
+        revalidatePath("/admin/dashboard");
+        return { success: true };
+    }
+    return { success: false, error: "Member not found" };
+}
+
+export async function deleteTeamMember(id: string) {
+    const db = await getDB();
+    if (!db.team) return { success: true };
+
+    db.team = db.team.filter(t => t.id !== id);
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+export async function getSettings() {
+    const db = await getDB();
+    return db.settings || { showTeam: false };
+}
+
+export async function toggleTeamSection(show: boolean) {
+    const db = await getDB();
+    if (!db.settings) db.settings = { showTeam: false };
+    db.settings.showTeam = show;
+    await saveDB(db);
+    revalidatePath("/");
     return { success: true };
 }

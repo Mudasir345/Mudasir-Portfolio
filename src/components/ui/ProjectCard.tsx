@@ -25,19 +25,33 @@ const ProjectCard = ({ src, title, description, techStack, liveUrl, githubUrl }:
             className="relative overflow-hidden rounded-lg shadow-lg border border-[#2A0E61] w-full max-w-[350px] glass-card flex flex-col h-full"
         >
             <div className="relative p-4 flex-grow">
-                <div className="w-full h-[200px] bg-gray-800 rounded-md mb-4 flex items-center justify-center overflow-hidden group">
+                {/* Carousel / Image Area */}
+                <div className="w-full h-[200px] bg-gray-800 rounded-md mb-4 flex items-center justify-center overflow-hidden group relative">
+                    {/* Main Image Logic */}
                     {src ? (
-                        <Image
-                            src={src}
-                            alt={title}
-                            width={1000}
-                            height={1000}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
+                        src.endsWith(".mp4") || src.endsWith(".webm") || (src.includes("/uploads/") && src.includes("video")) ? (
+                            <video
+                                src={src}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                            />
+                        ) : (
+                            <Image
+                                src={src}
+                                alt={title}
+                                width={1000}
+                                height={1000}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+                        )
                     ) : (
                         <div className="text-gray-500">No Image</div>
                     )}
                 </div>
+
                 <h1 className="text-2xl font-semibold text-white mb-2">{title}</h1>
                 <p className="text-gray-300 text-sm mb-4 leading-relaxed">{description}</p>
 

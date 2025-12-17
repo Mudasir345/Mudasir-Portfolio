@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import { getProfile } from "@/actions/admin";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,15 +47,17 @@ export const viewport = {
   themeColor: '#030014',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const profile = await getProfile();
+
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#030014] overflow-y-scroll overflow-x-hidden`}>
-        <Navbar />
+        <Navbar profile={profile} />
         {children}
       </body>
     </html>

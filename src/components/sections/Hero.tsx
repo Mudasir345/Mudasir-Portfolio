@@ -5,13 +5,19 @@ import ParticleBackground from "../3d/ParticleBackground";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
-import { ProfileData } from "@/lib/db";
+import { Github, Linkedin, Mail, Smartphone } from "lucide-react";
+import ResumeDownloadBtn from "../resume/ResumeDownloadBtn";
+import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData } from '@/lib/db';
 
 interface HeroProps {
     profile: ProfileData;
+    skills: SkillData[];
+    experience: ExperienceData[];
+    education: EducationData[];
+    projects: ProjectData[];
 }
 
-const Hero = ({ profile }: HeroProps) => {
+const Hero = ({ profile, skills, experience, education, projects }: HeroProps) => {
     // Generate sequence for TypeAnimation from roles array
     const rolesSequence = profile.roles.flatMap(role => [role, 1000]);
 
@@ -38,12 +44,12 @@ const Hero = ({ profile }: HeroProps) => {
                             ease: "easeInOut"
                         }
                     }}
-                    className="md:w-1/2 flex justify-center md:justify-start order-1 md:order-1"
+                    className="md:w-1/2 flex flex-col items-center justify-center md:items-start order-1 md:order-1"
                 >
                     <div className="relative w-[220px] h-[220px] md:w-[350px] md:h-[350px] rounded-full p-[4px] bg-gradient-to-r from-purple-500 to-cyan-500 shadow-2xl shadow-purple-500/50">
                         <div className="w-full h-full rounded-full overflow-hidden bg-black">
                             <Image
-                                src="/profile.png"
+                                src={profile.image || "/profile.png"} // Fallback to default
                                 alt={profile.name}
                                 width={350}
                                 height={350}
@@ -51,6 +57,33 @@ const Hero = ({ profile }: HeroProps) => {
                                 priority
                             />
                         </div>
+                    </div>
+
+                    {/* Social Icons under Profile Image */}
+                    <div className="flex flex-row gap-5 items-center mt-8 justify-center">
+                        {profile.github && (
+                            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="hover:-translate-y-1 transition-transform duration-300 p-2 bg-white/5 rounded-full hover:bg-white/10 border border-white/5">
+                                <Github className="text-gray-300 cursor-pointer hover:text-[#7042f8] transition-colors" size={24} />
+                            </a>
+                        )}
+                        {profile.linkedin && (
+                            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="hover:-translate-y-1 transition-transform duration-300 p-2 bg-white/5 rounded-full hover:bg-white/10 border border-white/5">
+                                <Linkedin className="text-gray-300 cursor-pointer hover:text-[#0077b5] transition-colors" size={24} />
+                            </a>
+                        )}
+                        {profile.email && (
+                            <a href={`mailto:${profile.email}`} className="hover:-translate-y-1 transition-transform duration-300 p-2 bg-white/5 rounded-full hover:bg-white/10 border border-white/5">
+                                <Mail className="text-gray-300 cursor-pointer hover:text-cyan-400 transition-colors" size={24} />
+                            </a>
+                        )}
+                        {profile.whatsapp && (
+                            <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer" className="group relative hover:-translate-y-1 transition-transform duration-300 group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-green-600 to-green-400 rounded-full blur opacity-0 group-hover:opacity-60 transition duration-200"></div>
+                                <div className="relative p-2 bg-black/50 rounded-full border border-white/5">
+                                    <Smartphone className="text-gray-300 cursor-pointer group-hover:text-green-400 transition-colors" size={24} />
+                                </div>
+                            </a>
+                        )}
                     </div>
                 </motion.div>
 
@@ -95,7 +128,7 @@ const Hero = ({ profile }: HeroProps) => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.8 }}
-                        className="flex gap-5"
+                        className="flex flex-wrap gap-4"
                     >
                         <a
                             href={`mailto:${profile.email}`}
@@ -103,6 +136,13 @@ const Hero = ({ profile }: HeroProps) => {
                         >
                             Contact Me
                         </a>
+                        <ResumeDownloadBtn
+                            profile={profile}
+                            skills={skills}
+                            experience={experience}
+                            education={education}
+                            projects={projects}
+                        />
                         <a
                             href="#projects"
                             className="py-3 px-8 text-center text-white cursor-pointer rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"

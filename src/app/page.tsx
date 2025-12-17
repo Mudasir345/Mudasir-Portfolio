@@ -10,24 +10,34 @@ import Contact from "@/components/sections/Contact";
 import Testimonials from "@/components/sections/Testimonials";
 import Footer from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { getProjects, getServices, getProfile, getSkills, getExperience, getEducation } from "@/actions/admin";
+import Team from "@/components/sections/Team";
+import { getProjects, getServices, getProfile, getSkills, getExperience, getEducation, getTestimonials, getTeam, getSettings } from "@/actions/admin";
 
 export const revalidate = 0; // Ensure fresh data on every request
 
 export default async function Home() {
-  const [projects, services, profile, skills, experience, education] = await Promise.all([
+  const [projects, services, profile, skills, experience, education, testimonials, team, settings] = await Promise.all([
     getProjects(),
     getServices(),
     getProfile(),
     getSkills(),
     getExperience(),
-    getEducation()
+    getEducation(),
+    getTestimonials(),
+    getTeam(),
+    getSettings()
   ]);
 
   return (
     <main className="h-full w-full">
       <div className="flex flex-col gap-20">
-        <Hero profile={profile} />
+        <Hero
+          profile={profile}
+          skills={skills}
+          experience={experience}
+          education={education}
+          projects={projects}
+        />
 
         <ScrollReveal width="100%">
           <About profile={profile} />
@@ -57,15 +67,21 @@ export default async function Home() {
           <Projects initialProjects={projects} />
         </ScrollReveal>
 
+        {settings.showTeam && (
+          <ScrollReveal width="100%">
+            <Team team={team} />
+          </ScrollReveal>
+        )}
+
         <ScrollReveal width="100%">
-          <Testimonials />
+          <Testimonials testimonials={testimonials} />
         </ScrollReveal>
 
         <ScrollReveal width="100%">
-          <Contact />
+          <Contact email={profile.email} />
         </ScrollReveal>
 
-        <Footer />
+        <Footer profile={profile} />
       </div>
     </main>
   );
