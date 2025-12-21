@@ -30,7 +30,7 @@ const Hero = ({ profile, skills, experience, education, projects }: HeroProps) =
             <div className="absolute bottom-[-20%] right-[-20%] w-[50vw] h-[50vw] bg-cyan-600/20 rounded-full blur-[120px] z-0 animate-pulse-slow pointer-events-none delay-1000" />
 
             {/* Container */}
-            <div className="z-[20] flex flex-col md:flex-row items-center justify-center md:justify-between w-full max-w-[1200px] gap-8 md:gap-16 px-6 pt-24 pb-12 md:py-0">
+            <div className="z-[20] flex flex-col md:flex-row items-center justify-center md:justify-between w-full max-w-[1200px] gap-8 md:gap-16 px-6 pt-40 pb-12">
 
                 {/* Profile Image (Left on Desktop) */}
                 <motion.div
