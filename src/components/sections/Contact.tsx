@@ -70,9 +70,9 @@ const Contact = ({ profile }: ContactProps) => {
 
                             {/* Placeholder for Phone/Location if needed, or just social links */}
                             <div className="flex gap-4">
-                                {profile.socials?.github && (
+                                {profile.github && (
                                     <a
-                                        href={profile.socials.github}
+                                        href={profile.github}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 text-gray-400 hover:text-white transition-all hover:scale-105"
@@ -80,9 +80,9 @@ const Contact = ({ profile }: ContactProps) => {
                                         <Github size={24} />
                                     </a>
                                 )}
-                                {profile.socials?.linkedin && (
+                                {profile.linkedin && (
                                     <a
-                                        href={profile.socials.linkedin}
+                                        href={profile.linkedin}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 text-gray-400 hover:text-[#0077b5] transition-all hover:scale-105"

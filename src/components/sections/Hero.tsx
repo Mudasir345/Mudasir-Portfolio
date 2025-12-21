@@ -94,9 +94,6 @@ const Hero = ({ profile, skills, experience, education, projects }: HeroProps) =
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                     >
-                        <h2 className="text-lg md:text-xl font-medium text-cyan-400 mb-2 tracking-wide uppercase">
-                            Welcome to my Portfolio
-                        </h2>
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight leading-tight">
                             Hi, I'm <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500 animate-gradient-x bg-[length:200%_auto]">
@@ -111,7 +108,6 @@ const Hero = ({ profile, skills, experience, education, projects }: HeroProps) =
                         transition={{ duration: 0.5, delay: 0.5 }}
                         className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-200 pb-2 h-[60px] md:h-[auto] flex items-center md:items-start justify-center md:justify-start"
                     >
-                        <span className="mr-2">I am a</span>
                         <TypeAnimation
                             sequence={rolesSequence}
                             wrapper="span"
@@ -169,7 +165,7 @@ const Hero = ({ profile, skills, experience, education, projects }: HeroProps) =
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 2, duration: 1 }}
-                className="absolute bottom-5 z-[20] flex flex-col items-center gap-2 animate-bounce cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
+                className="absolute bottom-2 z-[20] flex flex-col items-center gap-2 animate-bounce cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
             >
                 <span className="text-xs text-gray-400 uppercase tracking-widest">Scroll Down</span>
                 <ChevronsDown className="text-cyan-400" size={24} />
