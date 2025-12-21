@@ -165,7 +165,7 @@ const Hero = ({ profile, skills, experience, education, projects }: HeroProps) =
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 2, duration: 1 }}
-                className="absolute bottom-2 z-[20] flex flex-col items-center gap-2 animate-bounce cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
+                className="absolute bottom-1 z-[20] flex flex-col items-center gap-2 animate-bounce cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
             >
                 <span className="text-xs text-gray-400 uppercase tracking-widest">Scroll Down</span>
                 <ChevronsDown className="text-cyan-400" size={24} />
