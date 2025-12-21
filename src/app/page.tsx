@@ -30,7 +30,7 @@ export default async function Home() {
 
   return (
     <main className="h-full w-full">
-      <div className="flex flex-col gap-20">
+      <div className="flex flex-col gap-0">
         <Hero
           profile={profile}
           skills={skills}
@@ -78,7 +78,7 @@ export default async function Home() {
         </ScrollReveal>
 
         <ScrollReveal width="100%">
-          <Contact email={profile.email} />
+          <Contact profile={profile} />
         </ScrollReveal>
 
         <Footer profile={profile} />

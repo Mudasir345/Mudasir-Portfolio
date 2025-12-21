@@ -8,6 +8,9 @@ export type ProjectCategory = "Web" | "Mobile" | "Desktop" | "Automation";
 export interface ProjectData {
     title: string;
     description: string;
+    longDescription?: string; // Detailed case study text
+    features?: string[]; // List of key features
+    challenges?: string[]; // List of challenges overcome
     techStack: string[];
     image: string;
     mediaType?: "image" | "video"; // New field for video support

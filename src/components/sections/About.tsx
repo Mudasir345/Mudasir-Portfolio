@@ -16,15 +16,15 @@ export default function About({ profile }: AboutProps) {
         <section className="flex flex-col items-center justify-center py-20 relative z-[20]" id="about">
             <SectionHeading>About Me</SectionHeading>
 
-            <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-[1200px] px-10 gap-10">
+            <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-[1200px] px-4 md:px-10 gap-10">
                 {/* Left Side: The Story */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="flex-1 space-y-6"
+                    className="flex-1 space-y-6 w-full"
                 >
-                    <div className="glass-card p-8 rounded-2xl border border-white/10 relative overflow-hidden group">
+                    <div className="glass-card p-6 md:p-8 rounded-2xl border border-white/10 relative overflow-hidden group">
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                         <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
@@ -42,7 +42,7 @@ export default function About({ profile }: AboutProps) {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="glass-card p-6 rounded-xl border border-white/10 flex flex-col items-center text-center hover:border-purple-500/50 transition-colors">
                             <Brain className="text-purple-400 mb-2" size={32} />
                             <h4 className="font-bold text-white">Problem Solver</h4>

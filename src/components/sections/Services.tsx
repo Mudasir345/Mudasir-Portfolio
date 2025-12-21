@@ -49,7 +49,7 @@ const Services = ({ initialServices }: ServicesProps) => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="flex flex-wrap justify-center gap-10 px-10 max-w-[1400px]"
+                className="flex flex-wrap justify-center gap-8 px-10 max-w-[1400px] mt-10"
             >
                 {initialServices.map((service, index) => {
                     const IconComponent = IconMap[service.iconType] || Code;
@@ -60,17 +60,25 @@ const Services = ({ initialServices }: ServicesProps) => {
                             layout
                             variants={itemVariants}
                             onClick={() => toggleService(index)}
-                            className={`flex flex-col items-center p-8 glass-card rounded-xl border w-full md:w-[45%] lg:w-[28%] transition-colors duration-300 relative group overflow-hidden cursor-pointer ${activeindex === index ? "border-cyan-500 bg-[#0d0426]" : "border-[#7042f861]"}`}
+                            whileHover={{ y: -10, scale: 1.02 }}
+                            className={`flex flex-col items-center p-8 glass-card rounded-2xl border w-full md:w-[45%] lg:w-[30%] transition-all duration-500 relative group overflow-hidden cursor-pointer shadow-2xl ${activeindex === index ? "border-cyan-500 bg-[#0d0426]/80 shadow-cyan-500/20" : "border-white/10 hover:border-purple-500/50 hover:shadow-purple-500/20"}`}
                         >
-                            <div className={`absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 transition-opacity duration-300 ${activeindex === index ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
+                            {/* Holographic Gradient Background */}
+                            <div className={`absolute inset-0 bg-gradient-to-br from-purple-600/20 via-transparent to-cyan-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${activeindex === index ? "opacity-100" : ""}`} />
 
-                            <motion.div layout className="mb-4 z-10">
-                                <IconComponent size={40} className="text-secondary" />
+                            {/* Glowing Orb Effect */}
+                            <div className="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/20 rounded-full blur-[50px] group-hover:bg-purple-500/40 transition-colors duration-500"></div>
+                            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-cyan-500/20 rounded-full blur-[50px] group-hover:bg-cyan-500/40 transition-colors duration-500"></div>
+
+                            <motion.div layout className="mb-6 z-10 p-4 rounded-full bg-white/5 border border-white/10 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 transition-colors duration-300">
+                                <IconComponent size={32} className="text-gray-300 group-hover:text-cyan-400 transition-colors duration-300" />
                             </motion.div>
-                            <motion.h3 layout className="text-2xl font-bold text-white mb-2 z-10 text-center">
+
+                            <motion.h3 layout className="text-2xl font-bold text-white mb-3 z-10 text-center group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-cyan-400 transition-all duration-300">
                                 {service.title}
                             </motion.h3>
-                            <motion.p layout className="text-gray-300 text-center z-10 text-sm mb-4">
+
+                            <motion.p layout className="text-gray-400 text-center z-10 text-sm mb-6 leading-relaxed group-hover:text-gray-300 transition-colors">
                                 {service.description}
                             </motion.p>
 
@@ -81,24 +89,30 @@ const Services = ({ initialServices }: ServicesProps) => {
                                         initial={{ opacity: 0, height: 0 }}
                                         animate={{ opacity: 1, height: "auto" }}
                                         exit={{ opacity: 0, height: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="w-full z-10"
+                                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                                        className="w-full z-10 overflow-hidden"
                                     >
-                                        <div className="w-full h-[1px] bg-gray-700 my-3"></div>
-                                        <div className="grid grid-cols-2 gap-3 w-full">
+                                        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent my-4"></div>
+                                        <div className="grid grid-cols-2 gap-3 w-full pb-2">
                                             {service.details.map((detail, idx) => (
-                                                <div key={idx} className="flex items-center gap-2 text-gray-300 bg-white/5 p-2 rounded-lg border border-white/5 hover:border-cyan-500/50 transition-colors">
-                                                    <div className="relative w-5 h-5">
+                                                <motion.div
+                                                    key={idx}
+                                                    initial={{ opacity: 0, x: -10 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: idx * 0.05 }}
+                                                    className="flex items-center gap-2 text-gray-300 bg-black/40 p-2.5 rounded-lg border border-white/5 hover:border-cyan-500/50 transition-colors"
+                                                >
+                                                    <div className="relative w-5 h-5 min-w-[20px]">
                                                         <Image
                                                             src={detail.iconUrl}
                                                             alt={detail.name}
                                                             fill
-                                                            className={`object-contain ${detail.name === 'Next.js' ? 'invert' : ''}`} // Invert Next.js black logo
+                                                            className={`object-contain ${detail.name === 'Next.js' ? 'invert' : ''}`}
                                                             unoptimized
                                                         />
                                                     </div>
-                                                    <span className="text-xs font-medium">{detail.name}</span>
-                                                </div>
+                                                    <span className="text-xs font-medium truncate">{detail.name}</span>
+                                                </motion.div>
                                             ))}
                                         </div>
                                     </motion.div>
@@ -107,13 +121,18 @@ const Services = ({ initialServices }: ServicesProps) => {
 
                             {/* Click Hint */}
                             {!activeindex && activeindex !== index && (
-                                <motion.span
+                                <motion.div
                                     initial={{ opacity: 0 }}
-                                    animate={{ opacity: 0.5 }}
-                                    className="absolute bottom-2 text-[10px] text-gray-500 uppercase tracking-widest mt-2"
+                                    animate={{ opacity: 1 }}
+                                    className="absolute bottom-4 flex flex-col items-center gap-1"
                                 >
-                                    Tap to view stack
-                                </motion.span>
+                                    <span className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold group-hover:text-cyan-400 transition-colors">Explore</span>
+                                    <motion.div
+                                        animate={{ y: [0, 3, 0] }}
+                                        transition={{ repeat: Infinity, duration: 1.5 }}
+                                        className="w-1 h-1 bg-cyan-500 rounded-full"
+                                    />
+                                </motion.div>
                             )}
                         </motion.div>
                     );

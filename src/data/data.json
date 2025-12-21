@@ -105,6 +105,30 @@
     {
       "name": "Vue.js",
       "category": "Frontend"
+    },
+    {
+      "name": "Graph API",
+      "category": "Backend"
+    },
+    {
+      "name": "REST API",
+      "category": "Backend"
+    },
+    {
+      "name": "Docker",
+      "category": "Tools"
+    },
+    {
+      "name": "Kubernetes",
+      "category": "Tools"
+    },
+    {
+      "name": "Postman",
+      "category": "Tools"
+    },
+    {
+      "name": "Figma",
+      "category": "Tools"
     }
   ],
   "experience": [
@@ -155,6 +179,19 @@
     {
       "title": "E-Commerce Platform",
       "description": "Full-stack e-commerce solution with real-time inventory, Stripe payments, and admin dashboard.",
+      "longDescription": "A comprehensive e-commerce solution designed for scalability and performance. This platform features a real-time inventory management system, secure payment processing via Stripe, and a robust admin dashboard for analytics and order management. Built with Next.js 14 and Prisma, it ensures SEO optimization and lightning-fast page loads.",
+      "features": [
+        "Real-time Inventory Syncing",
+        "Secure Stripe Payment Integration",
+        "Admin Dashboard with Analytics",
+        "User Authentication & Order History",
+        "Responsive Mobile-First Design"
+      ],
+      "challenges": [
+        "Handling concurrent checkout sessions without inventory conflicts.",
+        "Optimizing image loading for thousands of products.",
+        "Implementing complex tax calculation logic based on user location."
+      ],
       "techStack": [
         "Next.js",
         "TypeScript",
@@ -167,6 +204,19 @@
     {
       "title": "SaaS Analytics Dashboard",
       "description": "Real-time analytics platform for SaaS businesses featuring data visualization and user management.",
+      "longDescription": "A high-performance analytics dashboard tailored for SaaS businesses. It aggregates data from multiple sources to provide actionable insights through interactive charts and graphs. The system supports multi-tenancy, allowing different organizations to manage their data securely in isolation.",
+      "features": [
+        "Interactive Data Visualization with Recharts",
+        "Role-Based Access Control (RBAC)",
+        "Real-time WebSocket Updates",
+        "Exportable Reports (PDF/CSV)",
+        "Dark/Light Mode Support"
+      ],
+      "challenges": [
+        "Visualizing large datasets without UI lag.",
+        "Ensuring data privacy in a multi-tenant architecture.",
+        "Managing WebSocket connections for real-time updates at scale."
+      ],
       "techStack": [
         "React.js",
         "Tailwind CSS",
@@ -180,6 +230,19 @@
     {
       "title": "Corporate Portal",
       "description": "Enterprise-grade portal with role-based access control and document management system.",
+      "longDescription": "An enterprise corporate portal designed to streamline internal communications and document management. It features a secure login system, departmental news feeds, and a centralized repository for company policies and documents. The system is built on Laravel for robust backend security.",
+      "features": [
+        "Secure Document Management System",
+        "Departmental News Feeds",
+        "Employee Directory & Profile Management",
+        "Event Calendar & Scheduling",
+        "Granular Permission Settings"
+      ],
+      "challenges": [
+        "Migrating legacy data to the new system.",
+        "Implementing complex permission hierarchies for different departments.",
+        "Ensuring GDPR compliance for employee data."
+      ],
       "techStack": [
         "Laravel",
         "PHP",
@@ -193,6 +256,19 @@
     {
       "title": "Fitness Tracker Pro",
       "description": "Cross-platform mobile app for tracking workouts and nutrition with social features.",
+      "longDescription": "A cross-platform mobile application that helps users track their fitness journey. It includes workout logging, nutrition tracking, and social features like challenges and leaderboards. Built with React Native, it offers a native-like experience on both iOS and Android.",
+      "features": [
+        "Custom Workout Plans & Logging",
+        "Barcode Scanner for Nutrition Tracking",
+        "Social Leaderboards & Challenges",
+        "Integration with Apple Health & Google Fit",
+        "Offline Mode Support"
+      ],
+      "challenges": [
+        "Synchronizing offline data when connectivity is restored.",
+        "Optimizing battery usage for background step tracking.",
+        "Ensuring consistent UI across different device screen sizes."
+      ],
       "techStack": [
         "React Native",
         "Expo",
@@ -205,6 +281,19 @@
     {
       "title": "Food Delivery App",
       "description": "On-demand food delivery application with live GPS tracking and payment integration.",
+      "longDescription": "A comprehensive food delivery ecosystem connecting customers, restaurants, and riders. The app features live order tracking, secure payments, and a rating system. It uses Google Maps API for precise location services and route optimization.",
+      "features": [
+        "Live GPS Order Tracking",
+        "Multi-Vendor Restaurant Support",
+        "Secure In-App Wallet & Payments",
+        "Push Notifications for Order Status",
+        "Rider & Restaurant Partner Apps"
+      ],
+      "challenges": [
+        "Real-time location updates with low latency.",
+        "Handling peak load during lunch and dinner hours.",
+        "Complex algorithm for assigning riders to orders efficiently."
+      ],
       "techStack": [
         "Flutter",
         "Dart",
@@ -217,6 +306,19 @@
     {
       "title": "Modern File Explorer",
       "description": "A beautiful, highly customizable file explorer replacement for Windows with tabbed browsing.",
+      "longDescription": "A modern, aesthetic replacement for the default Windows File Explorer. It introduces tabbed browsing, dual-pane view, and extensive customization options. Built with Electron, it brings the power of web technologies to the desktop environment.",
+      "features": [
+        "Tabbed Browsing Interface",
+        "Dual-Pane View for Easy File Transfer",
+        "Customizable Themes & Icons",
+        "Fast File Search & Indexing",
+        "Plugin System for Extensions"
+      ],
+      "challenges": [
+        "Optimizing file system operations for speed.",
+        "Handling large directories without UI freezing.",
+        "Ensuring compatibility with various Windows versions."
+      ],
       "techStack": [
         "Electron.js",
         "React",
@@ -229,6 +331,19 @@
     {
       "title": "POS System (Point of Sale)",
       "description": "Offline-first retail management system for high-volume stores with inventory syncing.",
+      "longDescription": "A robust Point of Sale system designed for high-volume retail environments. It supports barcode scanning, receipt printing, and inventory management. The offline-first architecture ensures business continuity even during internet outages.",
+      "features": [
+        "Offline-First Architecture",
+        "Barcode Scanning & Receipt Printing",
+        "Inventory & Stock Management",
+        "Sales Reporting & Analytics",
+        "Employee Shift Management"
+      ],
+      "challenges": [
+        "Ensuring data integrity during offline-online sync.",
+        "Interfacing with various hardware peripherals (scanners, printers).",
+        "Optimizing database queries for instant product lookup."
+      ],
       "techStack": [
         "C#",
         ".NET Core",
@@ -241,6 +356,19 @@
     {
       "title": "LinkedIn Lead Scraper",
       "description": "High-performance scraper to aggregate professional profiles and export to CSV/CRM.",
+      "longDescription": "An advanced automation tool for lead generation. It scrapes professional profiles based on specific criteria and exports the data to CSV or directly to a CRM. It includes anti-detection mechanisms to ensure reliable operation.",
+      "features": [
+        "Targeted Profile Scraping",
+        "Export to CSV/Excel/CRM",
+        "Anti-Bot Detection Bypass",
+        "Scheduled Scraping Jobs",
+        "Proxy Rotation Support"
+      ],
+      "challenges": [
+        "Bypassing complex CAPTCHAs and anti-bot measures.",
+        "Handling dynamic DOM changes on the target site.",
+        "Managing rate limits to avoid IP bans."
+      ],
       "techStack": [
         "Puppeteer",
         "Node.js",
@@ -348,7 +476,7 @@
         },
         {
           "name": "AWS",
-          "iconUrl": "https://cdn.simpleicons.org/amazonaws/FF9900"
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
         },
         {
           "name": "Firebase",

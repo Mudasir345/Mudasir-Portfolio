@@ -13,47 +13,66 @@ interface ProjectCardProps {
     techStack?: string[];
     liveUrl?: string;
     githubUrl?: string;
+    onClick?: () => void;
 }
 
-const ProjectCard = ({ src, title, description, techStack, liveUrl, githubUrl }: ProjectCardProps) => {
+const ProjectCard = ({ src, title, description, techStack, liveUrl, githubUrl, onClick }: ProjectCardProps) => {
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-lg shadow-lg border border-[#2A0E61] w-full max-w-[350px] glass-card flex flex-col h-full"
+            className="relative overflow-hidden rounded-lg shadow-lg border border-[#2A0E61] w-full max-w-[400px] md:max-w-[350px] glass-card flex flex-col h-full group hover:scale-[1.02] transition-transform duration-300 z-10"
         >
-            <div className="relative p-4 flex-grow">
-                {/* Carousel / Image Area */}
-                <div className="w-full h-[200px] bg-gray-800 rounded-md mb-4 flex items-center justify-center overflow-hidden group relative">
-                    {/* Main Image Logic */}
+            {/* Main Clickable Area */}
+            <div
+                onClick={onClick}
+                className="absolute inset-0 z-0 cursor-pointer"
+                role="button"
+                tabIndex={0}
+                aria-label={`View details for ${title}`}
+            />
+
+            <div className="relative p-4 flex-grow flex flex-col h-full z-10 pointer-events-none">
+                {/* Image Area */}
+                <div className="w-full h-[180px] sm:h-[200px] bg-gray-800 rounded-md mb-4 flex items-center justify-center overflow-hidden relative pointer-events-auto">
                     {src ? (
                         src.endsWith(".mp4") || src.endsWith(".webm") || (src.includes("/uploads/") && src.includes("video")) ? (
-                            <video
-                                src={src}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                autoPlay
-                                muted
-                                loop
-                                playsInline
-                            />
+                            <div className="w-full h-full relative" onClick={onClick}>
+                                <video
+                                    src={src}
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                />
+                            </div>
                         ) : (
-                            <Image
-                                src={src}
-                                alt={title}
-                                width={1000}
-                                height={1000}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
+                            <div className="w-full h-full relative" onClick={onClick}>
+                                <Image
+                                    src={src}
+                                    alt={title}
+                                    fill
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                />
+                            </div>
                         )
                     ) : (
-                        <div className="text-gray-500">No Image</div>
+                        <div className="text-gray-500 text-sm">No Preview</div>
                     )}
+
+                    {/* Hover Overlay Hint */}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none z-10">
+                        <span className="px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-sm font-semibold border border-white/20 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            View Details
+                        </span>
+                    </div>
                 </div>
 
-                <h1 className="text-2xl font-semibold text-white mb-2">{title}</h1>
-                <p className="text-gray-300 text-sm mb-4 leading-relaxed">{description}</p>
+                <h1 className="text-xl sm:text-2xl font-semibold text-white mb-2 line-clamp-1">{title}</h1>
+                <p className="text-gray-300 text-xs sm:text-sm mb-4 leading-relaxed line-clamp-3">{description}</p>
 
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
                     {techStack && (
@@ -71,7 +90,8 @@ const ProjectCard = ({ src, title, description, techStack, liveUrl, githubUrl }:
                         </div>
                     )}
 
-                    <div className="flex gap-3">
+                    {/* Social links allowed to be interactive */}
+                    <div className="flex gap-3 pointer-events-auto z-20">
                         {githubUrl && (
                             <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors" title="View Code">
                                 <Github size={18} />

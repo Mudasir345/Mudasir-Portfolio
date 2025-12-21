@@ -55,7 +55,7 @@ export default async function RootLayout({
   const profile = await getProfile();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} bg-[#030014] overflow-y-scroll overflow-x-hidden`}>
         <Navbar profile={profile} />
         {children}
