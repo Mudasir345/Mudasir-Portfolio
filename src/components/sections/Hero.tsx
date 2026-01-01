@@ -161,6 +161,9 @@ const Hero = ({ profile, skills, experience, education, projects }: HeroProps) =
             </div>
 
 
+            {/* Seamless Transition Gradient Mask */}
+            <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#030014] to-transparent z-[15] pointer-events-none" />
+
         </div>
     );
 };
