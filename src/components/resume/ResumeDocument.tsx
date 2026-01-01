@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         fontSize: 26,
         fontWeight: 'bold',
         textTransform: 'uppercase',
-        marginBottom: 6, // More space to avoid overlap
+        marginBottom: 12, // Significantly increased space
         letterSpacing: 1,
         color: '#000'
     },
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#000',
         marginBottom: 8,
+        marginTop: 4, // Added top margin for safety
         fontFamily: 'Times-Roman'
     },
     contactRow: {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
         gap: 12,
         fontSize: 10,
         color: '#000',
-        marginBottom: 2 // Space between rows
+        marginBottom: 6 // Increased to ensure no row overlap
     },
     link: {
         textDecoration: 'none',
