@@ -1,0 +1,64 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#0F172A"/>
+  
+  <!-- Sidebar -->
+  <rect x="0" y="0" width="200" height="600" fill="#1E293B"/>
+  <rect x="20" y="40" width="160" height="40" rx="8" fill="#3B82F6"/>
+  <text x="100" y="65" fill="white" font-family="sans-serif" font-size="14" text-anchor="middle" font-weight="bold">New Campaign</text>
+  
+  <text x="30" y="140" fill="#94A3B8" font-family="sans-serif" font-size="14">Dashboard</text>
+  <text x="30" y="180" fill="#E2E8F0" font-family="sans-serif" font-size="14" font-weight="bold">Review Bot</text>
+  <text x="30" y="220" fill="#94A3B8" font-family="sans-serif" font-size="14">Session Manager</text>
+  <text x="30" y="260" fill="#94A3B8" font-family="sans-serif" font-size="14">Proxies</text>
+  <text x="30" y="300" fill="#94A3B8" font-family="sans-serif" font-size="14">Reports</text>
+
+  <!-- Main Content -->
+  <!-- Header -->
+  <text x="240" y="60" fill="white" font-family="sans-serif" font-size="24" font-weight="bold">Campaign Overview</text>
+  <rect x="680" y="40" width="100" height="35" rx="17.5" fill="#10B981"/>
+  <text x="730" y="62" fill="white" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="bold">Running</text>
+
+  <!-- Stats Cards -->
+  <rect x="240" y="100" width="160" height="100" rx="12" fill="#1E293B" stroke="#334155"/>
+  <text x="260" y="130" fill="#94A3B8" font-family="sans-serif" font-size="12">Reviews Posted</text>
+  <text x="260" y="170" fill="#3B82F6" font-family="sans-serif" font-size="32" font-weight="bold">1,248</text>
+
+  <rect x="420" y="100" width="160" height="100" rx="12" fill="#1E293B" stroke="#334155"/>
+  <text x="440" y="130" fill="#94A3B8" font-family="sans-serif" font-size="12">Active Sessions</text>
+  <text x="440" y="170" fill="#10B981" font-family="sans-serif" font-size="32" font-weight="bold">56</text>
+
+  <rect x="600" y="100" width="160" height="100" rx="12" fill="#1E293B" stroke="#334155"/>
+  <text x="620" y="130" fill="#94A3B8" font-family="sans-serif" font-size="12">Negative Flagged</text>
+  <text x="620" y="170" fill="#EF4444" font-family="sans-serif" font-size="32" font-weight="bold">12</text>
+
+  <!-- Log Table -->
+  <rect x="240" y="240" width="520" height="320" rx="12" fill="#1E293B" stroke="#334155"/>
+  <text x="260" y="270" fill="white" font-family="sans-serif" font-size="16" font-weight="bold">Live Activity Log</text>
+  
+  <!-- Table Header -->
+  <text x="260" y="310" fill="#64748B" font-family="sans-serif" font-size="12">TIMESTAMP</text>
+  <text x="360" y="310" fill="#64748B" font-family="sans-serif" font-size="12">ACTION</text>
+  <text x="500" y="310" fill="#64748B" font-family="sans-serif" font-size="12">TARGET</text>
+  <text x="680" y="310" fill="#64748B" font-family="sans-serif" font-size="12">STATUS</text>
+
+  <!-- Row 1 -->
+  <text x="260" y="350" fill="#94A3B8" font-family="monospace" font-size="12">10:42:05</text>
+  <text x="360" y="350" fill="white" font-family="sans-serif" font-size="12">Post Review (5★)</text>
+  <text x="500" y="350" fill="#94A3B8" font-family="sans-serif" font-size="12">Cafe Monarch...</text>
+  <text x="680" y="350" fill="#10B981" font-family="sans-serif" font-size="12">Success</text>
+  <path d="M260 370 L740 370" stroke="#334155" stroke-width="1"/>
+
+  <!-- Row 2 -->
+  <text x="260" y="400" fill="#94A3B8" font-family="monospace" font-size="12">10:41:58</text>
+  <text x="360" y="400" fill="white" font-family="sans-serif" font-size="12">Save Session</text>
+  <text x="500" y="400" fill="#94A3B8" font-family="sans-serif" font-size="12">user_mudasir...</text>
+  <text x="680" y="400" fill="#10B981" font-family="sans-serif" font-size="12">Saved</text>
+  <path d="M260 420 L740 420" stroke="#334155" stroke-width="1"/>
+
+  <!-- Row 3 -->
+  <text x="260" y="450" fill="#94A3B8" font-family="monospace" font-size="12">10:41:12</text>
+  <text x="360" y="450" fill="white" font-family="sans-serif" font-size="12">Flag Review</text>
+  <text x="500" y="450" fill="#94A3B8" font-family="sans-serif" font-size="12">Competitor Inc...</text>
+  <text x="680" y="450" fill="#EF4444" font-family="sans-serif" font-size="12">Reported</text>
+
+</svg>

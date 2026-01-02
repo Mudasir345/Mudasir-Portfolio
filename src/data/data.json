@@ -10,7 +10,7 @@
     "bio": "Specializing in Web Development, Mobile Apps, and Automation Bots. Transforming ideas into high-performance digital reality.",
     "aboutText": "I am a passionate Full Stack Developer who believes that code is art. My journey started with a curiosity for how things work, which evolved into a career of building complex, high-performance systems.\n\nWhether it's architecting a robust SaaS platform, optimizing an Automation bots, or crafting a pixel-perfect 3D website, I bring the same level of dedication and precision. I don't just write code; I engineer solutions that solve real-world problems.",
     "stats": {
-      "experienceYears": "5+",
+      "experienceYears": "3+",
       "projectsCompleted": "50+",
       "satisfaction": "100%",
       "availability": "24/7"
@@ -177,206 +177,281 @@
   ],
   "projects": [
     {
-      "title": "E-Commerce Platform",
-      "description": "Full-stack e-commerce solution with real-time inventory, Stripe payments, and admin dashboard.",
-      "longDescription": "A comprehensive e-commerce solution designed for scalability and performance. This platform features a real-time inventory management system, secure payment processing via Stripe, and a robust admin dashboard for analytics and order management. Built with Next.js 14 and Prisma, it ensures SEO optimization and lightning-fast page loads.",
+      "title": "Reddit Growth Automation Bot",
+      "description": "AI-powered Reddit automation tool for content generation, karma growth, and audience engagement.",
+      "longDescription": "A cutting-edge marketing automation tool built with Python. It leverages OpenAI's GPT-4 to generate context-aware posts and comments tailored to specific subreddits. The system includes an advanced 'Account Warmer' module that mimics human activity (scrolling, upvoting) to build trust scores and prevent bans, managed via a rotating proxy network.",
       "features": [
-        "Real-time Inventory Syncing",
-        "Secure Stripe Payment Integration",
-        "Admin Dashboard with Analytics",
-        "User Authentication & Order History",
-        "Responsive Mobile-First Design"
+        "AI-Generated Content (OpenAI GPT-4)",
+        "Automated Account Warming & Aging",
+        "Subreddit Keyword Monitoring",
+        "Proxy Network & Session Management",
+        "Karma Tracking Dashboard"
       ],
       "challenges": [
-        "Handling concurrent checkout sessions without inventory conflicts.",
-        "Optimizing image loading for thousands of products.",
-        "Implementing complex tax calculation logic based on user location."
+        "Navigating Reddit's strict anti-spam filters and shadowban algorithms.",
+        "Generating AI content that mimics authentic human discussion styles.",
+        "Managing multiple concurrent sessions without cross-contamination."
+      ],
+      "techStack": [
+        "Python 3.11+",
+        "PRAW (Reddit API)",
+        "OpenAI API",
+        "Selenium (Activity Simulation)",
+        "Docker Container"
+      ],
+      "image": "/projects/reddit_bot_icon.svg",
+      "category": "Automation",
+      "githubUrl": "https://github.com/Mudasir345/reddit-automation",
+      "mediaType": "image"
+    },
+    {
+      "title": "Facebook Marketplace Scraper",
+      "description": "High-performance Chrome Extension for bulk data extraction from Facebook Marketplace listings.",
+      "longDescription": "A powerful browser extension engineered for e-commerce data analysis. It automates the scraping of thousands of marketplace listings in minutes, dealing with the complexity of infinite scrolling and dynamic DOM loading. The tool extracts granular details like pricing, location, seller rating, and description, exporting clean structured data (CSV/JSON) for immediate use.",
+      "features": [
+        "Bulk Data Extraction (Unlimited Listings)",
+        "Auto-Scroll & Pagination Handling",
+        "One-Click CSV/JSON Export",
+        "Smart Selector Engine (Dynamic DOM)",
+        "Background Worker Architecture"
+      ],
+      "challenges": [
+        "Adapting to Facebook's frequent obfuscated class name changes.",
+        "Managing memory efficient storage for thousands of scraped objects.",
+        "Implementing retry logic for network instability during bulk operations."
+      ],
+      "techStack": [
+        "JavaScript (ES6+)",
+        "Chrome Extension V3",
+        "Python (Data Processing)",
+        "DOM Manipulation",
+        "Service Workers"
+      ],
+      "image": "/projects/fb_scraper_safe.svg",
+      "category": "Automation",
+      "githubUrl": "https://github.com/Mudasir345/facebook-marketplace-scraper",
+      "mediaType": "image"
+    },
+    {
+      "title": "Google Maps Review Automation",
+      "description": "Enterprise-grade bot for automated review management, session persistence, and reputation control.",
+      "longDescription": "A sophisticated automation tool designed to manage Google Maps reputation at scale. The system uses a React frontend for campaign management and a powerful Python backend for browser automation. Key capabilities include session persistence (storing Gmail cookies to bypass login), intelligent posting algorithms to mimic human behavior, and auto-flagging of negative reviews.",
+      "features": [
+        "Automated 5-Star Review Posting",
+        "Competitor Negative Review Flagging",
+        "Gmail Session Persistence (No Re-login)",
+        "React Dashboard for Campaign Control",
+        "Proxy Rotation & Browser Fingerprinting"
+      ],
+      "challenges": [
+        "Bypassing Google's advanced bot detection and CAPTCHAs.",
+        "Managing thousands of Gmail cookies securely without invalidation.",
+        "Simulating realistic mouse movements and typing speeds."
+      ],
+      "techStack": [
+        "Python 3.11+",
+        "Selenium WebDriver",
+        "Puppeteer (Pyppeteer)",
+        "Undetected Chromedriver",
+        "Flask API",
+        "React.js",
+        "Docker"
+      ],
+      "image": "/projects/google_review_bot.svg",
+      "category": "Automation",
+      "githubUrl": "https://github.com/Mudasir345/Google-review-bot",
+      "mediaType": "image"
+    },
+    {
+      "title": "React Native Calculator",
+      "description": "Professional-grade computational tool featuring scientific operations and history management.",
+      "longDescription": "A robust, enterprise-ready scientific calculator application designed for precision and reliability. Built on the React Native framework, it implements a custom mathematical parsing engine to handle complex operations with zero latency. The interface adheres to strict iOS/Android design guidelines, ensuring a native look and feel.",
+      "features": [
+        "Scientific Operations (Trigonometry, Logarithms)",
+        "Persistent Calculation History",
+        "Error handling & Input Validation",
+        "Dark/Light Theme Support",
+        "Optimized Performance for Low-end Devices"
+      ],
+      "challenges": [
+        "Developing a custom parser to handle operator precedence correctly.",
+        "Managing state effectively to allow for instant history retrieval.",
+        "Ensuring 100% layout consistency across diverse screen sizes."
+      ],
+      "techStack": [
+        "React Native",
+        "TypeScript",
+        "Math.js",
+        "Jest (Unit Testing)"
+      ],
+      "image": "/projects/calculator_icon.svg",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/React-Native-Calculator",
+      "mediaType": "image"
+    },
+    {
+      "title": "React Native Stop-Watch",
+      "description": "High-accuracy chronometer with millisecond precision and background timer capabilities.",
+      "longDescription": "An industry-standard timing application that provides reliable stopwatch and timer functionality. It deals with critical challenges like background execution and state persistence, ensuring timing accuracy even when the app is minimized. The UI is designed for high legibility and rapid interaction.",
+      "features": [
+        "Millisecond Precision Timing",
+        "Background Execution Services",
+        "Lap Time Tracking & Export",
+        "Minimalist, High-Contrast UI",
+        "Battery Efficient Architecture"
+      ],
+      "challenges": [
+        "Synchronizing timer state between foreground and background services.",
+        "Preventing thread blocking to ensure smooth 60fps UI updates.",
+        "Handling device-specific power saving modes."
+      ],
+      "techStack": [
+        "React Native",
+        "React Hooks",
+        "AsyncStorage",
+        "Native Modules"
+      ],
+      "image": "/projects/stopwatch_icon.svg",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/React-Native-Stop-watch",
+      "mediaType": "image"
+    },
+    {
+      "title": "Perplexity AI Search Clone",
+      "description": "Enterprise-grade AI search engine delivering real-time answers with citations and deep research capabilities.",
+      "longDescription": "A sophisticated research tool that redefines web search. Built with Next.js and LangChain, this application synthesizes complex answers from live web data using OpenAI's GPT-4. It features a streaming interface for instant feedback, rigorous citation tracking for reliability, and a 'Copilot' mode that asks clarifying questions to refine search intent.",
+      "features": [
+        "Real-time Web Search Synthesis (LangChain)",
+        "Precision Citations & Source Tracking",
+        "Edge-Runtime AI Streaming Response",
+        "'Copilot' Recursive Research Integration",
+        "Context-Aware Follow-up Questions"
+      ],
+      "challenges": [
+        "Orchestrating multi-step LLM chains (Search -> Read -> Synthesize) efficiently.",
+        "Reducing latency for a 'instant' search feel using Edge streams.",
+        "Implementing vector similarity search for retrieving relevant context."
       ],
       "techStack": [
         "Next.js",
-        "TypeScript",
-        "Stripe",
-        "Prisma"
-      ],
-      "image": "/projects/web1.png",
-      "category": "Web"
-    },
-    {
-      "title": "SaaS Analytics Dashboard",
-      "description": "Real-time analytics platform for SaaS businesses featuring data visualization and user management.",
-      "longDescription": "A high-performance analytics dashboard tailored for SaaS businesses. It aggregates data from multiple sources to provide actionable insights through interactive charts and graphs. The system supports multi-tenancy, allowing different organizations to manage their data securely in isolation.",
-      "features": [
-        "Interactive Data Visualization with Recharts",
-        "Role-Based Access Control (RBAC)",
-        "Real-time WebSocket Updates",
-        "Exportable Reports (PDF/CSV)",
-        "Dark/Light Mode Support"
-      ],
-      "challenges": [
-        "Visualizing large datasets without UI lag.",
-        "Ensuring data privacy in a multi-tenant architecture.",
-        "Managing WebSocket connections for real-time updates at scale."
-      ],
-      "techStack": [
-        "React.js",
+        "LangChain",
+        "OpenAI API",
         "Tailwind CSS",
-        "Recharts",
-        "Node.js"
+        "Pinecone"
       ],
-      "image": "/uploads/projects/1765860493589-WhatsApp_Image_2025-12-10_at_21.06.00_0ddf66cf__1_.jpg",
+      "image": "/projects/perplexity_mockup.png",
       "category": "Web",
+      "githubUrl": "https://github.com/Mudasir345/PerplexityAI-Clone",
       "mediaType": "image"
     },
     {
-      "title": "Corporate Portal",
-      "description": "Enterprise-grade portal with role-based access control and document management system.",
-      "longDescription": "An enterprise corporate portal designed to streamline internal communications and document management. It features a secure login system, departmental news feeds, and a centralized repository for company policies and documents. The system is built on Laravel for robust backend security.",
+      "title": "MernGPT AI Chatbot",
+      "description": "Advanced conversational AI mobile app powered by OpenAI & Gemini, featuring secure authentication and chat history.",
+      "longDescription": "A cutting-edge mobile chatbot application that bridges the gap between major LLMs. Users can switch between OpenAI's GPT-4 and Google's Gemini Pro models seamlessly. The app features a robust Node.js/MongoDB backend for storing chat history and user preferences, secured with JWT authentication. The React Native frontend delivers a fluid, futuristic chat interface.",
       "features": [
-        "Secure Document Management System",
-        "Departmental News Feeds",
-        "Employee Directory & Profile Management",
-        "Event Calendar & Scheduling",
-        "Granular Permission Settings"
+        "Multi-LLM Support (GPT-4 & Gemini Pro)",
+        "Secure JWT Authentication & MongoDB Storage",
+        "Real-time Streaming Responses",
+        "Code Syntax Highlighting & Markdown Support",
+        "Dark/Light Theme & User Customization"
       ],
       "challenges": [
-        "Migrating legacy data to the new system.",
-        "Implementing complex permission hierarchies for different departments.",
-        "Ensuring GDPR compliance for employee data."
+        "Handling streaming API responses for a 'typing' effect.",
+        "Securing API keys and user data with proper encryption.",
+        "Optimizing MongoDB queries for retrieving long chat histories."
       ],
       "techStack": [
-        "Laravel",
-        "PHP",
-        "MySQL",
-        "Bootstrap"
+        "React Native",
+        "Node.js",
+        "MongoDB",
+        "OpenAI API",
+        "Gemini API"
       ],
-      "image": "/uploads/projects/1765860509527-WhatsApp_Image_2025-12-10_at_18.28.25_69146a9f__1_.jpg",
-      "category": "Web",
+      "image": "/projects/merngpt_mockup.png",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/React-Native-MernGPT-Chatbot",
       "mediaType": "image"
     },
     {
-      "title": "Fitness Tracker Pro",
-      "description": "Cross-platform mobile app for tracking workouts and nutrition with social features.",
-      "longDescription": "A cross-platform mobile application that helps users track their fitness journey. It includes workout logging, nutrition tracking, and social features like challenges and leaderboards. Built with React Native, it offers a native-like experience on both iOS and Android.",
+      "title": "Smart Notes App",
+      "description": "Minimalist, distraction-free note-taking application with local storage persistence and rich text support.",
+      "longDescription": "A lightweight yet powerful note-taking app designed for speed and simplicity. Built with React Native, it features instant load times and keeps data private using secure local storage. The robust CRUD operations allow users to manage their thoughts effortlessly, while the clean UI ensures a distraction-free writing environment.",
       "features": [
-        "Custom Workout Plans & Logging",
-        "Barcode Scanner for Nutrition Tracking",
-        "Social Leaderboards & Challenges",
-        "Integration with Apple Health & Google Fit",
-        "Offline Mode Support"
+        "Instant Local Storage (AsyncStorage)",
+        "Full CRUD (Create, Read, Update, Delete) Operations",
+        "Color-Coded Organization System",
+        "Real-time Search & Filtering",
+        "Offline-First Architecture"
       ],
       "challenges": [
-        "Synchronizing offline data when connectivity is restored.",
-        "Optimizing battery usage for background step tracking.",
-        "Ensuring consistent UI across different device screen sizes."
+        "Managing efficient state updates for large lists of notes.",
+        "Implementing a smooth search algorithm that filters instantly.",
+        "Ensuring data persistence across app restarts without lag."
+      ],
+      "techStack": [
+        "React Native",
+        "JavaScript",
+        "AsyncStorage",
+        "React Navigation"
+      ],
+      "image": "/projects/notepad_mockup.png",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/ReacT-Native-NotePad",
+      "mediaType": "image"
+    },
+    {
+      "title": "Chef's Canvas Recipe App",
+      "description": "Interactive mobile application for discovering, saving, and cooking delicious recipes from around the world.",
+      "longDescription": "A visually stunning mobile application built with React Native that serves as a personal culinary assistant. Users can explore thousands of recipes, filter by dietary preferences (Vegan, Keto, etc.), and follow step-by-step cooking instructions with integrated timers. The app features a 'Pantry' mode to suggest recipes based on available ingredients, reducing food waste.",
+      "features": [
+        "Advanced Recipe Search & Filtering",
+        "Step-by-Step Cooking Mode with Timers",
+        "'My Pantry' Smart Ingredient Matcher",
+        "Favorites & Offline Access",
+        "Social Sharing of Custom Recipes"
+      ],
+      "challenges": [
+        "Optimizing image caching for smooth infinite scrolling.",
+        "Implementing complex state management for the Pantry algorithm.",
+        "Ensuring consistent typography and layout across iOS and Android."
       ],
       "techStack": [
         "React Native",
         "Expo",
-        "Firebase",
-        "Redux"
+        "Redux Toolkit",
+        "TheMealDB API"
       ],
-      "image": "/projects/mob1.png",
-      "category": "Mobile"
+      "image": "/projects/food_recipe_mockup.png",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/Food-Recipe",
+      "mediaType": "image"
     },
     {
-      "title": "Food Delivery App",
-      "description": "On-demand food delivery application with live GPS tracking and payment integration.",
-      "longDescription": "A comprehensive food delivery ecosystem connecting customers, restaurants, and riders. The app features live order tracking, secure payments, and a rating system. It uses Google Maps API for precise location services and route optimization.",
+      "title": "PayRoll Management System",
+      "description": "Comprehensive desktop application for employee salary management, attendance tracking, and automated payslip generation.",
+      "longDescription": "A robust desktop application designed to streamline the complex process of payroll management. Built with C# and .NET Framework, this system ensures accurate salary calculations, tracks employee attendance in real-time, and automates the generation of tax-compliant payslips. It features a secure MySQL database backend for reliable data storage and retrieval.",
       "features": [
-        "Live GPS Order Tracking",
-        "Multi-Vendor Restaurant Support",
-        "Secure In-App Wallet & Payments",
-        "Push Notifications for Order Status",
-        "Rider & Restaurant Partner Apps"
+        "Automated Salary & Tax Calculation",
+        "Employee Attendance Tracking",
+        "Instant Payslip Generation (PDF)",
+        "Secure User Authentication & Role Management",
+        "Comprehensive Reporting & Analytics"
       ],
       "challenges": [
-        "Real-time location updates with low latency.",
-        "Handling peak load during lunch and dinner hours.",
-        "Complex algorithm for assigning riders to orders efficiently."
-      ],
-      "techStack": [
-        "Flutter",
-        "Dart",
-        "Google Maps API",
-        "Stripe"
-      ],
-      "image": "/projects/mob2.png",
-      "category": "Mobile"
-    },
-    {
-      "title": "Modern File Explorer",
-      "description": "A beautiful, highly customizable file explorer replacement for Windows with tabbed browsing.",
-      "longDescription": "A modern, aesthetic replacement for the default Windows File Explorer. It introduces tabbed browsing, dual-pane view, and extensive customization options. Built with Electron, it brings the power of web technologies to the desktop environment.",
-      "features": [
-        "Tabbed Browsing Interface",
-        "Dual-Pane View for Easy File Transfer",
-        "Customizable Themes & Icons",
-        "Fast File Search & Indexing",
-        "Plugin System for Extensions"
-      ],
-      "challenges": [
-        "Optimizing file system operations for speed.",
-        "Handling large directories without UI freezing.",
-        "Ensuring compatibility with various Windows versions."
-      ],
-      "techStack": [
-        "Electron.js",
-        "React",
-        "Node.js",
-        "SCSS"
-      ],
-      "image": "/projects/desk1.png",
-      "category": "Desktop"
-    },
-    {
-      "title": "POS System (Point of Sale)",
-      "description": "Offline-first retail management system for high-volume stores with inventory syncing.",
-      "longDescription": "A robust Point of Sale system designed for high-volume retail environments. It supports barcode scanning, receipt printing, and inventory management. The offline-first architecture ensures business continuity even during internet outages.",
-      "features": [
-        "Offline-First Architecture",
-        "Barcode Scanning & Receipt Printing",
-        "Inventory & Stock Management",
-        "Sales Reporting & Analytics",
-        "Employee Shift Management"
-      ],
-      "challenges": [
-        "Ensuring data integrity during offline-online sync.",
-        "Interfacing with various hardware peripherals (scanners, printers).",
-        "Optimizing database queries for instant product lookup."
+        "Implementing complex tax formulas and deduction logic.",
+        "Ensuring data consistency across simultaneous user sessions.",
+        "Designing a responsive WinForms UI for various screen resolutions."
       ],
       "techStack": [
         "C#",
-        ".NET Core",
-        "WPF",
-        "SQL Server"
+        ".NET Framework",
+        "MySQL",
+        "WinForms"
       ],
-      "image": "/projects/desk2.png",
-      "category": "Desktop"
-    },
-    {
-      "title": "LinkedIn Lead Scraper",
-      "description": "High-performance scraper to aggregate professional profiles and export to CSV/CRM.",
-      "longDescription": "An advanced automation tool for lead generation. It scrapes professional profiles based on specific criteria and exports the data to CSV or directly to a CRM. It includes anti-detection mechanisms to ensure reliable operation.",
-      "features": [
-        "Targeted Profile Scraping",
-        "Export to CSV/Excel/CRM",
-        "Anti-Bot Detection Bypass",
-        "Scheduled Scraping Jobs",
-        "Proxy Rotation Support"
-      ],
-      "challenges": [
-        "Bypassing complex CAPTCHAs and anti-bot measures.",
-        "Handling dynamic DOM changes on the target site.",
-        "Managing rate limits to avoid IP bans."
-      ],
-      "techStack": [
-        "Puppeteer",
-        "Node.js",
-        "MongoDB",
-        "Express"
-      ],
-      "image": "/projects/bot2.png",
-      "category": "Automation"
+      "image": "/projects/payroll_mockup.png",
+      "category": "Desktop",
+      "githubUrl": "https://github.com/Mudasir345/PayRoll-System",
+      "mediaType": "image"
     }
   ],
   "services": [
@@ -547,6 +622,6 @@
     }
   ],
   "settings": {
-    "showTeam": true
+    "showTeam": false
   }
 }
