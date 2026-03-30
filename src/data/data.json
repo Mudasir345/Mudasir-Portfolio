@@ -178,7 +178,7 @@
   "projects": [
     {
       "title": "Reddit Growth Automation Bot",
-      "description": "- Developed an AI-powered Reddit automation engine using Python and OpenAI GPT-4.\n- Implemented proxy rotation and session warming to bypass anti-spam algorithms.\n- Achieved scalable karma growth and targeted audience engagement.",
+      "description": "- Engineered a scalable AI-driven marketing automation framework using Python, generating context-aware content via OpenAI GPT-4.\n- Architected an advanced 'Account Warmer' module to simulate human behavior patterns (scrolling, upvoting) and build algorithmic trust scores.\n- Implemented robust rotating proxy networks and persistent session management to circumvent Reddit's strict anti-spam filters.\n- Delivered automated subreddit keyword monitoring and karma tracking dashboards for seamless campaign orchestration.",
       "longDescription": "A cutting-edge marketing automation tool built with Python. It leverages OpenAI's GPT-4 to generate context-aware posts and comments tailored to specific subreddits. The system includes an advanced 'Account Warmer' module that mimics human activity (scrolling, upvoting) to build trust scores and prevent bans, managed via a rotating proxy network.",
       "features": [
         "AI-Generated Content (OpenAI GPT-4)",
@@ -206,7 +206,7 @@
     },
     {
       "title": "Facebook Marketplace Scraper",
-      "description": "- Engineered a high-performance Chrome Extension for bulk data extraction from Facebook Marketplace.\n- Automated pagination and dynamic DOM scraping, exporting structured CSV/JSON data.\n- Implemented background workers to process thousands of concurrent listings efficiently.",
+      "description": "- Developed a high-performance Chrome Extension utilizing ES6+ and Service Workers for automated bulk data extraction from e-commerce listings.\n- Engineered a smart DOM selector engine to flawlessly navigate infinite scrolling and adapt to obfuscated class name changes dynamically.\n- Implemented background worker architecture to handle thousands of concurrent listings efficiently without browser memory constraints.\n- Built seamless one-click export pipelines to convert complex scraped details into clean, structured CSV/JSON data formats.",
       "longDescription": "A powerful browser extension engineered for e-commerce data analysis. It automates the scraping of thousands of marketplace listings in minutes, dealing with the complexity of infinite scrolling and dynamic DOM loading. The tool extracts granular details like pricing, location, seller rating, and description, exporting clean structured data (CSV/JSON) for immediate use.",
       "features": [
         "Bulk Data Extraction (Unlimited Listings)",
@@ -234,7 +234,7 @@
     },
     {
       "title": "Google Maps Review Automation",
-      "description": "- Designed an enterprise automation bot using Selenium and Python to manage Google Maps reputation.\n- Engineered Gmail session persistence strategies to bypass CAPTCHAs and login blocks.\n- Built a custom React dashboard for campaign management and competitor review tracking.",
+      "description": "- Architected a sophisticated enterprise automation application using Python, Selenium WebDriver, and Pyppeteer to manage local business reputation.\n- Engineered highly secure Gmail session persistence strategies to completely bypass advanced Google bot detection mechanisms and CAPTCHAs.\n- Developed an intelligent posting algorithm that accurately simulates realistic human mouse movements, typing cadences, and delays.\n- Built a comprehensive React.js frontend interface for remote campaign control, competitor tracking, and automated negative review flagging.",
       "longDescription": "A sophisticated automation tool designed to manage Google Maps reputation at scale. The system uses a React frontend for campaign management and a powerful Python backend for browser automation. Key capabilities include session persistence (storing Gmail cookies to bypass login), intelligent posting algorithms to mimic human behavior, and auto-flagging of negative reviews.",
       "features": [
         "Automated 5-Star Review Posting",
@@ -264,7 +264,7 @@
     },
     {
       "title": "React Native Calculator",
-      "description": "- Built a professional computational tool with scientific operations using React Native and Math.js.\n- Implemented persistent calculation history and robust mathematical parsing engines.\n- Ensured layout consistency and fluid animations across iOS and Android devices.",
+      "description": "- Built an enterprise-ready scientific computational tool using React Native and Math.js, achieving zero-latency calculations for complex operations.\n- Developed a proprietary mathematical parsing engine within TypeScript to accurately handle operator precedence and trigonometry matrices.\n- Implemented a highly optimized, persistent calculation history layer using local storage for instant computational state retrieval.\n- Engineered a strictly responsive interface adhering to native iOS/Android design paradigms with dynamic Dark/Light theme support.",
       "longDescription": "A robust, enterprise-ready scientific calculator application designed for precision and reliability. Built on the React Native framework, it implements a custom mathematical parsing engine to handle complex operations with zero latency. The interface adheres to strict iOS/Android design guidelines, ensuring a native look and feel.",
       "features": [
         "Scientific Operations (Trigonometry, Logarithms)",
@@ -291,7 +291,7 @@
     },
     {
       "title": "React Native Stop-Watch",
-      "description": "- Developed a high-accuracy chronometer app with millisecond precision and background execution.\n- Implemented battery-efficient lap tracking and persistent state management using AsyncStorage.\n- Designed a minimalist, high-contrast UI optimized for strictly smooth 60fps rendering.",
+      "description": "- Programmed an industry-standard chronometer application delivering guaranteed millisecond precision timing and intelligent background execution.\n- Overcame complex thread-blocking challenges to synchronize timer states between foreground UI and background native active services.\n- Implemented highly efficient memory and battery utilization architectures, preventing device drain during prolonged lap time tracking.\n- Designed a minimalist, high-contrast user interface specifically optimized to consistently render at a flawless 60 frames per second.",
       "longDescription": "An industry-standard timing application that provides reliable stopwatch and timer functionality. It deals with critical challenges like background execution and state persistence, ensuring timing accuracy even when the app is minimized. The UI is designed for high legibility and rapid interaction.",
       "features": [
         "Millisecond Precision Timing",
@@ -318,7 +318,7 @@
     },
     {
       "title": "Perplexity AI Search Clone",
-      "description": "- Architected an enterprise AI search engine synthesizing real-time web data using Next.js and LangChain.\n- Integrated OpenAI GPT-4 with Pinecone vector similarity search for deep research capabilities.\n- Engineered edge-runtime AI streaming responses with rigorous citation tracking.",
+      "description": "- Architected an advanced research engine with Next.js and LangChain, synthesizing complex answers from live web data in real-time.\n- Engineered deep integrations with OpenAI GPT-4 and Pinecone vector databases to execute high-fidelity semantic similarity searches.\n- Developed low-latency edge-runtime API routes to stream AI responses instantly, mimicking seamless typing and conversational feedback.\n- Implemented rigorous citation tracking algorithms and a recursive 'Copilot' research mode to automatically refine user search intents.",
       "longDescription": "A sophisticated research tool that redefines web search. Built with Next.js and LangChain, this application synthesizes complex answers from live web data using OpenAI's GPT-4. It features a streaming interface for instant feedback, rigorous citation tracking for reliability, and a 'Copilot' mode that asks clarifying questions to refine search intent.",
       "features": [
         "Real-time Web Search Synthesis (LangChain)",
@@ -346,7 +346,7 @@
     },
     {
       "title": "MernGPT AI Chatbot",
-      "description": "- Built a secure conversational AI mobile app seamlessly integrating OpenAI GPT-4 and Google Gemini.\n- Developed a scalable Node.js/MongoDB backend with JWT authentication for encrypted chat history.\n- Implemented real-time streaming responses and syntax highlighting for generated code blocks.",
+      "description": "- Built a cutting-edge mobile conversational application featuring seamless dynamic switching between OpenAI's GPT-4 and Google's Gemini Pro APIs.\n- Developed a robust Node.js and MongoDB backend architecture protected by JWT encryption for highly secure user authentication and data access.\n- Engineered real-time streaming interfaces within React Native, coupled with advanced markdown parsing and automatic code syntax highlighting.\n- Optimized massive MongoDB query structures to instantly retrieve and chronologically sort extensive user historical chat logs.",
       "longDescription": "A cutting-edge mobile chatbot application that bridges the gap between major LLMs. Users can switch between OpenAI's GPT-4 and Google's Gemini Pro models seamlessly. The app features a robust Node.js/MongoDB backend for storing chat history and user preferences, secured with JWT authentication. The React Native frontend delivers a fluid, futuristic chat interface.",
       "features": [
         "Multi-LLM Support (GPT-4 & Gemini Pro)",
@@ -374,7 +374,7 @@
     },
     {
       "title": "Smart Notes App",
-      "description": "- Created a distraction-free note-taking application using React Native and local AsyncStorage.\n- Implemented robust real-time search algorithms, filtering, and offline-first data architecture.\n- Designed color-coded organization systems and fluid CRUD state manipulation.",
+      "description": "- Created a high-speed, distraction-free organizational tool using React Native, utilizing offline-first principles and AsyncStorage persistence.\n- Implemented sophisticated real-time filtering and search algorithms capable of instantly querying large state arrays without UI blocking.\n- Engineered flawless full CRUD state operations backed by color-coded data models to maintain strict file organization architectures.\n- Designed a highly fluid, minimalist interface mapping out custom navigation transitions to reduce cognitive load during note-taking.",
       "longDescription": "A lightweight yet powerful note-taking app designed for speed and simplicity. Built with React Native, it features instant load times and keeps data private using secure local storage. The robust CRUD operations allow users to manage their thoughts effortlessly, while the clean UI ensures a distraction-free writing environment.",
       "features": [
         "Instant Local Storage (AsyncStorage)",
@@ -401,7 +401,7 @@
     },
     {
       "title": "Chef's Canvas Recipe App",
-      "description": "- Developed an interactive culinary app featuring step-by-step cooking modes and integrated timers.\n- Engineered a smart Pantry algorithm matching user ingredients to available TheMealDB recipes.\n- Optimized image caching and implemented Redux Toolkit for seamless infinite scrolling.",
+      "description": "- Developed a highly interactive culinary mobile application consuming complex REST APIs to deliver thousands of global step-by-step recipes.\n- Modeled an intelligent 'My Pantry' algorithmic engine matching a user's local ingredient inventory strictly to available recipe computations.\n- Implemented comprehensive Redux Toolkit states to handle complex offline favorites saving and real-time cooking timer mode synchronizations.\n- Engineered advanced image caching pipelines within Expo to eliminate stuttering and guarantee perfectly smooth infinite scrolling lists.",
       "longDescription": "A visually stunning mobile application built with React Native that serves as a personal culinary assistant. Users can explore thousands of recipes, filter by dietary preferences (Vegan, Keto, etc.), and follow step-by-step cooking instructions with integrated timers. The app features a 'Pantry' mode to suggest recipes based on available ingredients, reducing food waste.",
       "features": [
         "Advanced Recipe Search & Filtering",
@@ -428,7 +428,7 @@
     },
     {
       "title": "PayRoll Management System",
-      "description": "- Architected a comprehensive desktop application in C# .NET for automated salary and tax calculations.\n- Managed real-time employee attendance tracking and instant PDF payslip generation.\n- Built a secure MySQL database backend focusing on strict data integrity and role-based access.",
+      "description": "- Architected a highly secure, enterprise-grade desktop application using C# .NET Framework to fully automate complex fiscal payroll constraints.\n- Engineered precision tax calculation formulations and instant dynamic PDF payslip generation logic based on regional deduction variables.\n- Designed a highly robust MySQL relational database architecture rigorously maintaining data integrity, session concurrency, and role-based tracking.\n- Developed a comprehensive WinForms dashboard featuring live employee attendance overviews and exhaustive historical reporting modules.",
       "longDescription": "A robust desktop application designed to streamline the complex process of payroll management. Built with C# and .NET Framework, this system ensures accurate salary calculations, tracks employee attendance in real-time, and automates the generation of tax-compliant payslips. It features a secure MySQL database backend for reliable data storage and retrieval.",
       "features": [
         "Automated Salary & Tax Calculation",
