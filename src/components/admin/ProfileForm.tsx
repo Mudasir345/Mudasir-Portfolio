@@ -143,10 +143,21 @@ export default function ProfileForm({ initialData, onSuccess }: ProfileFormProps
                                 <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">About Me (Markdown)</label>
                                 <textarea
                                     required
-                                    rows={6}
+                                    rows={5}
                                     value={formData.aboutText}
                                     onChange={e => setFormData({ ...formData, aboutText: e.target.value })}
                                     className="w-full px-4 py-3 bg-[#030014] border border-white/10 rounded-xl text-white focus:border-cyan-500 outline-none transition-all resize-none text-sm font-mono leading-relaxed"
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">CV Declaration Text</label>
+                                <textarea
+                                    rows={3}
+                                    placeholder="I hereby declare that the above-mentioned information..."
+                                    value={formData.declaration || ""}
+                                    onChange={e => setFormData({ ...formData, declaration: e.target.value })}
+                                    className="w-full px-4 py-3 bg-[#030014] border border-white/10 rounded-xl text-white focus:border-purple-500 outline-none transition-all resize-none text-sm"
                                 />
                             </div>
                         </div>

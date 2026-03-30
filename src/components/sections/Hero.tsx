@@ -7,7 +7,7 @@ import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Smartphone, ChevronsDown } from "lucide-react";
 import ResumeDownloadBtn from "../resume/ResumeDownloadBtn";
-import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData } from '@/lib/db';
+import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, CertificateData, LanguageData, InterestData } from '@/lib/db';
 
 interface HeroProps {
     profile: ProfileData;
@@ -15,14 +15,18 @@ interface HeroProps {
     experience: ExperienceData[];
     education: EducationData[];
     projects: ProjectData[];
+    certificates: CertificateData[];
+    languages: LanguageData[];
+    interests: InterestData[];
+    settings: any;
 }
 
-const Hero = ({ profile, skills, experience, education, projects }: HeroProps) => {
+const Hero = ({ profile, skills, experience, education, projects, certificates, languages, interests, settings }: HeroProps) => {
     // Generate sequence for TypeAnimation from roles array
     const rolesSequence = profile.roles.flatMap(role => [role, 1000]);
 
     return (
-        <div className="relative flex flex-col h-screen w-full items-center justify-center overflow-hidden" id="about-me">
+        <div className="relative flex flex-col min-h-screen w-full items-center justify-center overflow-hidden" id="about-me">
             <ParticleBackground />
 
             {/* Cosmic Glow Effects */}
@@ -130,11 +134,11 @@ const Hero = ({ profile, skills, experience, education, projects }: HeroProps) =
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.9 }}
-                        className="flex flex-wrap gap-4 justify-center md:justify-start"
+                        className="flex flex-wrap gap-3 sm:gap-4 w-full justify-center md:justify-start"
                     >
                         <a
                             href="#contact"
-                            className="group relative px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-semibold shadow-lg shadow-purple-500/30 hover:shadow-cyan-500/40 transition-all hover:-translate-y-1 overflow-hidden"
+                            className="group relative px-6 sm:px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-semibold shadow-lg shadow-purple-500/30 hover:shadow-cyan-500/40 transition-all hover:-translate-y-1 overflow-hidden whitespace-nowrap text-sm sm:text-base"
                         >
                             <span className="relative z-10">Contact Me</span>
                             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
@@ -147,12 +151,16 @@ const Hero = ({ profile, skills, experience, education, projects }: HeroProps) =
                                 experience={experience}
                                 education={education}
                                 projects={projects}
+                                certificates={certificates}
+                                languages={languages}
+                                interests={interests}
+                                settings={settings}
                             />
                         </div>
 
                         <a
                             href="#projects"
-                            className="px-8 py-3 rounded-full border border-white/20 text-white font-medium hover:bg-white/5 hover:border-white/40 transition-all hover:-translate-y-1 backdrop-blur-sm"
+                            className="px-6 sm:px-8 py-3 rounded-full border border-white/20 text-white font-medium hover:bg-white/5 hover:border-white/40 transition-all hover:-translate-y-1 backdrop-blur-sm whitespace-nowrap text-sm sm:text-base"
                         >
                             View Work
                         </a>

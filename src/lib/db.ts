@@ -19,6 +19,7 @@ export interface ProjectData {
     link?: string;
     liveUrl?: string;
     githubUrl?: string;
+    showInCv?: boolean; // Toggle for showing on CV
 }
 
 export interface TeamMember {
@@ -60,6 +61,7 @@ export interface ProfileData {
     github: string;
     linkedin: string;
     whatsapp: string;
+    declaration?: string; // Appears at the bottom of the CV
 }
 
 export interface SkillData {
@@ -93,6 +95,25 @@ export interface TestimonialData {
     stars: number;
 }
 
+export interface CertificateData {
+    id: string;
+    title: string;
+    issuer: string;
+    date: string;
+    link?: string;
+}
+
+export interface LanguageData {
+    id: string;
+    name: string;
+    proficiency: string; // Native, Fluent, Intermediate, etc.
+}
+
+export interface InterestData {
+    id: string;
+    name: string;
+}
+
 export interface DBData {
     profile: ProfileData;
     projects: ProjectData[];
@@ -102,8 +123,15 @@ export interface DBData {
     education: EducationData[];
     testimonials: TestimonialData[];
     team: TeamMember[];
+    certificates?: CertificateData[];
+    languages?: LanguageData[];
+    interests?: InterestData[];
     settings: {
         showTeam: boolean;
+        cvShowCertificates?: boolean;
+        cvShowLanguages?: boolean;
+        cvShowInterests?: boolean;
+        cvShowDeclaration?: boolean;
     };
 }
 
@@ -134,7 +162,16 @@ export async function getDB(): Promise<DBData> {
             education: [],
             testimonials: [],
             team: [],
-            settings: { showTeam: false }
+            certificates: [],
+            languages: [],
+            interests: [],
+            settings: { 
+                showTeam: false,
+                cvShowCertificates: true,
+                cvShowLanguages: true,
+                cvShowInterests: true,
+                cvShowDeclaration: true
+            }
         };
     }
 }

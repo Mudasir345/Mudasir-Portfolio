@@ -25,6 +25,7 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
         techStack: [],
         liveUrl: "",
         githubUrl: "",
+        showInCv: true,
     });
     const [tagInput, setTagInput] = useState("");
 
@@ -42,6 +43,7 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
                 techStack: [],
                 liveUrl: "",
                 githubUrl: "",
+                showInCv: true,
             });
         }
     }, [initialData]);
@@ -79,6 +81,7 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
                     techStack: [],
                     liveUrl: "",
                     githubUrl: "",
+                    showInCv: true,
                 });
             }
             onSuccess();
@@ -265,6 +268,21 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
                         ))}
                     </div>
                 </div>
+            </div>
+
+            {/* Show in CV Toggle */}
+            <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 mt-4">
+                <div>
+                    <h4 className="text-sm font-semibold text-white">Show in CV Download</h4>
+                    <p className="text-xs text-gray-400">Include this project in the generated PDF Resume.</p>
+                </div>
+                <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, showInCv: !formData.showInCv })}
+                    className={`w-12 h-6 rounded-full transition-colors relative ${formData.showInCv ? "bg-cyan-500" : "bg-gray-700"}`}
+                >
+                    <span className={`absolute top-1 bottom-1 w-4 bg-white rounded-full transition-all ${formData.showInCv ? "left-7" : "left-1"}`} />
+                </button>
             </div>
 
             <button

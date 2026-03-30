@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getProfile, getSkills, getExperience, getEducation, getProjects, getServices, getTestimonials, getTeam, deleteProject, deleteExperience, deleteEducation } from "@/actions/admin";
+import { getProfile, getSkills, getExperience, getEducation, getProjects, getServices, getTestimonials, getTeam, getCertificates, getLanguages, getInterests, getSettings, updateCvSettings, updateProject, deleteProject, deleteExperience, deleteEducation, deleteCertificate, deleteLanguage, deleteInterest } from "@/actions/admin";
 
-import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, ServiceData, TestimonialData, TeamMember } from "@/lib/db";
-import { LogOut, User, Code2, Briefcase, GraduationCap, FolderKanban, Layers, MessageSquare, Search, Plus, Users, Trash2, Edit2 } from "lucide-react";
+import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, ServiceData, TestimonialData, TeamMember, CertificateData, LanguageData, InterestData } from "@/lib/db";
+import { LogOut, User, Code2, Briefcase, GraduationCap, FolderKanban, Layers, MessageSquare, Search, Plus, Users, Trash2, Edit2, Award, Globe, Heart, Settings as SettingsIcon } from "lucide-react";
 
 import ProfileForm from "@/components/admin/ProfileForm";
 import SkillsManager from "@/components/admin/SkillsManager";
@@ -15,8 +15,11 @@ import ProjectForm from "@/components/admin/ProjectForm";
 import ServiceForm from "@/components/admin/ServiceForm";
 import TestimonialForm from "@/components/admin/TestimonialForm";
 import TeamManager from "@/components/admin/TeamManager";
+import CertificateForm from "@/components/admin/CertificateForm";
+import LanguageForm from "@/components/admin/LanguageForm";
+import InterestForm from "@/components/admin/InterestForm";
 
-type TabType = "profile" | "skills" | "experience" | "education" | "projects" | "services" | "testimonials" | "team";
+type TabType = "profile" | "skills" | "experience" | "education" | "projects" | "services" | "testimonials" | "team" | "certificates" | "languages" | "interests" | "cv-settings";
 
 export default function AdminDashboard() {
     const router = useRouter();
@@ -33,6 +36,10 @@ export default function AdminDashboard() {
     const [services, setServices] = useState<ServiceData[]>([]);
     const [testimonials, setTestimonials] = useState<TestimonialData[]>([]);
     const [team, setTeam] = useState<TeamMember[]>([]);
+    const [certificates, setCertificates] = useState<CertificateData[]>([]);
+    const [languages, setLanguages] = useState<LanguageData[]>([]);
+    const [interests, setInterests] = useState<InterestData[]>([]);
+    const [settings, setSettings] = useState<any>(null);
 
     // Modal States for Add/Edit
     const [showModal, setShowModal] = useState(false);
@@ -53,8 +60,8 @@ export default function AdminDashboard() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const [profileData, skillsData, expData, eduData, projData, servData, testData, teamData] = await Promise.all([
-                getProfile(), getSkills(), getExperience(), getEducation(), getProjects(), getServices(), getTestimonials(), getTeam()
+            const [profileData, skillsData, expData, eduData, projData, servData, testData, teamData, certData, langData, intData, cvSettingsData] = await Promise.all([
+                getProfile(), getSkills(), getExperience(), getEducation(), getProjects(), getServices(), getTestimonials(), getTeam(), getCertificates(), getLanguages(), getInterests(), getSettings()
             ]);
             setProfile(profileData);
             setSkills(skillsData);
@@ -64,6 +71,10 @@ export default function AdminDashboard() {
             setServices(servData);
             setTestimonials(testData);
             setTeam(teamData);
+            setCertificates(certData);
+            setLanguages(langData);
+            setInterests(intData);
+            setSettings(cvSettingsData);
         } catch (error) {
             console.error("Failed to fetch data", error);
         } finally {
@@ -123,12 +134,59 @@ export default function AdminDashboard() {
         fetchData();
     };
 
+    const handleDeleteCertificate = async (id: string) => {
+        if (!confirm("Are you sure?")) return;
+        await deleteCertificate(id);
+        fetchData();
+    };
+
+    const handleDeleteLanguage = async (id: string) => {
+        if (!confirm("Are you sure?")) return;
+        await deleteLanguage(id);
+        fetchData();
+    };
+
+    const handleDeleteInterest = async (id: string) => {
+        if (!confirm("Are you sure?")) return;
+        await deleteInterest(id);
+        fetchData();
+    };
+
+    const handleToggleProjectCv = async (project: ProjectData) => {
+        setLoading(true);
+        try {
+            await updateProject(project.title, { ...project, showInCv: !project.showInCv });
+            fetchData();
+        } catch (error) {
+            console.error(error);
+            alert("Failed to update project CV visibility.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleToggleCvSetting = async (key: string, value: boolean) => {
+        setLoading(true);
+        try {
+            await updateCvSettings({ [key]: value });
+            fetchData();
+        } catch (error) {
+            console.error(error);
+            alert("Failed to update CV settings.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     // Filter projects/services based on search
     const filteredProjects = projects.filter(p => p.title.toLowerCase().includes(searchTerm.toLowerCase()));
     const filteredServices = services.filter(s => s.title.toLowerCase().includes(searchTerm.toLowerCase()));
     const filteredExperience = experience.filter(e => e.title.toLowerCase().includes(searchTerm.toLowerCase()));
     const filteredEducation = education.filter(e => e.degree.toLowerCase().includes(searchTerm.toLowerCase()));
     const filteredTestimonials = testimonials.filter(t => t.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredCertificates = certificates.filter(c => c.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredLanguages = languages.filter(l => l.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredInterests = interests.filter(i => i.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
     if (loading) {
         return <div className="min-h-screen bg-[#030014] flex items-center justify-center text-white">Loading Dashboard...</div>;
@@ -152,10 +210,14 @@ export default function AdminDashboard() {
                             { id: "skills", label: "Skills", icon: Code2 },
                             { id: "experience", label: "Experience", icon: Briefcase },
                             { id: "education", label: "Education", icon: GraduationCap },
+                            { id: "certificates", label: "Certificates", icon: Award },
+                            { id: "languages", label: "Languages", icon: Globe },
+                            { id: "interests", label: "Interests", icon: Heart },
                             { id: "projects", label: "Projects", icon: FolderKanban },
                             { id: "services", label: "Services", icon: Layers },
                             { id: "testimonials", label: "Testimonials", icon: MessageSquare },
                             { id: "team", label: "Team", icon: Users },
+                            { id: "cv-settings", label: "CV Settings", icon: SettingsIcon },
                         ].map((tab) => (
                             <button
                                 key={tab.id}
@@ -183,7 +245,7 @@ export default function AdminDashboard() {
                         <p className="text-gray-400 text-sm">Manage your {activeTab} section</p>
                     </div>
 
-                    {(activeTab === "projects" || activeTab === "services" || activeTab === "experience" || activeTab === "education" || activeTab === "testimonials") && (
+                    {(activeTab === "projects" || activeTab === "services" || activeTab === "experience" || activeTab === "education" || activeTab === "testimonials" || activeTab === "certificates" || activeTab === "languages" || activeTab === "interests") && (
                         <div className="flex gap-4">
                             {/* Search */}
                             <div className="relative">
@@ -235,6 +297,16 @@ export default function AdminDashboard() {
                                     <div className="flex items-center gap-2 mt-4">
                                         <button onClick={() => handleEdit(project)} className="text-cyan-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-1"><Edit2 size={16} /> Edit</button>
                                         <button onClick={() => handleDeleteProject(project.title)} className="text-red-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-1"><Trash2 size={16} /> Delete</button>
+                                        
+                                        <div className="ml-auto flex items-center gap-2" title="Show in CV">
+                                            <span className="text-xs font-semibold text-gray-400">CV</span>
+                                            <button
+                                                onClick={() => handleToggleProjectCv(project)}
+                                                className={`w-8 h-4 rounded-full transition-colors relative ${project.showInCv !== false ? "bg-cyan-500" : "bg-gray-700"}`}
+                                            >
+                                                <span className={`absolute top-0.5 bottom-0.5 w-3 bg-white rounded-full transition-all`} style={{ left: project.showInCv !== false ? '18px' : '2px' }} />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -302,6 +374,84 @@ export default function AdminDashboard() {
                         </div>
                     )}
 
+                    {activeTab === "certificates" && (
+                        <div className="space-y-4">
+                            {filteredCertificates.map((cert) => (
+                                <div key={cert.id} className="glass-card p-4 flex justify-between items-center bg-white/5 rounded-xl border border-white/10">
+                                    <div>
+                                        <h4 className="font-bold">{cert.title}</h4>
+                                        <p className="text-gray-400">{cert.issuer} - {cert.date}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => handleEdit(cert)} className="p-2 text-cyan-400 hover:bg-white/10 rounded"><Edit2 size={16} /></button>
+                                        <button onClick={() => handleDeleteCertificate(cert.id)} className="p-2 text-red-400 hover:bg-white/10 rounded"><Trash2 size={16} /></button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {activeTab === "languages" && (
+                        <div className="space-y-4">
+                            {filteredLanguages.map((lang) => (
+                                <div key={lang.id} className="glass-card p-4 flex justify-between items-center bg-white/5 rounded-xl border border-white/10">
+                                    <div>
+                                        <h4 className="font-bold">{lang.name}</h4>
+                                        <p className="text-gray-400">{lang.proficiency}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => handleEdit(lang)} className="p-2 text-cyan-400 hover:bg-white/10 rounded"><Edit2 size={16} /></button>
+                                        <button onClick={() => handleDeleteLanguage(lang.id)} className="p-2 text-red-400 hover:bg-white/10 rounded"><Trash2 size={16} /></button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {activeTab === "interests" && (
+                        <div className="space-y-4">
+                            {filteredInterests.map((interest) => (
+                                <div key={interest.id} className="glass-card p-4 flex justify-between items-center bg-white/5 rounded-xl border border-white/10">
+                                    <h4 className="font-bold">{interest.name}</h4>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => handleEdit(interest)} className="p-2 text-cyan-400 hover:bg-white/10 rounded"><Edit2 size={16} /></button>
+                                        <button onClick={() => handleDeleteInterest(interest.id)} className="p-2 text-red-400 hover:bg-white/10 rounded"><Trash2 size={16} /></button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {activeTab === "cv-settings" && settings && (
+                        <div className="max-w-2xl mx-auto space-y-6">
+                            <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-6">
+                                <div>
+                                    <h3 className="text-xl font-bold mb-2 text-white flex items-center gap-2"><SettingsIcon className="text-purple-400" /> CV Export Settings</h3>
+                                    <p className="text-sm text-gray-400">Select which optional sections appear on your generated PDF Resume.</p>
+                                </div>
+
+                                <div className="space-y-3">
+                                    {[
+                                        { key: "cvShowCertificates", label: "Certificates Section" },
+                                        { key: "cvShowLanguages", label: "Languages Section" },
+                                        { key: "cvShowInterests", label: "Interests Section" },
+                                        { key: "cvShowDeclaration", label: "Declaration Text" }
+                                    ].map((opt) => (
+                                        <div key={opt.key} className="flex items-center justify-between p-4 bg-[#030014] rounded-xl border border-white/5 hover:border-white/10 transition-colors">
+                                            <span className="font-medium text-gray-300">{opt.label}</span>
+                                            <button
+                                                onClick={() => handleToggleCvSetting(opt.key, settings[opt.key] !== false ? false : true)}
+                                                className={`w-12 h-6 rounded-full transition-colors relative ${settings[opt.key] !== false ? "bg-cyan-500" : "bg-gray-700"}`} // Defaults to true if missing
+                                            >
+                                                <span className="absolute top-1 bottom-1 w-4 bg-white rounded-full transition-all" style={{ left: settings[opt.key] !== false ? '26px' : '4px' }} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                 </div>
             </main>
 
@@ -328,6 +478,15 @@ export default function AdminDashboard() {
                             )}
                             {activeTab === "testimonials" && (
                                 <TestimonialForm onSuccess={handleSuccess} initialData={editingItem} onCancel={handleCloseModal} />
+                            )}
+                            {activeTab === "certificates" && (
+                                <CertificateForm onSuccess={handleSuccess} initialData={editingItem} onCancel={handleCloseModal} />
+                            )}
+                            {activeTab === "languages" && (
+                                <LanguageForm onSuccess={handleSuccess} initialData={editingItem} onCancel={handleCloseModal} />
+                            )}
+                            {activeTab === "interests" && (
+                                <InterestForm onSuccess={handleSuccess} initialData={editingItem} onCancel={handleCloseModal} />
                             )}
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData } from '@/lib/db';
+import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, CertificateData, LanguageData, InterestData } from '@/lib/db';
 import { FileDown, Loader2 } from 'lucide-react';
 
 // Dynamically import PDFDownloadLink to avoid SSR issues with @react-pdf/renderer
@@ -22,6 +22,10 @@ interface ResumeDownloadBtnProps {
     experience: ExperienceData[];
     education: EducationData[];
     projects: ProjectData[];
+    certificates: CertificateData[];
+    languages: LanguageData[];
+    interests: InterestData[];
+    settings: any;
 }
 
 const ResumeDownloadBtn = (props: ResumeDownloadBtnProps) => {
@@ -37,7 +41,7 @@ const ResumeDownloadBtn = (props: ResumeDownloadBtnProps) => {
         <PDFDownloadLink
             document={<ResumeDocument {...props} />}
             fileName={`${props.profile.name.replace(/\s+/g, '_')}_Resume.pdf`}
-            className="group px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all flex items-center gap-2 backdrop-blur-sm cursor-pointer z-[50]"
+            className="group px-5 sm:px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all flex items-center gap-2 backdrop-blur-sm cursor-pointer z-[50] whitespace-nowrap text-sm sm:text-base"
         >
             {({ blob, url, loading, error }) => (
                 <>

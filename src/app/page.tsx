@@ -11,12 +11,12 @@ import Testimonials from "@/components/sections/Testimonials";
 import Footer from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Team from "@/components/sections/Team";
-import { getProjects, getServices, getProfile, getSkills, getExperience, getEducation, getTestimonials, getTeam, getSettings } from "@/actions/admin";
+import { getProjects, getServices, getProfile, getSkills, getExperience, getEducation, getTestimonials, getTeam, getSettings, getCertificates, getLanguages, getInterests } from "@/actions/admin";
 
 export const revalidate = 0; // Ensure fresh data on every request
 
 export default async function Home() {
-  const [projects, services, profile, skills, experience, education, testimonials, team, settings] = await Promise.all([
+  const [projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests] = await Promise.all([
     getProjects(),
     getServices(),
     getProfile(),
@@ -25,7 +25,10 @@ export default async function Home() {
     getEducation(),
     getTestimonials(),
     getTeam(),
-    getSettings()
+    getSettings(),
+    getCertificates(),
+    getLanguages(),
+    getInterests()
   ]);
 
   return (
@@ -37,6 +40,10 @@ export default async function Home() {
           experience={experience}
           education={education}
           projects={projects}
+          certificates={certificates}
+          languages={languages}
+          interests={interests}
+          settings={settings}
         />
 
         <ScrollReveal width="100%">

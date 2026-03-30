@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getDB, saveDB, ProjectData, ServiceData, ProfileData, SkillData, ExperienceData, EducationData, TestimonialData, TeamMember } from "@/lib/db";
+import { getDB, saveDB, ProjectData, ServiceData, ProfileData, SkillData, ExperienceData, EducationData, TestimonialData, TeamMember, CertificateData, LanguageData, InterestData, DBData } from "@/lib/db";
 
 // --- Authentication ---
 export async function authenticate(password: string) {
@@ -271,5 +271,96 @@ export async function toggleTeamSection(show: boolean) {
     db.settings.showTeam = show;
     await saveDB(db);
     revalidatePath("/");
+    return { success: true };
+}
+
+// --- Certificates ---
+export async function getCertificates() {
+    const db = await getDB();
+    return db.certificates || [];
+}
+
+export async function saveCertificate(cert: CertificateData) {
+    const db = await getDB();
+    if (!db.certificates) db.certificates = [];
+    const index = db.certificates.findIndex(c => c.id === cert.id);
+    if (index !== -1) db.certificates[index] = cert;
+    else db.certificates.push(cert);
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+export async function deleteCertificate(id: string) {
+    const db = await getDB();
+    db.certificates = (db.certificates || []).filter(c => c.id !== id);
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+// --- Languages ---
+export async function getLanguages() {
+    const db = await getDB();
+    return db.languages || [];
+}
+
+export async function saveLanguage(lang: LanguageData) {
+    const db = await getDB();
+    if (!db.languages) db.languages = [];
+    const index = db.languages.findIndex(l => l.id === lang.id);
+    if (index !== -1) db.languages[index] = lang;
+    else db.languages.push(lang);
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+export async function deleteLanguage(id: string) {
+    const db = await getDB();
+    db.languages = (db.languages || []).filter(l => l.id !== id);
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+// --- Interests ---
+export async function getInterests() {
+    const db = await getDB();
+    return db.interests || [];
+}
+
+export async function saveInterest(interest: InterestData) {
+    const db = await getDB();
+    if (!db.interests) db.interests = [];
+    const index = db.interests.findIndex(i => i.id === interest.id);
+    if (index !== -1) db.interests[index] = interest;
+    else db.interests.push(interest);
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+export async function deleteInterest(id: string) {
+    const db = await getDB();
+    db.interests = (db.interests || []).filter(i => i.id !== id);
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+    return { success: true };
+}
+
+// --- CV Settings ---
+export async function updateCvSettings(newSettings: Partial<DBData["settings"]>) {
+    const db = await getDB();
+    db.settings = { ...db.settings, ...newSettings };
+    await saveDB(db);
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
     return { success: true };
 }

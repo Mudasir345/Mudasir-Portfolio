@@ -59,7 +59,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                         animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 30 }}
                         transition={{ type: "spring", duration: 0.6, bounce: 0.2 }}
-                        className="relative w-full max-w-7xl bg-[#0d0426]/95 backdrop-blur-2xl border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(112,66,248,0.15)] flex flex-col lg:flex-row max-h-[92vh] lg:h-[85vh] z-[110]"
+                        className="relative w-full max-w-7xl bg-[#0d0426]/95 backdrop-blur-2xl border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(112,66,248,0.15)] flex flex-col lg:flex-row max-h-[92vh] lg:h-[90vh] min-h-[600px] z-[110]"
                     >
                         {/* Close Button */}
                         <motion.button
@@ -73,7 +73,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                         </motion.button>
 
                         {/* Left Side: Media Gallery */}
-                        <div className="w-full lg:w-[60%] h-[250px] sm:h-[300px] lg:h-full relative bg-black flex items-center justify-center group overflow-hidden shrink-0">
+                        <div className="w-full lg:w-[55%] h-[250px] sm:h-[300px] lg:h-full relative bg-black flex items-center justify-center group overflow-hidden shrink-0">
 
                             {/* Gradient Overlay for Cinematic Effect */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 pointer-events-none" />
@@ -142,12 +142,12 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                         </div>
 
                         {/* Right Side: Content & Details */}
-                        <div className="w-full lg:w-[40%] flex flex-col bg-[#0d0426]/50 lg:border-l border-white/10 relative">
+                        <div className="w-full lg:w-[45%] flex flex-col bg-[#0d0426]/50 lg:border-l border-white/10 relative">
                             {/* Content Background Gradient */}
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/5 via-transparent to-cyan-900/5 pointer-events-none" />
 
                             {/* Header */}
-                            <div className="p-5 md:p-8 pb-4 border-b border-white/5 relative z-10 shrink-0">
+                            <div className="p-5 md:px-8 md:py-6 pb-3 border-b border-white/5 relative z-10 shrink-0">
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -167,7 +167,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.3 }}
-                                    className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+                                    className="text-2xl md:text-3xl font-bold text-white mb-1 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
                                 >
                                     {project.title}
                                 </motion.h2>
@@ -179,7 +179,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                                     <button
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
-                                        className={`py-4 text-sm font-medium capitalize relative transition-colors ${activeTab === tab ? "text-white" : "text-gray-400 hover:text-gray-200"}`}
+                                        className={`py-3 text-sm font-medium capitalize relative transition-colors whitespace-nowrap ${activeTab === tab ? "text-white" : "text-gray-400 hover:text-gray-200"}`}
                                     >
                                         {tab}
                                         {activeTab === tab && (
@@ -202,11 +202,11 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -20 }}
                                             transition={{ duration: 0.3 }}
-                                            className="space-y-8"
+                                            className="space-y-6"
                                         >
-                                            <p className="text-gray-300 leading-relaxed text-base lg:text-lg font-light">
-                                                {project.longDescription || project.description}
-                                            </p>
+                                            <div className="text-gray-300 leading-relaxed text-base lg:text-lg font-light whitespace-pre-wrap">
+                                                {project.description}
+                                            </div>
 
                                             <div>
                                                 <h3 className="text-white font-semibold mb-4 flex items-center gap-2 text-sm uppercase tracking-wider text-gray-400">
@@ -283,13 +283,13 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                             </div>
 
                             {/* Footer Actions */}
-                            <div className="p-5 md:p-8 pt-4 border-t border-white/5 bg-[#0d0426]/80 backdrop-blur-md z-10 flex flex-col sm:flex-row gap-3 md:gap-4 shrink-0">
+                            <div className="p-5 md:px-8 md:py-6 border-t border-white/5 bg-[#0d0426]/80 backdrop-blur-md z-10 flex flex-col sm:flex-row gap-3 md:gap-4 shrink-0">
                                 {project.liveUrl && (
                                     <a
                                         href={project.liveUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex-1 py-4 bg-gradient-to-r from-purple-600 to-cyan-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(112,66,248,0.4)] transition-all transform hover:-translate-y-1 active:scale-95 group"
+                                        className="flex-1 py-3 md:py-4 bg-gradient-to-r from-purple-600 to-cyan-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(112,66,248,0.4)] transition-all transform hover:-translate-y-1 active:scale-95 group"
                                     >
                                         <ExternalLink size={20} className="group-hover:rotate-45 transition-transform" />
                                         Live Demo
@@ -300,7 +300,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                                         href={project.githubUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex-1 py-4 bg-white/5 border border-white/10 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-white/10 hover:border-white/30 transition-all transform hover:-translate-y-1 active:scale-95 group"
+                                        className="flex-1 py-3 md:py-4 bg-white/5 border border-white/10 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-white/10 hover:border-white/30 transition-all transform hover:-translate-y-1 active:scale-95 group"
                                     >
                                         <Github size={20} className="group-hover:scale-110 transition-transform" />
                                         Source Code
