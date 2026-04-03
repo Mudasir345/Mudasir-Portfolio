@@ -737,6 +737,10 @@
     }
   ],
   "settings": {
-    "showTeam": false
+    "showTeam": false,
+    "cvShowCertificates": true,
+    "cvShowLanguages": true,
+    "cvShowInterests": true,
+    "cvShowDeclaration": true
   }
 }
