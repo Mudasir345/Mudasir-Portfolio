@@ -177,6 +177,120 @@
   ],
   "projects": [
     {
+      "title": "AR Player — Enterprise Video Hosting & Monetization Platform",
+      "description": "- Built a production-grade, self-hosted SaaS video platform with cryptographic domain locking, AES-256-CBC encrypted embed tokens, and a 1,400+ line fully custom React video player — all from scratch to production.\n- Engineered a dual JWT authentication system (Admin & User) with role-based access, auto subscription lifecycle management, and DevTools/right-click protection.\n- Developed a complete monetization ecosystem: subscription plans, coupon engine, manual payment approvals (EasyPaisa, JazzCash, PayPal, Crypto), and an automated subscription downgrade middleware.\n- Implemented a 4-tab real-time analytics dashboard (Views, Revenue, Subscribers, Plans) and a pre-roll/mid-roll/pause ad monetization system with configurable skip timers.",
+      "longDescription": "AR Player is a full-stack SaaS platform for secure video hosting, subscription-based access, multi-site iframe embedding with cryptographic domain locking, and real-time analytics — built entirely from scratch to production. Unlike YouTube or Vimeo, AR Player gives operators full control: who can watch (subscription tiers & paywalls), where content is embedded (AES-256 domain locking), ad monetization (pre-roll, mid-roll, pause), and revenue flows. The custom-built 1,400+ line React video player supports HLS, MP4, chapters, subtitles, watermarks, keyboard shortcuts, and a paywall with blur effect. The server proxies all video URLs to the browser, keeping CDN sources completely hidden.",
+      "features": [
+        "Cryptographic Domain Locking (AES-256-CBC Embed Tokens)",
+        "Custom 1,400+ Line React Video Player (HLS, MP4, Chapters, Subtitles)",
+        "Full Subscription & Manual Payment System (EasyPaisa, JazzCash, PayPal, Crypto)",
+        "Pre-Roll, Mid-Roll & Pause Ad Monetization Engine",
+        "4-Tab Real-Time Analytics Dashboard (Revenue, Subscribers, Plans, Overview)",
+        "JWT Dual Auth (Admin 8h + User 7d) with Auto-Downgrade Middleware",
+        "Video Proxy Server (CDN URLs Never Exposed to Browser)",
+        "Coupon System (% Off, Fixed, Free Days, Fully Free)"
+      ],
+      "challenges": [
+        "Designing a cryptographic embed token system that locks content to specific domains without exposing the video URL to the client browser.",
+        "Building a 1,400+ line React video player from scratch with HLS support, ad injection, paywall overlays, and PiP — without any third-party player library.",
+        "Implementing AES-256-CBC token encryption/decryption on the server for embed validation while keeping the system resilient to token replay attacks."
+      ],
+      "techStack": [
+        "React 18",
+        "Vite",
+        "React Router v6",
+        "Node.js (v18+)",
+        "Express.js",
+        "MySQL 8",
+        "JWT (Dual Auth)",
+        "AES-256-CBC Encryption",
+        "Multer",
+        "Nodemailer",
+        "cPanel Deployment"
+      ],
+      "image": "/projects/arplayer_mockup.png",
+      "category": "Web",
+      "liveUrl": "https://arplayer.smartbillcalculator.online",
+      "githubUrl": "https://github.com/Mudasir345/ar-player",
+      "mediaType": "image",
+      "showInCv": true
+    },
+    {
+      "title": "ViserTube — Full-Stack Video Streaming & Monetization SaaS",
+      "description": "- Architected a production-grade, multi-tenant video streaming SaaS on Laravel 11 with 58 Eloquent models, 27 database migrations, and 50+ controllers — supporting video uploads, embed codes, and direct URLs.\n- Engineered a dual-mode advertising engine: a legacy click/impression system and an advanced Campaign Ads system with geo-targeting, category-targeting, daily budget caps, and a real-time ad eligibility oracle.\n- Integrated 32 payment gateways (Stripe, Razorpay, PayPal, Binance, bKash, Flutterwave, and 26 more) with a unified adapter pattern for creator monetization, subscriptions, and advertiser campaign payments.\n- Implemented enterprise security: TOTP 2FA (Google Authenticator), KYC verification, OAuth 2.0 (Socialite), Email/SMS OTP, AES-encrypted video paths, and HTMLPurifier XSS sanitization.",
+      "longDescription": "ViserTube is a production-grade, full-stack video streaming and monetization SaaS platform built on Laravel 11. Inspired by the architecture of modern video-sharing platforms, it delivers a complete ecosystem for content creators, advertisers, and platform administrators — offering video hosting, channel management, multi-gateway payments, a dual-mode advertising engine, real-time analytics, and creator monetization — all under one unified codebase. The platform supports triple-source video (uploaded files, embed codes, direct URLs), multi-resolution playback, Shorts, and a CMS-style page builder.",
+      "features": [
+        "Dual-Mode Ad Engine: Legacy Click/Impression + Advanced Geo-Targeted Campaigns",
+        "32 Payment Gateway Integrations (Stripe, Binance, bKash, PayPal, Flutterwave, etc.)",
+        "Creator Monetization: Multi-Stream Earnings, Wallet & Withdrawal System",
+        "Triple-Source Video (Upload, Embed Code, URL) with Multi-Resolution Playback",
+        "TOTP 2FA, KYC Verification, OAuth 2.0, Email/SMS OTP Security Stack",
+        "Threaded Comments, Reactions, Watch History, Watch Later & Notifications",
+        "Multi-Language Support, CMS Page Builder, GDPR Cookie Consent",
+        "58 Eloquent Models, 27 Migrations, Background Job Queue Processing"
+      ],
+      "challenges": [
+        "Designing a real-time ad eligibility engine that evaluates 6 independent conditions (campaign status, budget, country, category, schedule, daily caps) on every single ad request.",
+        "Building a unified adapter pattern across 32 completely different payment gateway APIs, each with unique webhook/IPN callback behaviors.",
+        "Implementing session-based view deduplication with a 20-minute cooldown window to prevent view count inflation without using a cache layer."
+      ],
+      "techStack": [
+        "PHP 8.3",
+        "Laravel 11",
+        "Laravel Sanctum",
+        "Laravel Socialite",
+        "Eloquent ORM",
+        "MySQL",
+        "Queue (Database Driver)",
+        "AWS S3 (Flysystem)",
+        "Blade Templates",
+        "jQuery",
+        "ApexCharts"
+      ],
+      "image": "/projects/visertube_mockup.png",
+      "category": "Web",
+      "githubUrl": "https://github.com/Mudasir345/visertube",
+      "mediaType": "image",
+      "showInCv": true
+    },
+    {
+      "title": "Board N Barrel — E-Commerce, POS & Restaurant Management System",
+      "description": "- Built a full-stack, multi-module web platform unifying a customer-facing e-commerce storefront, an internal Admin Dashboard, a touch-optimized Point of Sale (POS) system, and a Kitchen Display System (KDS) into one synchronized architecture.\n- Engineered real-time synchronization between three distinct client types (Customer Web Store, POS terminals, KDS screens) using PHP WebSockets (Ratchet), ensuring order state is always consistent across all surfaces.\n- Integrated Stripe API and Apple Pay for secure online payment processing; developed custom credit card input chunking and tokenization logic for the checkout flow.\n- Implemented comprehensive HR and inventory modules: staff role management, shift and roster creation, low-stock alerts, stock reorder workflows, and barcode scanning/receipt printing for POS cashiers.",
+      "longDescription": "Board N Barrel is a full-fledged, scalable, and multi-module web application designed for restaurant and retail operations. It combines an e-commerce storefront for customers with a robust internal ecosystem encompassing an Admin Dashboard, a Point of Sale (POS) system, and a Kitchen Display System (KDS). This project bridges the gap between online ordering and in-store operations, synchronizing sales, inventory, and staff management into a single unified platform using PHP WebSockets for real-time data flow across all three clients.",
+      "features": [
+        "Real-Time WebSocket Sync (Customer Store → POS → Kitchen Display)",
+        "Stripe & Apple Pay Integration with Custom Credit Card Tokenization",
+        "Touch-Optimized POS with Physical Terminal & Barcode Scanner Support",
+        "Kitchen Display System (KDS) with Order Completion Sync",
+        "Staff & HR Management: Roles, Shifts, Rosters, Time-Clock",
+        "Inventory: Low-Stock Alerts, Stock Reordering, Supplier Records",
+        "Analytics & Reporting: Sales, Employee & Inventory Dashboards",
+        "Customer Rewards System, Guest Checkout & Careers Portal"
+      ],
+      "challenges": [
+        "Synchronizing real-time order state across three completely different client types (Web Browser, POS Terminal, Kitchen Screen) simultaneously over WebSockets without data loss.",
+        "Implementing IP-based route restrictions and custom JWT/session-based role permissions (Admin vs. Staff vs. Customer) within a custom PHP architecture without a framework.",
+        "Developing specialized credit card input chunking and validation logic that tokenizes card data via Stripe before it ever touches the server."
+      ],
+      "techStack": [
+        "PHP (Custom Architecture)",
+        "MySQL",
+        "WebSockets (Ratchet)",
+        "Composer",
+        "HTML5 / CSS3",
+        "JavaScript (ES6+)",
+        "jQuery",
+        "Bootstrap",
+        "Stripe API",
+        "Apple Pay"
+      ],
+      "image": "/projects/boardnbarrel_mockup.png",
+      "category": "Web",
+      "githubUrl": "https://github.com/Mudasir345/BoardNbarel",
+      "mediaType": "image",
+      "showInCv": true
+    },
+    {
       "title": "Reddit Growth Automation Bot",
       "description": "- Engineered a scalable AI-driven marketing automation framework using Python, generating context-aware content via OpenAI GPT-4.\n- Architected an advanced 'Account Warmer' module to simulate human behavior patterns (scrolling, upvoting) and build algorithmic trust scores.\n- Implemented robust rotating proxy networks and persistent session management to circumvent Reddit's strict anti-spam filters.\n- Delivered automated subreddit keyword monitoring and karma tracking dashboards for seamless campaign orchestration.",
       "longDescription": "A cutting-edge marketing automation tool built with Python. It leverages OpenAI's GPT-4 to generate context-aware posts and comments tailored to specific subreddits. The system includes an advanced 'Account Warmer' module that mimics human activity (scrolling, upvoting) to build trust scores and prevent bans, managed via a rotating proxy network.",

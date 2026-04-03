@@ -1,0 +1,74 @@
+# Board N Barrel 
+
+**A Comprehensive E-Commerce, POS, and Restaurant Management System**
+
+## 📌 Project Overview
+Board N Barrel is a full-fledged, scalable, and multi-module web application designed for restaurant and retail operations. It combines an e-commerce storefront for customers with a robust internal ecosystem encompassing an Admin Dashboard, a Point of Sale (POS) system, and a Kitchen Display System (KDS). 
+
+This project bridges the gap between online ordering and in-store operations, synchronizing sales, inventory, and staff management into a single unified platform.
+
+---
+
+## 🚀 Technology Stack
+
+### Backend
+- **Core Language:** PHP (Custom Architecture)
+- **Database:** MySQL
+- **Real-Time Communication:** WebSockets using Ratchet (`cboden/ratchet`) for live KDS and POS updates.
+- **Dependency Management:** Composer
+
+### Frontend
+- **Languages:** HTML5, CSS3, JavaScript (ES6+), jQuery
+- **CSS Framework:** Bootstrap (for responsive grid architecture and layout)
+- **UI Components:** Swiper.js (for dynamic sliders), Lordicon (for animated Lottie-style icons)
+- **Utilities:** `html2canvas.js` (for screen capturing/receipt generation)
+
+### Third-Party Integrations & APIs
+- **Payment Gateways:** Stripe API (`stripe/stripe-php`) and Apple Pay integration.
+- **Hardware Integration:** Custom link mapping for POS terminals and barcode handling/printing.
+
+---
+
+## 🛠️ Key Modules & Features
+
+### 1. Customer-Facing Storefront (E-Commerce)
+Designed for a seamless online shopping and food ordering experience.
+- **Dynamic Content & Product Catalog:** Real-time fetching of web content, banners, and product details.
+- **Account Management:** User authentication, guest checkout capabilities, and personal dashboards (`my-account.php`, `my-orders.php`).
+- **Shopping Cart & Checkout:** Advanced checkout workflow with custom credit card input formatting, integrated Stripe processing, and Apple Pay support.
+- **Customer Rewards:** Dedicated reward history module to track user loyalty points (`reward-history.php`).
+- **Careers Portal:** Built-in job application mapping and career portals.
+
+### 2. Admin & Business Management Dashboard
+A powerful backend control panel to oversee the entire business module.
+- **Product & Menu Management:** Multi-level categorical management (Categories > Subcategories > Products), including inventory and supply tracking.
+- **Staff & HR Management:** Robust staff modules including role management, shifts/roster creation, staff availability, and a staff time-clock system (`staffclock.php`).
+- **Inventory & Suppliers:** Low stock alerts, stock reordering workflows (`stockreordering.php`), and supplier record handling.
+- **Analytics & Reporting:** Comprehensive sales, employee, and inventory reporting dashboards.
+
+### 3. Point of Sale (POS) System
+Tailored for on-the-ground cashiers and front-of-house staff.
+- **Touch-Optimized UI:** Designed for fast-paced order entry.
+- **Integrated Payments:** Linked to physical card terminals (`pinpad.js`, `linkterminal.php`).
+- **Receipts & Barcodes:** Automated thermal receipt rendering and barcode scanning support.
+
+### 4. Kitchen Display System (KDS)
+Optimized for the kitchen staff to ensure error-free fulfillment.
+- **Real-Time Synchronization:** Uses WebSockets to instantly push orders from the web or POS directly to the kitchen screens.
+- **Order Tracking:** Kitchen staff can mark orders as "Completed", which updates the order status system-wide synchronously.
+
+---
+
+## 💡 Engineering Highlights
+- **Synchronized Data Architecture:** Handled real-time syncing between three disparate clients (Customer Web Store, POS, KDS) using PHP WebSockets.
+- **Security & Authorization:** Implemented restrictive routing, IP-based restrictions (`iprestriction.php`), and custom JWT/Session-based permissions for distinct roles (Admin vs. Staff vs. Customer).
+- **Custom Payment UI Constraints:** Developed specialized input field chunking and validation logic for smooth credit card entry before securely tokenizing via Stripe.
+
+---
+
+## 📂 Architecture Snapshot
+- `/admin` — Core dashboard interfaces, reports, inventory, and HR tools.
+- `/pos_v2` — Modernized, touch-friendly Point of Sale interface.
+- `/kds_v2` — Web-socket equipped Kitchen Display System.
+- `/libraries` — Reusable core business logic, database singletons, and third-party wrappers.
+- `/app` — Backend endpoints supporting real-time functions and distinct isolated services.
