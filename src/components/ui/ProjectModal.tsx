@@ -59,7 +59,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                         animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 30 }}
                         transition={{ type: "spring", duration: 0.6, bounce: 0.2 }}
-                        className="relative w-full max-w-7xl bg-[#0d0426]/95 backdrop-blur-2xl border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(112,66,248,0.15)] flex flex-col lg:flex-row max-h-[92vh] lg:h-[90vh] min-h-[600px] z-[110]"
+                        className="relative z-[110] flex min-h-[520px] max-h-[92vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0d0426]/95 shadow-[0_0_50px_rgba(112,66,248,0.15)] backdrop-blur-2xl sm:min-h-[600px] md:rounded-3xl lg:h-[90vh] lg:flex-row"
                     >
                         {/* Close Button */}
                         <motion.button
@@ -101,9 +101,8 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                                             src={galleryImages[currentImageIndex].url}
                                             alt={project.title}
                                             fill
+                                            sizes="(max-width: 1024px) 100vw, 55vw"
                                             className="object-cover lg:object-contain"
-                                            priority
-                                            unoptimized
                                         />
                                     )}
                                 </motion.div>

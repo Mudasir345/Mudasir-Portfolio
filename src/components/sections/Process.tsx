@@ -45,7 +45,7 @@ export default function Process() {
         <section className="flex flex-col items-center justify-center py-20 relative z-[20] w-full" id="process">
             <SectionHeading>My Process</SectionHeading>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-10 max-w-[1400px] w-full relative">
+            <div className="relative grid w-full max-w-[1400px] grid-cols-1 gap-6 px-4 sm:px-6 md:grid-cols-2 md:px-10 lg:grid-cols-4 lg:gap-8">
                 {/* Connecting Line (Only visible on large screens) */}
                 <div className="hidden lg:block absolute top-[40%] left-10 right-10 h-[2px] bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-green-500/30 -z-10" />
 

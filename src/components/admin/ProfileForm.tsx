@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { updateProfile } from "@/actions/admin";
 import { ProfileData } from "@/lib/db";
 import { motion } from "framer-motion";
-import { Plus, X, User, Mail, Github, Linkedin, Phone, FileText, Briefcase, Award, Clock, CheckCircle, FolderKanban } from "lucide-react";
+import { Plus, X, User, Mail, Github, Linkedin, Phone, Briefcase, Award, Clock, CheckCircle, FolderKanban } from "lucide-react";
 import MediaUploader from "./MediaUploader";
 
 interface ProfileFormProps {
@@ -59,7 +59,7 @@ export default function ProfileForm({ initialData, onSuccess }: ProfileFormProps
                         <div className="rounded-full overflow-hidden w-32 h-32 mx-auto bg-black border-2 border-dashed border-white/20 hover:border-purple-500/50 transition-colors shadow-lg shadow-purple-500/10 group relative">
                             <MediaUploader
                                 folder="profile"
-                                currentFile={formData.image || "/profile.png"}
+                                currentFile={formData.image || "/profile.jpg"}
                                 onUploadComplete={(path) => setFormData({ ...formData, image: path })}
                                 onRemove={() => setFormData({ ...formData, image: "" })}
                             />

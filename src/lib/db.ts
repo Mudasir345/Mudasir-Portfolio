@@ -145,7 +145,7 @@ export async function getDB(): Promise<DBData> {
         return {
             profile: {
                 name: "Mudasir Choudhry",
-                image: "/profile.png",
+                image: "/profile.jpg",
                 roles: ["Developer"],
                 bio: "",
                 aboutText: "",

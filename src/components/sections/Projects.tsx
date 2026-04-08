@@ -48,10 +48,10 @@ const Projects = ({ initialProjects }: ProjectsProps) => {
             {/* Projects Grid */}
             <motion.div
                 layout
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 px-4 md:px-10 max-w-[1400px] w-full"
+                className="grid w-full max-w-[1400px] grid-cols-1 gap-6 px-4 sm:px-6 md:grid-cols-2 md:gap-10 md:px-10 lg:grid-cols-3"
             >
                 <AnimatePresence mode="popLayout">
-                    {filteredProjects.map((project, index) => (
+                    {filteredProjects.map((project) => (
                         <motion.div
                             layout
                             initial={{ opacity: 0, scale: 0.8 }}
@@ -75,6 +75,7 @@ const Projects = ({ initialProjects }: ProjectsProps) => {
 
             {/* Project Details Modal */}
             <ProjectModal
+                key={selectedProject?.title ?? "project-modal"}
                 project={selectedProject}
                 onClose={() => setSelectedProject(null)}
             />

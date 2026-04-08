@@ -47,6 +47,7 @@ const ProjectCard = ({ src, title, description, techStack, liveUrl, githubUrl, o
                                     muted
                                     loop
                                     playsInline
+                                    preload="metadata"
                                 />
                             </div>
                         ) : (
@@ -55,6 +56,7 @@ const ProjectCard = ({ src, title, description, techStack, liveUrl, githubUrl, o
                                     src={src}
                                     alt={title}
                                     fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 30vw"
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                             </div>

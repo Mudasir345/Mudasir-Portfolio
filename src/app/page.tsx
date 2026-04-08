@@ -13,7 +13,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Team from "@/components/sections/Team";
 import { getProjects, getServices, getProfile, getSkills, getExperience, getEducation, getTestimonials, getTeam, getSettings, getCertificates, getLanguages, getInterests } from "@/actions/admin";
 
-export const revalidate = 0; // Ensure fresh data on every request
+export const revalidate = 3600;
 
 export default async function Home() {
   const [projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests] = await Promise.all([
@@ -31,8 +31,66 @@ export default async function Home() {
     getInterests()
   ]);
 
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Mudasir Choudhry Portfolio",
+    url: "https://mudasirchoudhry.com",
+    description: profile.bio,
+    inLanguage: "en",
+  };
+
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.name,
+    url: "https://mudasirchoudhry.com",
+    image: profile.image || "/profile.png",
+    description: profile.bio,
+    email: profile.email,
+    sameAs: [profile.github, profile.linkedin, profile.whatsapp].filter(Boolean),
+    knowsAbout: skills.map((skill) => skill.name),
+    jobTitle: profile.roles[0] || "Full Stack Developer",
+  };
+
+  const servicesSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Development Services",
+    itemListElement: services.map((service, index) => ({
+      "@type": "Service",
+      position: index + 1,
+      name: service.title,
+      description: service.description,
+      provider: {
+        "@type": "Person",
+        name: profile.name,
+      },
+    })),
+  };
+
+  const projectsSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Featured Projects",
+    itemListElement: projects.slice(0, 8).map((project, index) => ({
+      "@type": "CreativeWork",
+      position: index + 1,
+      name: project.title,
+      description: project.longDescription || project.description,
+      image: project.image,
+      url: project.liveUrl || project.githubUrl || "https://mudasirchoudhry.com/#projects",
+    })),
+  };
+
   return (
     <main className="h-full w-full">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([websiteSchema, personSchema, servicesSchema, projectsSchema]),
+        }}
+      />
       <div className="flex flex-col gap-0">
         <Hero
           profile={profile}

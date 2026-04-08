@@ -12,8 +12,7 @@ interface NavbarProps {
 const Navbar = ({ profile }: NavbarProps) => {
     const pathname = usePathname();
     const [activeSection, setActiveSection] = useState("about-me");
-
-    if (pathname?.startsWith("/admin")) return null;
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -46,14 +45,20 @@ const Navbar = ({ profile }: NavbarProps) => {
         { name: 'Projects', href: '#projects', id: 'projects' },
     ];
 
+    if (pathname?.startsWith("/admin")) return null;
+
     return (
-        <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001417] backdrop-blur-md z-50 px-5 md:px-10 border-b border-[#7042f861]">
-            <div className="w-full h-full flex flex-row items-center justify-between m-auto px-[10px]">
+        <div className="w-full fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001417] backdrop-blur-md z-50 px-5 md:px-10 border-b border-[#7042f861]">
+            <div className="w-full h-[65px] flex flex-row items-center justify-between m-auto px-[10px]">
                 <a
                     href="#about-me"
                     className="h-auto w-auto flex flex-row items-center cursor-pointer group"
+                    onClick={() => setIsMobileMenuOpen(false)}
                 >
                     <span className="font-bold ml-[10px] hidden md:block text-gray-300 group-hover:text-white transition-colors duration-300 transform group-hover:scale-105">
+                        {profile.name}
+                    </span>
+                    <span className="font-bold text-gray-200 md:hidden">
                         {profile.name}
                     </span>
                 </a>
@@ -74,8 +79,46 @@ const Navbar = ({ profile }: NavbarProps) => {
                     </div>
                 </div>
 
-
+                <button
+                    type="button"
+                    aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                    aria-expanded={isMobileMenuOpen}
+                    aria-controls="mobile-navigation"
+                    onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                    className="md:hidden inline-flex items-center justify-center p-2 rounded-full border border-white/10 bg-white/5 text-gray-200 hover:bg-white/10 hover:text-white transition-colors"
+                >
+                    {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                </button>
             </div>
+
+            {isMobileMenuOpen && (
+                <div className="md:hidden pb-4">
+                    <div className="rounded-2xl border border-[#7042f861] bg-[#030014f2] backdrop-blur-xl px-4 py-4 shadow-2xl shadow-[#2A0E61]/40">
+                        <nav
+                            id="mobile-navigation"
+                            className="flex flex-col gap-2"
+                        >
+                            {navLinks.map((item) => (
+                                <a
+                                    key={item.name}
+                                    href={item.href}
+                                    onClick={() => {
+                                        setActiveSection(item.id);
+                                        setIsMobileMenuOpen(false);
+                                    }}
+                                    className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
+                                        activeSection === item.id
+                                            ? "bg-cyan-500/10 text-cyan-300 border border-cyan-500/20"
+                                            : "text-gray-300 hover:bg-white/5 hover:text-white border border-transparent"
+                                    }`}
+                                >
+                                    {item.name}
+                                </a>
+                            ))}
+                        </nav>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

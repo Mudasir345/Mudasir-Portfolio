@@ -20,6 +20,9 @@ body {
   color: var(--color-foreground);
   background: var(--color-background);
   overflow-x: hidden;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 canvas {

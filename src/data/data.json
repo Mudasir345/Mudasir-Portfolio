@@ -208,7 +208,7 @@
         "Nodemailer",
         "cPanel Deployment"
       ],
-      "image": "/projects/arplayer_mockup.png",
+      "image": "/projects/arplayer_mockup.jpg",
       "category": "Web",
       "liveUrl": "https://arplayer.smartbillcalculator.online",
       "githubUrl": "https://github.com/Mudasir345/ar-player",
@@ -247,7 +247,7 @@
         "jQuery",
         "ApexCharts"
       ],
-      "image": "/projects/visertube_mockup.png",
+      "image": "/projects/visertube_mockup.jpg",
       "category": "Web",
       "githubUrl": "https://github.com/Mudasir345/visertube",
       "mediaType": "image",
@@ -284,7 +284,7 @@
         "Stripe API",
         "Apple Pay"
       ],
-      "image": "/projects/boardnbarrel_mockup.png",
+      "image": "/projects/boardnbarrel_mockup.jpg",
       "category": "Web",
       "liveUrl": "https://boardnbarrel.com.au/",
       "githubUrl": "https://github.com/Mudasir345/BoardNbarel",
@@ -454,7 +454,7 @@
         "Tailwind CSS",
         "Pinecone"
       ],
-      "image": "/projects/perplexity_mockup.png",
+      "image": "/projects/perplexity_mockup.jpg",
       "category": "Web",
       "githubUrl": "https://github.com/Mudasir345/PerplexityAI-Clone",
       "mediaType": "image"
@@ -482,7 +482,7 @@
         "OpenAI API",
         "Gemini API"
       ],
-      "image": "/projects/merngpt_mockup.png",
+      "image": "/projects/merngpt_mockup.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/React-Native-MernGPT-Chatbot",
       "mediaType": "image"
@@ -509,7 +509,7 @@
         "AsyncStorage",
         "React Navigation"
       ],
-      "image": "/projects/notepad_mockup.png",
+      "image": "/projects/notepad_mockup.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/ReacT-Native-NotePad",
       "mediaType": "image"
@@ -536,7 +536,7 @@
         "Redux Toolkit",
         "TheMealDB API"
       ],
-      "image": "/projects/food_recipe_mockup.png",
+      "image": "/projects/food_recipe_mockup.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/Food-Recipe",
       "mediaType": "image"
@@ -563,7 +563,7 @@
         "MySQL",
         "WinForms"
       ],
-      "image": "/projects/payroll_mockup.png",
+      "image": "/projects/payroll_mockup.jpg",
       "category": "Desktop",
       "githubUrl": "https://github.com/Mudasir345/PayRoll-System",
       "mediaType": "image"
@@ -738,9 +738,9 @@
   ],
   "settings": {
     "showTeam": false,
-    "cvShowCertificates": true,
+    "cvShowCertificates": false,
     "cvShowLanguages": true,
-    "cvShowInterests": true,
+    "cvShowInterests": false,
     "cvShowDeclaration": true
   }
 }

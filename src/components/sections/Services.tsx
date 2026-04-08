@@ -3,17 +3,13 @@
 import React, { useState } from "react";
 import SectionHeading from "../ui/SectionHeading";
 import {
-    Code, Smartphone, Bot, Server, Monitor,
-    Atom, Zap, FileCode, Database, Cloud, Box,
-    Terminal, Cpu, Globe, Layers, Command
+    Code, Smartphone, Bot, Server, Monitor
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-import Image from "next/image";
 import { ServiceData } from "@/lib/db";
 
 // Helper to map string icon names to components
-const IconMap: { [key: string]: any } = {
+const IconMap: Record<string, typeof Code> = {
     Code, Smartphone, Bot, Server, Monitor
 };
 
@@ -49,7 +45,7 @@ const Services = ({ initialServices }: ServicesProps) => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="flex flex-wrap justify-center gap-8 px-10 max-w-[1400px] mt-10"
+                className="mt-10 grid w-full max-w-[1400px] grid-cols-1 gap-6 px-4 sm:px-6 md:grid-cols-2 md:px-10 xl:grid-cols-3"
             >
                 {initialServices.map((service, index) => {
                     const IconComponent = IconMap[service.iconType] || Code;
@@ -61,7 +57,7 @@ const Services = ({ initialServices }: ServicesProps) => {
                             variants={itemVariants}
                             onClick={() => toggleService(index)}
                             whileHover={{ y: -10, scale: 1.02 }}
-                            className={`flex flex-col items-center p-8 glass-card rounded-2xl border w-full md:w-[45%] lg:w-[30%] transition-all duration-500 relative group overflow-hidden cursor-pointer shadow-2xl ${activeindex === index ? "border-cyan-500 bg-[#0d0426]/80 shadow-cyan-500/20" : "border-white/10 hover:border-purple-500/50 hover:shadow-purple-500/20"}`}
+                            className={`glass-card group relative flex h-full w-full cursor-pointer flex-col items-center overflow-hidden rounded-2xl border p-6 shadow-2xl transition-all duration-500 sm:p-8 ${activeindex === index ? "border-cyan-500 bg-[#0d0426]/80 shadow-cyan-500/20" : "border-white/10 hover:border-purple-500/50 hover:shadow-purple-500/20"}`}
                         >
                             {/* Holographic Gradient Background */}
                             <div className={`absolute inset-0 bg-gradient-to-br from-purple-600/20 via-transparent to-cyan-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${activeindex === index ? "opacity-100" : ""}`} />
@@ -93,7 +89,7 @@ const Services = ({ initialServices }: ServicesProps) => {
                                         className="w-full z-10 overflow-hidden"
                                     >
                                         <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent my-4"></div>
-                                        <div className="grid grid-cols-2 gap-3 w-full pb-2">
+                                        <div className="grid w-full grid-cols-1 gap-3 pb-2 sm:grid-cols-2">
                                             {service.details.map((detail, idx) => (
                                                 <motion.div
                                                     key={idx}
@@ -102,15 +98,9 @@ const Services = ({ initialServices }: ServicesProps) => {
                                                     transition={{ delay: idx * 0.05 }}
                                                     className="flex items-center gap-2 text-gray-300 bg-black/40 p-2.5 rounded-lg border border-white/5 hover:border-cyan-500/50 transition-colors"
                                                 >
-                                                    <div className="relative w-5 h-5 min-w-[20px]">
-                                                        <Image
-                                                            src={detail.iconUrl}
-                                                            alt={detail.name}
-                                                            fill
-                                                            className={`object-contain ${detail.name === 'Next.js' ? 'invert' : ''}`}
-                                                            unoptimized
-                                                        />
-                                                    </div>
+                                                    <span className="flex h-5 w-5 min-w-[20px] items-center justify-center rounded-full bg-gradient-to-br from-purple-500/30 to-cyan-500/30 text-[10px] font-bold uppercase text-cyan-200">
+                                                        {detail.name.slice(0, 2)}
+                                                    </span>
                                                     <span className="text-xs font-medium truncate">{detail.name}</span>
                                                 </motion.div>
                                             ))}
