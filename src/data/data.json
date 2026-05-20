@@ -11,7 +11,7 @@
     "aboutText": "I am a passionate Full Stack Developer who believes that code is art. My journey started with a curiosity for how things work, which evolved into a career of building complex, high-performance systems.\n\nWhether it's architecting a robust SaaS platform, optimizing an Automation bots, or crafting a pixel-perfect 3D website, I bring the same level of dedication and precision. I don't just write code; I engineer solutions that solve real-world problems.",
     "stats": {
       "experienceYears": "3+",
-      "projectsCompleted": "50+",
+      "projectsCompleted": "23",
       "satisfaction": "100%",
       "availability": "24/7"
     },
@@ -177,43 +177,40 @@
   ],
   "projects": [
     {
-      "title": "AR Player — Enterprise Video Hosting & Monetization Platform",
-      "description": "- Built a production-grade, self-hosted SaaS video platform with cryptographic domain locking, AES-256-CBC encrypted embed tokens, and a 1,400+ line fully custom React video player — all from scratch to production.\n- Engineered a dual JWT authentication system (Admin & User) with role-based access, auto subscription lifecycle management, and DevTools/right-click protection.\n- Developed a complete monetization ecosystem: subscription plans, coupon engine, manual payment approvals (EasyPaisa, JazzCash, PayPal, Crypto), and an automated subscription downgrade middleware.\n- Implemented a 4-tab real-time analytics dashboard (Views, Revenue, Subscribers, Plans) and a pre-roll/mid-roll/pause ad monetization system with configurable skip timers.",
-      "longDescription": "AR Player is a full-stack SaaS platform for secure video hosting, subscription-based access, multi-site iframe embedding with cryptographic domain locking, and real-time analytics — built entirely from scratch to production. Unlike YouTube or Vimeo, AR Player gives operators full control: who can watch (subscription tiers & paywalls), where content is embedded (AES-256 domain locking), ad monetization (pre-roll, mid-roll, pause), and revenue flows. The custom-built 1,400+ line React video player supports HLS, MP4, chapters, subtitles, watermarks, keyboard shortcuts, and a paywall with blur effect. The server proxies all video URLs to the browser, keeping CDN sources completely hidden.",
+      "title": "Bazario Marketplace — Admin & Backend",
+      "description": "- Architected the core enterprise backend using Laravel 8 to power the massive Bazario multi-platform ecosystem.\n- Integrated 7+ global payment gateways (Stripe, PayPal, Crypto, local options) using a unified payment adapter interface.\n- Engineered a highly interactive, component-driven Admin Dashboard using React 17 and Redux Toolkit.\n- Configured extensive cloud infrastructure including AWS S3 for object storage and WebSockets for real-time concurrency.",
+      "longDescription": "The Bazario Marketplace Admin & Backend represents the core engine of the Bazario ecosystem. Built on Laravel 8, it securely handles massive concurrency and synchronizes data across web and mobile endpoints. The frontend Admin Dashboard is built with React 17 and Redux Toolkit, providing administrators with real-time analytics, user management, and seamless control over a multi-vendor marketplace. Integrated with 7+ global payment systems, it is built to scale globally.",
       "features": [
-        "Cryptographic Domain Locking (AES-256-CBC Embed Tokens)",
-        "Custom 1,400+ Line React Video Player (HLS, MP4, Chapters, Subtitles)",
-        "Full Subscription & Manual Payment System (EasyPaisa, JazzCash, PayPal, Crypto)",
-        "Pre-Roll, Mid-Roll & Pause Ad Monetization Engine",
-        "4-Tab Real-Time Analytics Dashboard (Revenue, Subscribers, Plans, Overview)",
-        "JWT Dual Auth (Admin 8h + User 7d) with Auto-Downgrade Middleware",
-        "Video Proxy Server (CDN URLs Never Exposed to Browser)",
-        "Coupon System (% Off, Fixed, Free Days, Fully Free)"
+        "7+ Global Payment Gateway Integrations",
+        "React 17 & Redux Toolkit Admin Dashboard",
+        "AWS S3 Cloud Object Storage Integration",
+        "Real-Time Analytics & WebSockets Concurrency",
+        "Advanced Multi-Vendor Spatie Role Management"
       ],
       "challenges": [
-        "Designing a cryptographic embed token system that locks content to specific domains without exposing the video URL to the client browser.",
-        "Building a 1,400+ line React video player from scratch with HLS support, ad injection, paywall overlays, and PiP — without any third-party player library.",
-        "Implementing AES-256-CBC token encryption/decryption on the server for embed validation while keeping the system resilient to token replay attacks."
+        "Normalizing the API responses across 7 completely different third-party payment gateways.",
+        "Managing complex state across the React dashboard without performance degradation.",
+        "Ensuring 100% data consistency between the Laravel backend and the Flutter customer app."
       ],
       "techStack": [
-        "React 18",
-        "Vite",
-        "React Router v6",
-        "Node.js (v18+)",
-        "Express.js",
-        "MySQL 8",
-        "JWT (Dual Auth)",
-        "AES-256-CBC Encryption",
-        "Multer",
-        "Nodemailer",
-        "cPanel Deployment"
+        "Laravel 8",
+        "PHP 8.0",
+        "React 17",
+        "Redux Toolkit",
+        "AWS S3",
+        "MySQL",
+        "WebSockets"
       ],
-      "image": "/projects/arplayer_mockup.jpg",
+      "image": "/projects/bazaria admin.png",
       "category": "Web",
-      "liveUrl": "https://arplayer.smartbillcalculator.online",
-      "githubUrl": "https://github.com/Mudasir345/ar-player",
+      "githubUrl": "https://github.com/Mudasir345/Portfolio-Projects/tree/main/WEB-APPLICATIONS/10-Bazario-Admin-Backend",
       "mediaType": "image",
-      "showInCv": true
+      "gallery": [
+        {
+          "url": "/projects/bazaria admin (1).png",
+          "type": "image"
+        }
+      ]
     },
     {
       "title": "ViserTube — Full-Stack Video Streaming & Monetization SaaS",
@@ -292,89 +289,424 @@
       "showInCv": true
     },
     {
-      "title": "Reddit Growth Automation Bot",
-      "description": "- Engineered a scalable AI-driven marketing automation framework using Python, generating context-aware content via OpenAI GPT-4.\n- Architected an advanced 'Account Warmer' module to simulate human behavior patterns (scrolling, upvoting) and build algorithmic trust scores.\n- Implemented robust rotating proxy networks and persistent session management to circumvent Reddit's strict anti-spam filters.\n- Delivered automated subreddit keyword monitoring and karma tracking dashboards for seamless campaign orchestration.",
-      "longDescription": "A cutting-edge marketing automation tool built with Python. It leverages OpenAI's GPT-4 to generate context-aware posts and comments tailored to specific subreddits. The system includes an advanced 'Account Warmer' module that mimics human activity (scrolling, upvoting) to build trust scores and prevent bans, managed via a rotating proxy network.",
+      "title": "Life Changely — AI Coaching Platform",
+      "description": "- Developed a comprehensive MERN stack platform designed to provide AI-powered sales coaching and mentorship.\n- Integrated OpenAI's GPT models to analyze user inputs and provide constructive, context-aware feedback.\n- Built real-time Video and Audio communication infrastructure utilizing WebRTC protocols.\n- Designed an intuitive dashboard for users to track their progress, schedule sessions, and review AI feedback logs.",
+      "longDescription": "Life Changely is a holistic web platform built to revolutionize personal and sales coaching. Leveraging the MERN stack alongside OpenAI, it provides users with personalized coaching paths. The platform features integrated WebRTC video calling, real-time chat, and an AI analyzer that reviews session transcripts to offer actionable improvements.",
       "features": [
-        "AI-Generated Content (OpenAI GPT-4)",
-        "Automated Account Warming & Aging",
-        "Subreddit Keyword Monitoring",
-        "Proxy Network & Session Management",
-        "Karma Tracking Dashboard"
+        "OpenAI-Powered Feedback Analyzer",
+        "WebRTC Real-Time Video & Audio Calls",
+        "Secure User Authentication & Session Tracking",
+        "Progress Dashboards & Analytics",
+        "Stripe Payment Integration for Coaching Tiers"
       ],
       "challenges": [
-        "Navigating Reddit's strict anti-spam filters and shadowban algorithms.",
-        "Generating AI content that mimics authentic human discussion styles.",
-        "Managing multiple concurrent sessions without cross-contamination."
+        "Managing complex WebRTC signaling connections through custom Socket.io servers.",
+        "Parsing and passing audio transcripts securely to the OpenAI API for near real-time feedback.",
+        "Ensuring complete data privacy for coaching sessions."
       ],
       "techStack": [
-        "Python 3.11+",
-        "PRAW (Reddit API)",
+        "MongoDB",
+        "Express.js",
+        "React",
+        "Node.js",
+        "WebRTC",
+        "OpenAI API"
+      ],
+      "image": "/projects/life changely (1).png",
+      "category": "Web",
+      "githubUrl": "https://github.com/Mudasir345/Life-Changely",
+      "mediaType": "image",
+      "gallery": []
+    },
+    {
+      "title": "AR Player — Enterprise Video Hosting & Monetization Platform",
+      "description": "- Built a production-grade, self-hosted SaaS video platform with cryptographic domain locking, AES-256-CBC encrypted embed tokens, and a 1,400+ line fully custom React video player — all from scratch to production.\n- Engineered a dual JWT authentication system (Admin & User) with role-based access, auto subscription lifecycle management, and DevTools/right-click protection.\n- Developed a complete monetization ecosystem: subscription plans, coupon engine, manual payment approvals (EasyPaisa, JazzCash, PayPal, Crypto), and an automated subscription downgrade middleware.\n- Implemented a 4-tab real-time analytics dashboard (Views, Revenue, Subscribers, Plans) and a pre-roll/mid-roll/pause ad monetization system with configurable skip timers.",
+      "longDescription": "AR Player is a full-stack SaaS platform for secure video hosting, subscription-based access, multi-site iframe embedding with cryptographic domain locking, and real-time analytics — built entirely from scratch to production. Unlike YouTube or Vimeo, AR Player gives operators full control: who can watch (subscription tiers & paywalls), where content is embedded (AES-256 domain locking), ad monetization (pre-roll, mid-roll, pause), and revenue flows. The custom-built 1,400+ line React video player supports HLS, MP4, chapters, subtitles, watermarks, keyboard shortcuts, and a paywall with blur effect. The server proxies all video URLs to the browser, keeping CDN sources completely hidden.",
+      "features": [
+        "Cryptographic Domain Locking (AES-256-CBC Embed Tokens)",
+        "Custom 1,400+ Line React Video Player (HLS, MP4, Chapters, Subtitles)",
+        "Full Subscription & Manual Payment System (EasyPaisa, JazzCash, PayPal, Crypto)",
+        "Pre-Roll, Mid-Roll & Pause Ad Monetization Engine",
+        "4-Tab Real-Time Analytics Dashboard (Revenue, Subscribers, Plans, Overview)",
+        "JWT Dual Auth (Admin 8h + User 7d) with Auto-Downgrade Middleware",
+        "Video Proxy Server (CDN URLs Never Exposed to Browser)",
+        "Coupon System (% Off, Fixed, Free Days, Fully Free)"
+      ],
+      "challenges": [
+        "Designing a cryptographic embed token system that locks content to specific domains without exposing the video URL to the client browser.",
+        "Building a 1,400+ line React video player from scratch with HLS support, ad injection, paywall overlays, and PiP — without any third-party player library.",
+        "Implementing AES-256-CBC token encryption/decryption on the server for embed validation while keeping the system resilient to token replay attacks."
+      ],
+      "techStack": [
+        "React 18",
+        "Vite",
+        "React Router v6",
+        "Node.js (v18+)",
+        "Express.js",
+        "MySQL 8",
+        "JWT (Dual Auth)",
+        "AES-256-CBC Encryption",
+        "Multer",
+        "Nodemailer",
+        "cPanel Deployment"
+      ],
+      "image": "/projects/arplayer_mockup.jpg",
+      "category": "Web",
+      "liveUrl": "https://arplayer.smartbillcalculator.online",
+      "githubUrl": "https://github.com/Mudasir345/ar-player",
+      "mediaType": "image",
+      "showInCv": true
+    },
+    {
+      "title": "Perplexity AI Search Clone",
+      "description": "- Architected an advanced research engine with Next.js and LangChain, synthesizing complex answers from live web data in real-time.\n- Engineered deep integrations with OpenAI GPT-4 and Pinecone vector databases to execute high-fidelity semantic similarity searches.\n- Developed low-latency edge-runtime API routes to stream AI responses instantly, mimicking seamless typing and conversational feedback.\n- Implemented rigorous citation tracking algorithms and a recursive 'Copilot' research mode to automatically refine user search intents.",
+      "longDescription": "A sophisticated research tool that redefines web search. Built with Next.js and LangChain, this application synthesizes complex answers from live web data using OpenAI's GPT-4. It features a streaming interface for instant feedback, rigorous citation tracking for reliability, and a 'Copilot' mode that asks clarifying questions to refine search intent.",
+      "features": [
+        "Real-time Web Search Synthesis (LangChain)",
+        "Precision Citations & Source Tracking",
+        "Edge-Runtime AI Streaming Response",
+        "'Copilot' Recursive Research Integration",
+        "Context-Aware Follow-up Questions"
+      ],
+      "challenges": [
+        "Orchestrating multi-step LLM chains (Search -> Read -> Synthesize) efficiently.",
+        "Reducing latency for a 'instant' search feel using Edge streams.",
+        "Implementing vector similarity search for retrieving relevant context."
+      ],
+      "techStack": [
+        "Next.js",
+        "LangChain",
         "OpenAI API",
-        "Selenium (Activity Simulation)",
-        "Docker Container"
+        "Tailwind CSS",
+        "Pinecone"
       ],
-      "image": "/projects/reddit_bot_icon.svg",
-      "category": "Automation",
-      "githubUrl": "https://github.com/Mudasir345/reddit-automation",
+      "image": "/projects/peplexity clone.png",
+      "category": "Web",
+      "githubUrl": "https://github.com/Mudasir345/PerplexityAI-Clone",
+      "mediaType": "image",
+      "gallery": [
+        {
+          "url": "/projects/peplexity clone (1).png",
+          "type": "image"
+        }
+      ]
+    },
+    {
+      "title": "Mudasir Portfolio — 3D Interactive Web App",
+      "description": "- Designed and engineered a cutting-edge personal portfolio website utilizing Next.js 14 and React 19.\n- Integrated Three.js and React Three Fiber to render stunning, interactive 3D elements and geometries directly in the browser.\n- Developed seamless scroll-triggered animations and fluid typography using Framer Motion and Tailwind CSS.\n- Built robust backend logic for email delivery via Nodemailer and dynamic PDF resume generation.",
+      "longDescription": "More than just a standard website, this portfolio is a fully interactive 3D web application. Built with Next.js and enriched with Three.js graphics, it demonstrates advanced front-end capabilities, performance optimization, and creative coding. The application includes dynamic PDF generation and custom-built API routes for secure contact form handling.",
+      "features": [
+        "Interactive 3D Graphics (Three.js / React Three Fiber)",
+        "Advanced Framer Motion Animations",
+        "On-the-fly PDF Resume Generation",
+        "Secure Nodemailer Contact API",
+        "Server-Side Rendering for Extreme SEO"
+      ],
+      "challenges": [
+        "Optimizing 3D object rendering to maintain 60 FPS on low-end devices.",
+        "Handling complex animation orchestration between Framer Motion and Three.js canvases.",
+        "Generating perfectly formatted PDF documents dynamically in a serverless environment."
+      ],
+      "techStack": [
+        "Next.js 16",
+        "React 19",
+        "Three.js",
+        "Tailwind CSS 4",
+        "Framer Motion",
+        "TypeScript"
+      ],
+      "image": "/projects/portfolio.png",
+      "category": "Web",
+      "githubUrl": "https://github.com/Mudasir345/portfolio",
+      "mediaType": "image",
+      "gallery": [
+        {
+          "url": "/projects/portfolio (1).png",
+          "type": "image"
+        }
+      ]
+    },
+    {
+      "title": "Interactive 3D Particles",
+      "description": "- Built a highly experimental web application simulating over 20,000 interactive 3D particles using WebGL and Three.js.\n- Integrated Google's MediaPipe AI to enable revolutionary hand-gesture controls via the user's webcam.\n- Engineered advanced vertex and fragment shaders in GLSL for extreme rendering performance without CPU bottlenecks.\n- Implemented dynamic collision detection and physics calculations directly within the GPU space.",
+      "longDescription": "A cutting-edge experimental project that pushes the boundaries of web capabilities. It renders tens of thousands of individual 3D particles that react to real-time physics. Using Google's MediaPipe, users can control the particle flow via webcam hand gestures, blending AI vision with advanced GPU programming.",
+      "features": [
+        "20,000+ Real-Time 3D Particles",
+        "MediaPipe AI Hand Gesture Recognition",
+        "Custom GLSL Vertex & Fragment Shaders",
+        "GPU-Accelerated Physics Engine",
+        "Interactive WebGL Canvas"
+      ],
+      "challenges": [
+        "Offloading physics calculations entirely to the GPU to prevent browser crashing.",
+        "Translating 2D webcam gesture coordinates into an interactive 3D space.",
+        "Writing complex GLSL shaders from scratch to handle particle lifecycles."
+      ],
+      "techStack": [
+        "Three.js",
+        "WebGL",
+        "GLSL Shaders",
+        "MediaPipe",
+        "JavaScript"
+      ],
+      "image": "/projects/3d_particles.jpg",
+      "category": "Web",
+      "liveUrl": "https://interactive3dparticals.netlify.app/",
+      "githubUrl": "https://github.com/Mudasir345/Interactive-3D-Particles",
       "mediaType": "image"
     },
     {
-      "title": "Facebook Marketplace Scraper",
-      "description": "- Developed a high-performance Chrome Extension utilizing ES6+ and Service Workers for automated bulk data extraction from e-commerce listings.\n- Engineered a smart DOM selector engine to flawlessly navigate infinite scrolling and adapt to obfuscated class name changes dynamically.\n- Implemented background worker architecture to handle thousands of concurrent listings efficiently without browser memory constraints.\n- Built seamless one-click export pipelines to convert complex scraped details into clean, structured CSV/JSON data formats.",
-      "longDescription": "A powerful browser extension engineered for e-commerce data analysis. It automates the scraping of thousands of marketplace listings in minutes, dealing with the complexity of infinite scrolling and dynamic DOM loading. The tool extracts granular details like pricing, location, seller rating, and description, exporting clean structured data (CSV/JSON) for immediate use.",
+      "title": "Web-Based AI Chatbot",
+      "description": "- Engineered a lightweight, vanilla web chatbot integrating Google's Gemini AI directly into a browser environment.\n- Designed a hybrid fallback system that utilizes strict rule-based responses before escalating queries to the LLM.\n- Built a custom Node.js middleware server to securely hide API keys and handle rate limiting.\n- Implemented dynamic DOM manipulation to render markdown, code snippets, and conversational UI elements seamlessly.",
+      "longDescription": "A versatile web-based conversational agent built without heavy frontend frameworks. It uses vanilla HTML/CSS/JS on the client side, communicating with a Node.js backend that securely interfaces with Google's Gemini AI. The bot acts as an intelligent assistant, capable of rendering code, following predefined rules, and answering open-ended queries.",
       "features": [
-        "Bulk Data Extraction (Unlimited Listings)",
-        "Auto-Scroll & Pagination Handling",
-        "One-Click CSV/JSON Export",
-        "Smart Selector Engine (Dynamic DOM)",
-        "Background Worker Architecture"
+        "Gemini AI LLM Integration",
+        "Hybrid Rule-Based Fallback System",
+        "Vanilla JS DOM Manipulation",
+        "Markdown & Syntax Highlighting",
+        "Secure Node.js Proxy Server"
       ],
       "challenges": [
-        "Adapting to Facebook's frequent obfuscated class name changes.",
-        "Managing memory efficient storage for thousands of scraped objects.",
-        "Implementing retry logic for network instability during bulk operations."
+        "Building a smooth chat interface using purely Vanilla JavaScript without React state management.",
+        "Parsing AI markdown safely into HTML to prevent XSS attacks.",
+        "Handling network timeouts gracefully to provide a seamless user experience."
       ],
       "techStack": [
-        "JavaScript (ES6+)",
-        "Chrome Extension V3",
-        "Python (Data Processing)",
-        "DOM Manipulation",
-        "Service Workers"
+        "HTML/CSS/JS",
+        "Node.js",
+        "Express.js",
+        "Gemini API"
       ],
-      "image": "/projects/fb_scraper_safe.svg",
-      "category": "Automation",
-      "githubUrl": "https://github.com/Mudasir345/facebook-marketplace-scraper",
+      "image": "/projects/web ai chat (1).png",
+      "category": "Web",
+      "githubUrl": "https://github.com/Mudasir345/Web-Based-AI-Chatbot",
+      "mediaType": "image",
+      "gallery": []
+    },
+    {
+      "title": "Tutorial Component — Angular UI System",
+      "description": "- Developed a highly modular, reusable application onboarding walkthrough component using Angular 17.\n- Implemented complex RxJS observables to manage sequential tutorial states and user progression events.\n- Designed the component to be fully customizable via Tailwind CSS, supporting dark modes and custom brand colors.\n- Integrated comprehensive i18n multi-language support for global deployments.",
+      "longDescription": "A robust UI engineering project focused on improving user onboarding experiences. Built natively for Angular 17, this tutorial component uses RxJS to orchestrate complex step-by-step walkthroughs over an existing application UI. It features tooltips, backdrop blur focus, and full internationalization support.",
+      "features": [
+        "Modular Angular 17 Component Architecture",
+        "RxJS State Management for Tutorial Flows",
+        "Tailwind CSS Theming & Dark Mode",
+        "i18n Multi-Language Integration",
+        "Dynamic DOM Positioning Engine"
+      ],
+      "challenges": [
+        "Calculating precise X/Y coordinates dynamically to highlight elements regardless of screen size or scroll position.",
+        "Managing memory leaks when subscribing to multiple observable streams.",
+        "Ensuring the backdrop overlay handles z-index contexts correctly across complex applications."
+      ],
+      "techStack": [
+        "Angular 17",
+        "TypeScript",
+        "RxJS",
+        "Tailwind CSS"
+      ],
+      "image": "/projects/angular component.png",
+      "category": "Web",
+      "githubUrl": "https://github.com/Mudasir345/Tutorial-Component",
+      "mediaType": "image",
+      "gallery": []
+    },
+    {
+      "title": "Bazario Marketplace — AI Customer App",
+      "description": "- Built a natively compiled cross-platform customer application using Flutter 3 and Dart for the Bazario Ecosystem.\n- Integrated Google Gemini AI to provide an intelligent conversational assistant for user queries and product discovery.\n- Developed precision geo-tracking using Google Maps API and OSM Nominatim for live delivery updates.\n- Implemented strict BLoC architecture for predictable state management across complex authentication and booking flows.",
+      "longDescription": "The Bazario Marketplace Customer App provides end-users with an exceptionally smooth, AI-enhanced interface to interact with the Bazario ecosystem. Built natively cross-platform with Flutter 3.x, the application integrates BLoC Architecture for robust state management. It stands out with advanced integrations including Google Gemini AI for smart conversational assistance and Google Maps for precise real-time geolocation tracking.",
+      "features": [
+        "Google Gemini AI Conversational Assistant",
+        "Interactive Google Maps Delivery Tracking",
+        "BLoC State Management Architecture",
+        "Multi-Provider Social Login (Google, Apple, Facebook)",
+        "Firebase Cloud Messaging & Dynamic Links"
+      ],
+      "challenges": [
+        "Isolating business logic using BLoC to ensure the UI remains smooth during heavy asynchronous API operations.",
+        "Implementing accurate reverse geocoding to translate complex map coordinates into readable addresses in real-time.",
+        "Seamlessly integrating the Gemini AI API to provide contextual responses without blocking the main UI thread."
+      ],
+      "techStack": [
+        "Flutter",
+        "Dart",
+        "BLoC",
+        "Google Maps API",
+        "Firebase",
+        "Gemini AI"
+      ],
+      "image": "/projects/bazario_customer.jpg",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/Portfolio-Projects/tree/main/MOBILE-APPLICATIONS/09-Bazario-Customer-App",
       "mediaType": "image"
     },
     {
-      "title": "Google Maps Review Automation",
-      "description": "- Architected a sophisticated enterprise automation application using Python, Selenium WebDriver, and Pyppeteer to manage local business reputation.\n- Engineered highly secure Gmail session persistence strategies to completely bypass advanced Google bot detection mechanisms and CAPTCHAs.\n- Developed an intelligent posting algorithm that accurately simulates realistic human mouse movements, typing cadences, and delays.\n- Built a comprehensive React.js frontend interface for remote campaign control, competitor tracking, and automated negative review flagging.",
-      "longDescription": "A sophisticated automation tool designed to manage Google Maps reputation at scale. The system uses a React frontend for campaign management and a powerful Python backend for browser automation. Key capabilities include session persistence (storing Gmail cookies to bypass login), intelligent posting algorithms to mimic human behavior, and auto-flagging of negative reviews.",
+      "title": "Kal Shopping — Multi-Vendor E-Commerce",
+      "description": "- Built a production-ready, full-stack mobile e-commerce platform built to support multi-vendor environments.\n- Engineered a real-time customer support chat using WebSockets (Socket.io) with zero-latency messaging.\n- Integrated a smart shopping cart with persistent state and dynamic price calculations.\n- Developed an extensive Store Dashboard for vendors to manage inventory and fulfill orders.",
+      "longDescription": "Kal Shopping is a production-ready, full-stack mobile e-commerce platform built to support multi-vendor environments. Designed with scalability and clean architecture in mind, it provides a seamless shopping experience for customers and powerful management tools for store owners. The integration of WebSockets enables real-time customer support chat, while the TypeScript backend ensures type safety and robust business logic.",
       "features": [
-        "Automated 5-Star Review Posting",
-        "Competitor Negative Review Flagging",
-        "Gmail Session Persistence (No Re-login)",
-        "React Dashboard for Campaign Control",
-        "Proxy Rotation & Browser Fingerprinting"
+        "Multi-Vendor Store Management",
+        "Real-time Customer Support Chat (WebSockets)",
+        "Smart Persistent Shopping Cart",
+        "Order Tracking & Real-Time Status Updates",
+        "Firebase Authentication & JWT Security"
       ],
       "challenges": [
-        "Bypassing Google's advanced bot detection and CAPTCHAs.",
-        "Managing thousands of Gmail cookies securely without invalidation.",
-        "Simulating realistic mouse movements and typing speeds."
+        "Synchronizing WebSocket events for instant chat delivery without overlapping socket rooms.",
+        "Designing a scalable MongoDB schema to support independent vendors, dynamic product variants, and global orders.",
+        "Optimizing state management for the shopping cart to persist reliably across app restarts."
       ],
       "techStack": [
-        "Python 3.11+",
-        "Selenium WebDriver",
-        "Puppeteer (Pyppeteer)",
-        "Undetected Chromedriver",
-        "Flask API",
-        "React.js",
-        "Docker"
+        "React Native",
+        "TypeScript",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Socket.io",
+        "Firebase"
       ],
-      "image": "/projects/google_review_bot.svg",
-      "category": "Automation",
-      "githubUrl": "https://github.com/Mudasir345/Google-review-bot",
+      "image": "/projects/kal_shopping.jpg",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/kal-shopping",
+      "mediaType": "image"
+    },
+    {
+      "title": "Trave Social — Next-Gen Social Network",
+      "description": "- Developed a fully-featured, high-performance social networking platform supporting dynamic posts and 24-hour stories.\n- Built real-time 1-on-1 and group messaging infrastructure powered by WebSockets.\n- Integrated Cloudinary CDN for lightning-fast media delivery and optimized image/video uploads.\n- Implemented live streaming capabilities with interactive viewer counts and real-time online presence indicators.",
+      "longDescription": "Trave Social is a fully-featured, high-performance social networking platform that brings people together through dynamic posts, 24-hour stories, real-time messaging, and live streaming. Built with a robust Node.js and MongoDB backend, it utilizes Cloudinary for lightning-fast media delivery and WebSockets for an interactive, zero-latency user experience.",
+      "features": [
+        "Dynamic Infinite Scrolling Feed",
+        "24-Hour Ephemeral Stories & Highlights",
+        "Real-Time Instant Messaging & Group Chats",
+        "Live Video Streaming Architecture",
+        "Cloudinary CDN Media Optimization"
+      ],
+      "challenges": [
+        "Handling and scaling real-time WebSocket connections for thousands of concurrent users.",
+        "Optimizing image and video uploads to ensure fast loading times without consuming excessive server bandwidth.",
+        "Designing a dynamic feed algorithm to efficiently paginate and fetch nested social graph relationships."
+      ],
+      "techStack": [
+        "React Native",
+        "Node.js",
+        "MongoDB",
+        "Socket.io",
+        "Cloudinary",
+        "Passport.js"
+      ],
+      "image": "/projects/trave_social.jpg",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/Trave-Social",
+      "mediaType": "image"
+    },
+    {
+      "title": "MernGPT AI Chatbot",
+      "description": "- Built a cutting-edge mobile conversational application featuring seamless dynamic switching between OpenAI's GPT-4 and Google's Gemini Pro APIs.\n- Developed a robust Node.js and MongoDB backend architecture protected by JWT encryption for highly secure user authentication and data access.\n- Engineered real-time streaming interfaces within React Native, coupled with advanced markdown parsing and automatic code syntax highlighting.\n- Optimized massive MongoDB query structures to instantly retrieve and chronologically sort extensive user historical chat logs.",
+      "longDescription": "A cutting-edge mobile chatbot application that bridges the gap between major LLMs. Users can switch between OpenAI's GPT-4 and Google's Gemini Pro models seamlessly. The app features a robust Node.js/MongoDB backend for storing chat history and user preferences, secured with JWT authentication. The React Native frontend delivers a fluid, futuristic chat interface.",
+      "features": [
+        "Multi-LLM Support (GPT-4 & Gemini Pro)",
+        "Secure JWT Authentication & MongoDB Storage",
+        "Real-time Streaming Responses",
+        "Code Syntax Highlighting & Markdown Support",
+        "Dark/Light Theme & User Customization"
+      ],
+      "challenges": [
+        "Handling streaming API responses for a 'typing' effect.",
+        "Securing API keys and user data with proper encryption.",
+        "Optimizing MongoDB queries for retrieving long chat histories."
+      ],
+      "techStack": [
+        "React Native",
+        "Node.js",
+        "MongoDB",
+        "OpenAI API",
+        "Gemini API"
+      ],
+      "image": "/projects/merngpt_mockup.jpg",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/React-Native-MernGPT-Chatbot",
+      "mediaType": "image"
+    },
+    {
+      "title": "React Native AI Chatbot (Gemini)",
+      "description": "- Developed a sleek, cross-platform mobile chatbot application utilizing React Native and Expo.\n- Integrated Google's Gemini LLM through a custom Express.js backend to provide intelligent, hybrid rule-based and AI responses.\n- Implemented advanced UI animations and seamless typing effects to mimic natural conversational cadences.\n- Designed a highly responsive interface with customizable chat themes and persistent local history.",
+      "longDescription": "A lightweight but highly capable mobile chatbot client. Built with React Native and Expo, it connects to a custom Express API powered by Google Gemini. The application provides hybrid responses—mixing rule-based logic for specific app actions with powerful generative AI for open-ended queries.",
+      "features": [
+        "Google Gemini LLM Integration",
+        "Hybrid Rule-Based & Generative AI Engine",
+        "Natural Typing Animations",
+        "Persistent Chat History",
+        "Customizable Chat Interface"
+      ],
+      "challenges": [
+        "Handling streaming responses from the Gemini API and parsing them smoothly on a mobile device.",
+        "Balancing rule-based logic overrides with generative AI without causing context confusion.",
+        "Ensuring the chat UI remains fluid while rendering complex AI-generated markdown and lists."
+      ],
+      "techStack": [
+        "React Native",
+        "Expo",
+        "Node.js",
+        "Express.js",
+        "Gemini API"
+      ],
+      "image": "/projects/rn_chatbot.jpg",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/React-Native-Chatbot-App",
+      "mediaType": "image"
+    },
+    {
+      "title": "Chef's Canvas Recipe App",
+      "description": "- Developed a highly interactive culinary mobile application consuming complex REST APIs to deliver thousands of global step-by-step recipes.\n- Modeled an intelligent 'My Pantry' algorithmic engine matching a user's local ingredient inventory strictly to available recipe computations.\n- Implemented comprehensive Redux Toolkit states to handle complex offline favorites saving and real-time cooking timer mode synchronizations.\n- Engineered advanced image caching pipelines within Expo to eliminate stuttering and guarantee perfectly smooth infinite scrolling lists.",
+      "longDescription": "A visually stunning mobile application built with React Native that serves as a personal culinary assistant. Users can explore thousands of recipes, filter by dietary preferences (Vegan, Keto, etc.), and follow step-by-step cooking instructions with integrated timers. The app features a 'Pantry' mode to suggest recipes based on available ingredients, reducing food waste.",
+      "features": [
+        "Advanced Recipe Search & Filtering",
+        "Step-by-Step Cooking Mode with Timers",
+        "'My Pantry' Smart Ingredient Matcher",
+        "Favorites & Offline Access",
+        "Social Sharing of Custom Recipes"
+      ],
+      "challenges": [
+        "Optimizing image caching for smooth infinite scrolling.",
+        "Implementing complex state management for the Pantry algorithm.",
+        "Ensuring consistent typography and layout across iOS and Android."
+      ],
+      "techStack": [
+        "React Native",
+        "Expo",
+        "Redux Toolkit",
+        "TheMealDB API"
+      ],
+      "image": "/projects/food_recipe_mockup.jpg",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/Food-Recipe",
+      "mediaType": "image"
+    },
+    {
+      "title": "Smart Notes App",
+      "description": "- Created a high-speed, distraction-free organizational tool using React Native, utilizing offline-first principles and AsyncStorage persistence.\n- Implemented sophisticated real-time filtering and search algorithms capable of instantly querying large state arrays without UI blocking.\n- Engineered flawless full CRUD state operations backed by color-coded data models to maintain strict file organization architectures.\n- Designed a highly fluid, minimalist interface mapping out custom navigation transitions to reduce cognitive load during note-taking.",
+      "longDescription": "A lightweight yet powerful note-taking app designed for speed and simplicity. Built with React Native, it features instant load times and keeps data private using secure local storage. The robust CRUD operations allow users to manage their thoughts effortlessly, while the clean UI ensures a distraction-free writing environment.",
+      "features": [
+        "Instant Local Storage (AsyncStorage)",
+        "Full CRUD (Create, Read, Update, Delete) Operations",
+        "Color-Coded Organization System",
+        "Real-time Search & Filtering",
+        "Offline-First Architecture"
+      ],
+      "challenges": [
+        "Managing efficient state updates for large lists of notes.",
+        "Implementing a smooth search algorithm that filters instantly.",
+        "Ensuring data persistence across app restarts without lag."
+      ],
+      "techStack": [
+        "React Native",
+        "JavaScript",
+        "AsyncStorage",
+        "React Navigation"
+      ],
+      "image": "/projects/notepad_mockup.jpg",
+      "category": "Mobile",
+      "githubUrl": "https://github.com/Mudasir345/ReacT-Native-NotePad",
       "mediaType": "image"
     },
     {
@@ -432,113 +764,89 @@
       "mediaType": "image"
     },
     {
-      "title": "Perplexity AI Search Clone",
-      "description": "- Architected an advanced research engine with Next.js and LangChain, synthesizing complex answers from live web data in real-time.\n- Engineered deep integrations with OpenAI GPT-4 and Pinecone vector databases to execute high-fidelity semantic similarity searches.\n- Developed low-latency edge-runtime API routes to stream AI responses instantly, mimicking seamless typing and conversational feedback.\n- Implemented rigorous citation tracking algorithms and a recursive 'Copilot' research mode to automatically refine user search intents.",
-      "longDescription": "A sophisticated research tool that redefines web search. Built with Next.js and LangChain, this application synthesizes complex answers from live web data using OpenAI's GPT-4. It features a streaming interface for instant feedback, rigorous citation tracking for reliability, and a 'Copilot' mode that asks clarifying questions to refine search intent.",
+      "title": "Reddit Growth Automation Bot",
+      "description": "- Engineered a scalable AI-driven marketing automation framework using Python, generating context-aware content via OpenAI GPT-4.\n- Architected an advanced 'Account Warmer' module to simulate human behavior patterns (scrolling, upvoting) and build algorithmic trust scores.\n- Implemented robust rotating proxy networks and persistent session management to circumvent Reddit's strict anti-spam filters.\n- Delivered automated subreddit keyword monitoring and karma tracking dashboards for seamless campaign orchestration.",
+      "longDescription": "A cutting-edge marketing automation tool built with Python. It leverages OpenAI's GPT-4 to generate context-aware posts and comments tailored to specific subreddits. The system includes an advanced 'Account Warmer' module that mimics human activity (scrolling, upvoting) to build trust scores and prevent bans, managed via a rotating proxy network.",
       "features": [
-        "Real-time Web Search Synthesis (LangChain)",
-        "Precision Citations & Source Tracking",
-        "Edge-Runtime AI Streaming Response",
-        "'Copilot' Recursive Research Integration",
-        "Context-Aware Follow-up Questions"
+        "AI-Generated Content (OpenAI GPT-4)",
+        "Automated Account Warming & Aging",
+        "Subreddit Keyword Monitoring",
+        "Proxy Network & Session Management",
+        "Karma Tracking Dashboard"
       ],
       "challenges": [
-        "Orchestrating multi-step LLM chains (Search -> Read -> Synthesize) efficiently.",
-        "Reducing latency for a 'instant' search feel using Edge streams.",
-        "Implementing vector similarity search for retrieving relevant context."
+        "Navigating Reddit's strict anti-spam filters and shadowban algorithms.",
+        "Generating AI content that mimics authentic human discussion styles.",
+        "Managing multiple concurrent sessions without cross-contamination."
       ],
       "techStack": [
-        "Next.js",
-        "LangChain",
+        "Python 3.11+",
+        "PRAW (Reddit API)",
         "OpenAI API",
-        "Tailwind CSS",
-        "Pinecone"
+        "Selenium (Activity Simulation)",
+        "Docker Container"
       ],
-      "image": "/projects/perplexity_mockup.jpg",
-      "category": "Web",
-      "githubUrl": "https://github.com/Mudasir345/PerplexityAI-Clone",
+      "image": "/projects/reddit_bot_icon.svg",
+      "category": "Automation",
+      "githubUrl": "https://github.com/Mudasir345/reddit-automation",
       "mediaType": "image"
     },
     {
-      "title": "MernGPT AI Chatbot",
-      "description": "- Built a cutting-edge mobile conversational application featuring seamless dynamic switching between OpenAI's GPT-4 and Google's Gemini Pro APIs.\n- Developed a robust Node.js and MongoDB backend architecture protected by JWT encryption for highly secure user authentication and data access.\n- Engineered real-time streaming interfaces within React Native, coupled with advanced markdown parsing and automatic code syntax highlighting.\n- Optimized massive MongoDB query structures to instantly retrieve and chronologically sort extensive user historical chat logs.",
-      "longDescription": "A cutting-edge mobile chatbot application that bridges the gap between major LLMs. Users can switch between OpenAI's GPT-4 and Google's Gemini Pro models seamlessly. The app features a robust Node.js/MongoDB backend for storing chat history and user preferences, secured with JWT authentication. The React Native frontend delivers a fluid, futuristic chat interface.",
+      "title": "Google Maps Review Automation",
+      "description": "- Architected a sophisticated enterprise automation application using Python, Selenium WebDriver, and Pyppeteer to manage local business reputation.\n- Engineered highly secure Gmail session persistence strategies to completely bypass advanced Google bot detection mechanisms and CAPTCHAs.\n- Developed an intelligent posting algorithm that accurately simulates realistic human mouse movements, typing cadences, and delays.\n- Built a comprehensive React.js frontend interface for remote campaign control, competitor tracking, and automated negative review flagging.",
+      "longDescription": "A sophisticated automation tool designed to manage Google Maps reputation at scale. The system uses a React frontend for campaign management and a powerful Python backend for browser automation. Key capabilities include session persistence (storing Gmail cookies to bypass login), intelligent posting algorithms to mimic human behavior, and auto-flagging of negative reviews.",
       "features": [
-        "Multi-LLM Support (GPT-4 & Gemini Pro)",
-        "Secure JWT Authentication & MongoDB Storage",
-        "Real-time Streaming Responses",
-        "Code Syntax Highlighting & Markdown Support",
-        "Dark/Light Theme & User Customization"
+        "Automated 5-Star Review Posting",
+        "Competitor Negative Review Flagging",
+        "Gmail Session Persistence (No Re-login)",
+        "React Dashboard for Campaign Control",
+        "Proxy Rotation & Browser Fingerprinting"
       ],
       "challenges": [
-        "Handling streaming API responses for a 'typing' effect.",
-        "Securing API keys and user data with proper encryption.",
-        "Optimizing MongoDB queries for retrieving long chat histories."
+        "Bypassing Google's advanced bot detection and CAPTCHAs.",
+        "Managing thousands of Gmail cookies securely without invalidation.",
+        "Simulating realistic mouse movements and typing speeds."
       ],
       "techStack": [
-        "React Native",
-        "Node.js",
-        "MongoDB",
-        "OpenAI API",
-        "Gemini API"
+        "Python 3.11+",
+        "Selenium WebDriver",
+        "Puppeteer (Pyppeteer)",
+        "Undetected Chromedriver",
+        "Flask API",
+        "React.js",
+        "Docker"
       ],
-      "image": "/projects/merngpt_mockup.jpg",
-      "category": "Mobile",
-      "githubUrl": "https://github.com/Mudasir345/React-Native-MernGPT-Chatbot",
+      "image": "/projects/google_review_bot.svg",
+      "category": "Automation",
+      "githubUrl": "https://github.com/Mudasir345/Google-review-bot",
       "mediaType": "image"
     },
     {
-      "title": "Smart Notes App",
-      "description": "- Created a high-speed, distraction-free organizational tool using React Native, utilizing offline-first principles and AsyncStorage persistence.\n- Implemented sophisticated real-time filtering and search algorithms capable of instantly querying large state arrays without UI blocking.\n- Engineered flawless full CRUD state operations backed by color-coded data models to maintain strict file organization architectures.\n- Designed a highly fluid, minimalist interface mapping out custom navigation transitions to reduce cognitive load during note-taking.",
-      "longDescription": "A lightweight yet powerful note-taking app designed for speed and simplicity. Built with React Native, it features instant load times and keeps data private using secure local storage. The robust CRUD operations allow users to manage their thoughts effortlessly, while the clean UI ensures a distraction-free writing environment.",
+      "title": "Facebook Marketplace Scraper",
+      "description": "- Developed a high-performance Chrome Extension utilizing ES6+ and Service Workers for automated bulk data extraction from e-commerce listings.\n- Engineered a smart DOM selector engine to flawlessly navigate infinite scrolling and adapt to obfuscated class name changes dynamically.\n- Implemented background worker architecture to handle thousands of concurrent listings efficiently without browser memory constraints.\n- Built seamless one-click export pipelines to convert complex scraped details into clean, structured CSV/JSON data formats.",
+      "longDescription": "A powerful browser extension engineered for e-commerce data analysis. It automates the scraping of thousands of marketplace listings in minutes, dealing with the complexity of infinite scrolling and dynamic DOM loading. The tool extracts granular details like pricing, location, seller rating, and description, exporting clean structured data (CSV/JSON) for immediate use.",
       "features": [
-        "Instant Local Storage (AsyncStorage)",
-        "Full CRUD (Create, Read, Update, Delete) Operations",
-        "Color-Coded Organization System",
-        "Real-time Search & Filtering",
-        "Offline-First Architecture"
+        "Bulk Data Extraction (Unlimited Listings)",
+        "Auto-Scroll & Pagination Handling",
+        "One-Click CSV/JSON Export",
+        "Smart Selector Engine (Dynamic DOM)",
+        "Background Worker Architecture"
       ],
       "challenges": [
-        "Managing efficient state updates for large lists of notes.",
-        "Implementing a smooth search algorithm that filters instantly.",
-        "Ensuring data persistence across app restarts without lag."
+        "Adapting to Facebook's frequent obfuscated class name changes.",
+        "Managing memory efficient storage for thousands of scraped objects.",
+        "Implementing retry logic for network instability during bulk operations."
       ],
       "techStack": [
-        "React Native",
-        "JavaScript",
-        "AsyncStorage",
-        "React Navigation"
+        "JavaScript (ES6+)",
+        "Chrome Extension V3",
+        "Python (Data Processing)",
+        "DOM Manipulation",
+        "Service Workers"
       ],
-      "image": "/projects/notepad_mockup.jpg",
-      "category": "Mobile",
-      "githubUrl": "https://github.com/Mudasir345/ReacT-Native-NotePad",
-      "mediaType": "image"
-    },
-    {
-      "title": "Chef's Canvas Recipe App",
-      "description": "- Developed a highly interactive culinary mobile application consuming complex REST APIs to deliver thousands of global step-by-step recipes.\n- Modeled an intelligent 'My Pantry' algorithmic engine matching a user's local ingredient inventory strictly to available recipe computations.\n- Implemented comprehensive Redux Toolkit states to handle complex offline favorites saving and real-time cooking timer mode synchronizations.\n- Engineered advanced image caching pipelines within Expo to eliminate stuttering and guarantee perfectly smooth infinite scrolling lists.",
-      "longDescription": "A visually stunning mobile application built with React Native that serves as a personal culinary assistant. Users can explore thousands of recipes, filter by dietary preferences (Vegan, Keto, etc.), and follow step-by-step cooking instructions with integrated timers. The app features a 'Pantry' mode to suggest recipes based on available ingredients, reducing food waste.",
-      "features": [
-        "Advanced Recipe Search & Filtering",
-        "Step-by-Step Cooking Mode with Timers",
-        "'My Pantry' Smart Ingredient Matcher",
-        "Favorites & Offline Access",
-        "Social Sharing of Custom Recipes"
-      ],
-      "challenges": [
-        "Optimizing image caching for smooth infinite scrolling.",
-        "Implementing complex state management for the Pantry algorithm.",
-        "Ensuring consistent typography and layout across iOS and Android."
-      ],
-      "techStack": [
-        "React Native",
-        "Expo",
-        "Redux Toolkit",
-        "TheMealDB API"
-      ],
-      "image": "/projects/food_recipe_mockup.jpg",
-      "category": "Mobile",
-      "githubUrl": "https://github.com/Mudasir345/Food-Recipe",
+      "image": "/projects/fb_scraper_safe.svg",
+      "category": "Automation",
+      "githubUrl": "https://github.com/Mudasir345/facebook-marketplace-scraper",
       "mediaType": "image"
     },
     {
