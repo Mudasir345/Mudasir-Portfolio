@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Github, Linkedin, Mail, Smartphone } from "lucide-react";
 import { ProfileData } from "@/lib/db";
 
@@ -72,8 +73,8 @@ const Footer = ({ profile }: FooterProps) => {
                     &copy; {new Date().getFullYear()} {profile.name}. All rights reserved.
                 </div>
                 <div className="flex gap-6">
-                    <span className="hover:text-gray-300 cursor-pointer transition-colors">Privacy Policy</span>
-                    <span className="hover:text-gray-300 cursor-pointer transition-colors">Terms of Service</span>
+                    <Link href="/privacy" className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
+                    <Link href="/terms" className="hover:text-gray-300 transition-colors">Terms of Service</Link>
                 </div>
             </div>
         </footer>

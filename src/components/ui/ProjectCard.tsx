@@ -73,7 +73,7 @@ const ProjectCard = ({ src, title, description, techStack, liveUrl, githubUrl, o
                     </div>
                 </div>
 
-                <h1 className="text-xl sm:text-2xl font-semibold text-white mb-2 line-clamp-1">{title}</h1>
+                <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2 line-clamp-1">{title}</h3>
                 <p className="text-gray-300 text-xs sm:text-sm mb-4 leading-relaxed line-clamp-3">{description}</p>
 
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">

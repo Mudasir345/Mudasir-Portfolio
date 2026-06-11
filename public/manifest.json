@@ -1,0 +1,19 @@
+{
+  "name": "Mudasir Choudhry Portfolio",
+  "short_name": "Mudasir Portfolio",
+  "description": "Creative Full Stack Developer Portfolio specializing in Next.js, 3D Web Experiences, and Automation.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030014",
+  "theme_color": "#030014",
+  "orientation": "any",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/profile.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -6,6 +6,29 @@
   --color-primary: #7042f8;
   --color-secondary: #00f6ff;
   --color-glass: rgba(255, 255, 255, 0.05);
+  --font-sans: var(--font-outfit), "Segoe UI", sans-serif;
+
+  /* ─── Custom Animations (were missing — Hero glow/gradient/tilt were broken) ─── */
+  --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
+  --animate-gradient-x: gradient-x 5s ease infinite;
+  --animate-tilt: tilt 10s ease-in-out infinite;
+}
+
+/* Keyframes for custom animations */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.2; }
+  50%       { opacity: 0.6; }
+}
+
+@keyframes gradient-x {
+  0%        { background-position: 0% center; }
+  50%       { background-position: 100% center; }
+  100%      { background-position: 0% center; }
+}
+
+@keyframes tilt {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(2deg);  }
 }
 
 :root {
@@ -20,9 +43,24 @@ body {
   color: var(--color-foreground);
   background: var(--color-background);
   overflow-x: hidden;
-  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar for entire page */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #030014;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #7042f8, #00f6ff);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #8b5cf6, #06b6d4);
 }
 
 canvas {
@@ -32,4 +70,28 @@ canvas {
 /* Utilities */
 .glass-card {
   @apply bg-glass backdrop-blur-md border border-white/10 shadow-lg;
+}
+
+/* Custom scrollbar for modals */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(112, 66, 248, 0.4);
+  border-radius: 2px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(112, 66, 248, 0.7);
+}
+
+/* Hide scrollbar utility (used in ProjectModal tabs) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

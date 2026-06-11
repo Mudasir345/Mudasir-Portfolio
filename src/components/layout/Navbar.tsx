@@ -7,9 +7,10 @@ import { ProfileData } from "@/lib/db";
 
 interface NavbarProps {
     profile: ProfileData;
+    settings?: any;
 }
 
-const Navbar = ({ profile }: NavbarProps) => {
+const Navbar = ({ profile, settings }: NavbarProps) => {
     const pathname = usePathname();
     const [activeSection, setActiveSection] = useState("about-me");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -55,11 +56,17 @@ const Navbar = ({ profile }: NavbarProps) => {
                     className="h-auto w-auto flex flex-row items-center cursor-pointer group"
                     onClick={() => setIsMobileMenuOpen(false)}
                 >
-                    <span className="font-bold ml-[10px] hidden md:block text-gray-300 group-hover:text-white transition-colors duration-300 transform group-hover:scale-105">
+                    <span className="font-bold ml-[10px] text-gray-300 group-hover:text-white transition-colors duration-300 transform group-hover:scale-105 flex items-center gap-2">
                         {profile.name}
-                    </span>
-                    <span className="font-bold text-gray-200 md:hidden">
-                        {profile.name}
+                        {settings?.available !== false && (
+                            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.15)] relative">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                </span>
+                                Available
+                            </span>
+                        )}
                     </span>
                 </a>
 

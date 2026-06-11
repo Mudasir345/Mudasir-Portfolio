@@ -11,11 +11,16 @@ import Testimonials from "@/components/sections/Testimonials";
 import Footer from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Team from "@/components/sections/Team";
+import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
+import FloatingContactBtn from "@/components/ui/FloatingContactBtn";
+import HireMe from "@/components/sections/HireMe";
+import Certifications from "@/components/sections/Certifications";
 import { getProjects, getServices, getProfile, getSkills, getExperience, getEducation, getTestimonials, getTeam, getSettings, getCertificates, getLanguages, getInterests } from "@/actions/admin";
 
 export const revalidate = 3600;
 
 export default async function Home() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
   const [projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests] = await Promise.all([
     getProjects(),
     getServices(),
@@ -35,7 +40,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Mudasir Choudhry Portfolio",
-    url: "https://mudasirchoudhry.com",
+    url: siteUrl,
     description: profile.bio,
     inLanguage: "en",
   };
@@ -44,7 +49,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: profile.name,
-    url: "https://mudasirchoudhry.com",
+    url: siteUrl,
     image: profile.image || "/profile.png",
     description: profile.bio,
     email: profile.email,
@@ -79,12 +84,13 @@ export default async function Home() {
       name: project.title,
       description: project.longDescription || project.description,
       image: project.image,
-      url: project.liveUrl || project.githubUrl || "https://mudasirchoudhry.com/#projects",
+      url: project.liveUrl || project.githubUrl || `${siteUrl}/#projects`,
     })),
   };
 
   return (
     <main className="h-full w-full">
+      <ScrollProgressBar />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

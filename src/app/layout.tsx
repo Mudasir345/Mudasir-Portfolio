@@ -1,10 +1,17 @@
 import type { Metadata, Viewport } from "next";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
-import { getProfile } from "@/actions/admin";
+import { getProfile, getSettings } from "@/actions/admin";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mudasirchoudhry.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app"),
+  manifest: "/manifest.json",
   title: {
     default: "Mudasir Choudhry | Creative Full Stack Developer",
     template: "%s | Mudasir Choudhry",
@@ -72,12 +79,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const profile = await getProfile();
+  const [profile, settings] = await Promise.all([getProfile(), getSettings()]);
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-[#030014] overflow-y-scroll overflow-x-hidden antialiased">
-        <Navbar profile={profile} />
+      <body className={`${outfit.variable} bg-[#030014] overflow-y-scroll overflow-x-hidden antialiased`}>
+        <Navbar profile={profile} settings={settings} />
         {children}
       </body>
     </html>

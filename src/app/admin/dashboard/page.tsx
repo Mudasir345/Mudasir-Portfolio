@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getProfile, getSkills, getExperience, getEducation, getProjects, getServices, getTestimonials, getTeam, getCertificates, getLanguages, getInterests, getSettings, updateCvSettings, updateProject, deleteProject, deleteExperience, deleteEducation, deleteCertificate, deleteLanguage, deleteInterest } from "@/actions/admin";
+import { getProfile, getSkills, getExperience, getEducation, getProjects, getServices, getTestimonials, getTeam, getCertificates, getLanguages, getInterests, getSettings, updateCvSettings, updateProject, deleteProject, deleteExperience, deleteEducation, deleteCertificate, deleteLanguage, deleteInterest, deleteService, deleteTestimonial } from "@/actions/admin";
 
 import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, ServiceData, TestimonialData, TeamMember, CertificateData, LanguageData, InterestData } from "@/lib/db";
 import { LogOut, User, Code2, Briefcase, GraduationCap, FolderKanban, Layers, MessageSquare, Search, Plus, Users, Trash2, Edit2, Award, Globe, Heart, Settings as SettingsIcon } from "lucide-react";
@@ -150,6 +150,34 @@ export default function AdminDashboard() {
         if (!confirm("Are you sure?")) return;
         await deleteInterest(id);
         fetchData();
+    };
+
+    const handleDeleteService = async (title: string) => {
+        if (!confirm("Are you sure you want to delete this service?")) return;
+        setLoading(true);
+        try {
+            await deleteService(title);
+            fetchData();
+        } catch (e) {
+            console.error(e);
+            alert("Failed to delete service: " + e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDeleteTestimonial = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this testimonial?")) return;
+        setLoading(true);
+        try {
+            await deleteTestimonial(id);
+            fetchData();
+        } catch (e) {
+            console.error(e);
+            alert("Failed to delete testimonial: " + e);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleToggleProjectCv = async (project: ProjectData) => {
@@ -354,6 +382,7 @@ export default function AdminDashboard() {
                                     <h3 className="font-bold mb-2">{service.title}</h3>
                                     <div className="flex gap-2 mt-2">
                                         <button onClick={() => handleEdit(service)} className="text-cyan-400 text-sm flex items-center gap-1"><Edit2 size={14} /> Edit</button>
+                                        <button onClick={() => handleDeleteService(service.title)} className="text-red-400 text-sm flex items-center gap-1"><Trash2 size={14} /> Delete</button>
                                     </div>
                                 </div>
                             ))}
@@ -368,6 +397,7 @@ export default function AdminDashboard() {
                                     <h4 className="font-bold">{t.name}</h4>
                                     <div className="flex gap-2 mt-2">
                                         <button onClick={() => handleEdit(t)} className="text-cyan-400 text-sm flex items-center gap-1"><Edit2 size={14} /> Edit</button>
+                                        <button onClick={() => handleDeleteTestimonial(t.id)} className="text-red-400 text-sm flex items-center gap-1"><Trash2 size={14} /> Delete</button>
                                     </div>
                                 </div>
                             ))}
