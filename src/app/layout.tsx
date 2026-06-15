@@ -1,13 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { getProfile, getSettings } from "@/actions/admin";
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app"),
@@ -83,7 +77,12 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.variable} bg-[#030014] overflow-y-scroll overflow-x-hidden antialiased`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
+      </head>
+      <body className="bg-[#030014] overflow-y-scroll overflow-x-hidden antialiased">
         <Navbar profile={profile} settings={settings} />
         {children}
       </body>

@@ -5,6 +5,7 @@ import SectionHeading from "../ui/SectionHeading";
 import { motion } from "framer-motion";
 import { Briefcase, Code } from "lucide-react";
 import { ExperienceData } from "@/lib/db";
+import ReactMarkdown from "react-markdown";
 
 interface ExperienceProps {
     experience: ExperienceData[];
@@ -62,9 +63,17 @@ const Experience = ({ experience }: ExperienceProps) => {
                                             @{item.company}
                                         </h4>
 
-                                        <p className="text-gray-300 text-sm leading-relaxed">
-                                            {item.description}
-                                        </p>
+                                        <div className="text-gray-300 text-sm leading-relaxed space-y-2 prose prose-invert max-w-none">
+                                            <ReactMarkdown
+                                                components={{
+                                                    strong: ({ node, ...props }) => <strong className="text-cyan-300 font-bold" {...props} />,
+                                                    ul: ({ node, ...props }) => <ul className="list-disc pl-5 space-y-1" {...props} />,
+                                                    li: ({ node, ...props }) => <li className="pl-1" {...props} />,
+                                                }}
+                                            >
+                                                {item.description}
+                                            </ReactMarkdown>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

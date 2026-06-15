@@ -67,6 +67,7 @@ export interface ProfileData {
 export interface SkillData {
     name: string;
     category: "Frontend" | "Backend" | "Database" | "Tools";
+    proficiency?: "Beginner" | "Intermediate" | "Advanced" | "Expert";
 }
 
 export interface ExperienceData {

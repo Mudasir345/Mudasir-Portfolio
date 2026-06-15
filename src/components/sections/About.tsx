@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { User, Code2, Sparkles, Brain } from "lucide-react";
 import { ProfileData } from "@/lib/db";
 import ReactMarkdown from "react-markdown";
+import CountUp from "../ui/CountUp";
 
 interface AboutProps {
     profile: ProfileData;
@@ -70,20 +71,28 @@ export default function About({ profile }: AboutProps) {
 
                         <div className="grid grid-cols-2 gap-6 w-full relative z-10">
                             <div className="space-y-2">
-                                <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">{profile.stats.experienceYears}</h3>
-                                <p className="text-gray-400 text-sm">Years of Experience</p>
+                                <h3 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                                    <CountUp value={profile.stats.experienceYears} />
+                                </h3>
+                                <p className="text-gray-400 text-sm font-semibold">Years of Experience</p>
                             </div>
                             <div className="space-y-2">
-                                <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">{profile.stats.projectsCompleted}</h3>
-                                <p className="text-gray-400 text-sm">Projects Completed</p>
+                                <h3 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                                    <CountUp value={profile.stats.projectsCompleted} />
+                                </h3>
+                                <p className="text-gray-400 text-sm font-semibold">Projects Completed</p>
                             </div>
                             <div className="space-y-2">
-                                <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">{profile.stats.satisfaction}</h3>
-                                <p className="text-gray-400 text-sm">Client Satisfaction</p>
+                                <h3 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                                    <CountUp value={profile.stats.satisfaction} />
+                                </h3>
+                                <p className="text-gray-400 text-sm font-semibold">Client Satisfaction</p>
                             </div>
                             <div className="space-y-2">
-                                <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">{profile.stats.availability}</h3>
-                                <p className="text-gray-400 text-sm">Support Availability</p>
+                                <h3 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                                    <CountUp value={profile.stats.availability} />
+                                </h3>
+                                <p className="text-gray-400 text-sm font-semibold">Support Availability</p>
                             </div>
                         </div>
                     </div>

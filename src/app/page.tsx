@@ -91,6 +91,7 @@ export default async function Home() {
   return (
     <main className="h-full w-full">
       <ScrollProgressBar />
+      <FloatingContactBtn profile={profile} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -135,6 +136,10 @@ export default async function Home() {
         </ScrollReveal>
 
         <ScrollReveal width="100%">
+          <Certifications certificates={certificates} />
+        </ScrollReveal>
+
+        <ScrollReveal width="100%">
           <Projects initialProjects={projects} />
         </ScrollReveal>
 
@@ -146,6 +151,10 @@ export default async function Home() {
 
         <ScrollReveal width="100%">
           <Testimonials testimonials={testimonials} />
+        </ScrollReveal>
+
+        <ScrollReveal width="100%">
+          <HireMe profile={profile} settings={settings} />
         </ScrollReveal>
 
         <ScrollReveal width="100%">

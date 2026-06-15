@@ -18,7 +18,10 @@ export default function Certifications({ certificates }: CertificationsProps) {
             <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-cyan-500/5 blur-[100px] rounded-full pointer-events-none" />
 
             <div className="max-w-6xl mx-auto relative z-10">
-                <SectionHeading title="Certifications" subtitle="Verifiable accomplishments and professional credentials" />
+                <div className="flex flex-col items-center justify-center mb-10 gap-2">
+                    <SectionHeading>Certifications</SectionHeading>
+                    <p className="text-gray-400 text-center max-w-2xl">Verifiable accomplishments and professional credentials</p>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
                     {certificates.map((cert) => (

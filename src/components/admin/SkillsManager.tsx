@@ -25,6 +25,7 @@ export default function SkillsManager({ initialSkills, onSuccess }: SkillsManage
     const [skills, setSkills] = useState<SkillData[]>(initialSkills);
     const [skillName, setSkillName] = useState("");
     const [skillCategory, setSkillCategory] = useState<SkillCategory>("Frontend");
+    const [skillProficiency, setSkillProficiency] = useState<"Beginner" | "Intermediate" | "Advanced" | "Expert">("Advanced");
     const [filterCategory, setFilterCategory] = useState<SkillCategory | "All">("All");
     const [hasChanges, setHasChanges] = useState(false);
 
@@ -40,7 +41,11 @@ export default function SkillsManager({ initialSkills, onSuccess }: SkillsManage
                 alert("Skill already exists!");
                 return;
             }
-            setSkills(prev => [...prev, { name: skillName.trim(), category: skillCategory }]);
+            setSkills(prev => [...prev, { 
+                name: skillName.trim(), 
+                category: skillCategory, 
+                proficiency: skillProficiency 
+            }]);
             setSkillName("");
             setHasChanges(true);
         }
@@ -104,6 +109,17 @@ export default function SkillsManager({ initialSkills, onSuccess }: SkillsManage
                         <option value="Database">Database</option>
                         <option value="Tools">Tools</option>
                     </select>
+
+                    <select
+                        value={skillProficiency}
+                        onChange={e => setSkillProficiency(e.target.value as any)}
+                        className="px-4 py-3 bg-[#030014] border border-white/10 rounded-xl text-white focus:border-cyan-500 outline-none transition-all cursor-pointer"
+                    >
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Expert">Expert</option>
+                    </select>
                     
                     <button
                         type="button"
@@ -151,6 +167,11 @@ export default function SkillsManager({ initialSkills, onSuccess }: SkillsManage
                                 >
                                     <span className={config.color}>{config.icon}</span>
                                     <span className="text-white">{skill.name}</span>
+                                    {skill.proficiency && (
+                                        <span className="text-[10px] opacity-70 bg-white/10 px-1.5 py-0.5 rounded text-gray-300">
+                                            {skill.proficiency}
+                                        </span>
+                                    )}
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveSkill(originalIndex)}

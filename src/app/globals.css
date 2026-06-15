@@ -6,7 +6,7 @@
   --color-primary: #7042f8;
   --color-secondary: #00f6ff;
   --color-glass: rgba(255, 255, 255, 0.05);
-  --font-sans: var(--font-outfit), "Segoe UI", sans-serif;
+  --font-sans: "Outfit", "Segoe UI", sans-serif;
 
   /* ─── Custom Animations (were missing — Hero glow/gradient/tilt were broken) ─── */
   --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import SectionHeading from "../ui/SectionHeading";
 import { motion } from "framer-motion";
 import { SkillData } from "@/lib/db";
@@ -22,6 +22,125 @@ const itemVariants = {
 
 interface SkillsProps {
     skills: SkillData[];
+}
+
+const getSimpleIconSlug = (name: string): string => {
+    const mapping: Record<string, string> = {
+        "react": "react",
+        "react.js": "react",
+        "reactjs": "react",
+        "next.js": "nextdotjs",
+        "nextjs": "nextdotjs",
+        "node.js": "nodedotjs",
+        "nodejs": "nodedotjs",
+        "express.js": "express",
+        "expressjs": "express",
+        "express": "express",
+        "mongodb": "mongodb",
+        "mongo": "mongodb",
+        "postgresql": "postgresql",
+        "postgres": "postgresql",
+        "mysql": "mysql",
+        "sqlite": "sqlite",
+        "typescript": "typescript",
+        "javascript": "javascript",
+        "html": "html5",
+        "css": "css3",
+        "tailwind css": "tailwindcss",
+        "tailwindcss": "tailwindcss",
+        "bootstrap": "bootstrap",
+        "git": "git",
+        "github": "github",
+        "docker": "docker",
+        "aws": "amazonwebservices",
+        "python": "python",
+        "django": "django",
+        "flask": "flask",
+        "fastapi": "fastapi",
+        "firebase": "firebase",
+        "prisma": "prisma",
+        "graphql": "graphql",
+        "apollo": "apollographql",
+        "redux": "redux",
+        "sass": "sass",
+        "figma": "figma",
+        "postman": "postman",
+        "npm": "npm",
+        "yarn": "yarn",
+        "pnpm": "pnpm",
+        "vite": "vite",
+        "webpack": "webpack",
+        "jest": "jest",
+        "cypress": "cypress",
+        "redis": "redis",
+        "supabase": "supabase",
+        "linux": "linux",
+        "ubuntu": "ubuntu",
+        "nginx": "nginx",
+        "vercel": "vercel",
+        "netlify": "netlify",
+        "heroku": "heroku",
+        "wordpress": "wordpress",
+        "flutter": "flutter",
+        "react native": "react",
+        "dart": "dart",
+        "swift": "swift",
+        "kotlin": "kotlin",
+        "java": "openjdk",
+        "c++": "cplusplus",
+        "c#": "csharp",
+        "go": "go",
+        "golang": "go",
+        "rust": "rust",
+        "php": "php",
+        "laravel": "laravel",
+        "kubernetes": "kubernetes",
+        "terraform": "terraform",
+        "jira": "jira"
+    };
+    
+    const key = name.toLowerCase().trim();
+    if (mapping[key]) return mapping[key];
+    
+    return key.replace(/\s+/g, "").replace(/\.js/g, "dotjs").replace(/\./g, "");
+};
+
+function SkillBadge({ skill }: { skill: SkillData }) {
+    const [error, setError] = useState(false);
+    const slug = getSimpleIconSlug(skill.name);
+    const iconUrl = `https://cdn.simpleicons.org/${slug}/fff`;
+
+    return (
+        <motion.div
+            whileHover={{ scale: 1.05, y: -2 }}
+            className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-sm font-semibold transition-all duration-300 border border-white/5 hover:border-cyan-500/50 cursor-default shadow-lg hover:shadow-cyan-500/10 relative overflow-hidden group/skill"
+        >
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300" />
+            
+            {!error && (
+                <img
+                    src={iconUrl}
+                    alt=""
+                    className="w-4 h-4 object-contain transition-transform duration-300 group-hover/skill:scale-110"
+                    onError={() => setError(true)}
+                    loading="lazy"
+                />
+            )}
+            
+            <span className="relative z-10">{skill.name}</span>
+
+            {skill.proficiency && (
+                <span className={`relative z-10 text-[9px] font-extrabold tracking-wide uppercase px-1.5 py-0.5 rounded-md border ${
+                    skill.proficiency === "Expert" ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/20" :
+                    skill.proficiency === "Advanced" ? "bg-purple-500/10 text-purple-400 border-purple-500/20" :
+                    skill.proficiency === "Intermediate" ? "bg-blue-500/10 text-blue-400 border-blue-500/20" :
+                    "bg-gray-500/10 text-gray-400 border-gray-500/20"
+                }`}>
+                    {skill.proficiency}
+                </span>
+            )}
+        </motion.div>
+    );
 }
 
 const Skills = ({ skills }: SkillsProps) => {
@@ -59,14 +178,7 @@ const Skills = ({ skills }: SkillsProps) => {
 
                             <div className="flex flex-wrap gap-3 z-10">
                                 {categorySkills.map((skill, index) => (
-                                    <motion.div
-                                        key={index}
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-sm font-semibold transition-all duration-300 border border-white/5 hover:border-cyan-500/50 cursor-default shadow-lg hover:shadow-cyan-500/20 relative overflow-hidden group/skill"
-                                    >
-                                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300" />
-                                        <span className="relative z-10">{skill.name}</span>
-                                    </motion.div>
+                                    <SkillBadge skill={skill} key={index} />
                                 ))}
                             </div>
                         </motion.div>
