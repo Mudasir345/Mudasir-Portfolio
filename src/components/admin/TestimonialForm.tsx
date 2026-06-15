@@ -11,6 +11,8 @@ interface TestimonialFormProps {
     onCancel?: () => void;
 }
 
+const PLACEHOLDER_REVIEW_PATTERN = /(lorem ipsum|sample review|placeholder|test review|fake review|example review|client review)/i;
+
 export default function TestimonialForm({ initialData, onSuccess, onCancel }: TestimonialFormProps) {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState<TestimonialData>({
@@ -37,10 +39,25 @@ export default function TestimonialForm({ initialData, onSuccess, onCancel }: Te
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        const name = formData.name.trim();
+        const role = formData.role.trim();
+        const review = formData.review.trim();
+
+        if (!name || !role || !review) {
+            alert("Please complete all testimonial fields before saving.");
+            return;
+        }
+
+        if (PLACEHOLDER_REVIEW_PATTERN.test(review) || PLACEHOLDER_REVIEW_PATTERN.test(name) || PLACEHOLDER_REVIEW_PATTERN.test(role)) {
+            alert("Only real, approved client testimonials are allowed. Please remove placeholder or generic text.");
+            return;
+        }
+
         setLoading(true);
 
         try {
-            await saveTestimonial(formData);
+            await saveTestimonial({ ...formData, name, role, review });
             onSuccess();
         } catch (error) {
             console.error("Failed to save testimonial", error);

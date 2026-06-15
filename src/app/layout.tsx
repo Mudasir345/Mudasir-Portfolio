@@ -3,9 +3,18 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { getProfile, getSettings } from "@/actions/admin";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
+const metadataBase = new URL(siteUrl);
+const ogImageUrl = new URL("/og-image.jpg", metadataBase).toString();
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app"),
+  metadataBase,
   manifest: "/manifest.json",
+  icons: {
+    icon: "/profile.png",
+    shortcut: "/profile.png",
+    apple: "/profile.png",
+  },
   title: {
     default: "Mudasir Choudhry | Creative Full Stack Developer",
     template: "%s | Mudasir Choudhry",
@@ -17,7 +26,7 @@ export const metadata: Metadata = {
   publisher: "Mudasir Choudhry",
   category: "technology",
   alternates: {
-    canonical: "/",
+    canonical: siteUrl,
   },
   applicationName: "Mudasir Choudhry Portfolio",
   formatDetection: {
@@ -28,11 +37,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mudasir Choudhry | Creative Full Stack Developer",
     description: "Specializing in Next.js, 3D Web Experiences, and Automation.",
-    url: "https://mudasirchoudhry.com",
+    url: siteUrl,
     siteName: "Mudasir Choudhry Portfolio",
     images: [
       {
-        url: "/og-image.jpg",
+        url: ogImageUrl,
         width: 1200,
         height: 630,
         alt: "Mudasir Choudhry Portfolio",
@@ -45,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Mudasir Choudhry | Creative Full Stack Developer",
     description: "Building the future of the web, one pixel at a time.",
-    images: ["/og-image.jpg"],
+    images: [ogImageUrl],
     creator: "@Mudasir345",
   },
   robots: {

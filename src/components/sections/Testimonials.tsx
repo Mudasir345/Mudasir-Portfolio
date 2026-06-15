@@ -30,14 +30,29 @@ const getAvatarColor = (name: string) => {
 };
 
 const Testimonials = ({ testimonials }: TestimonialsProps) => {
-    if (testimonials.length === 0) return null;
+    const verifiedTestimonials = testimonials.filter((item) => {
+        const hasName = typeof item.name === "string" && item.name.trim().length > 0;
+        const hasReview = typeof item.review === "string" && item.review.trim().length > 0;
+        return hasName && hasReview && item.stars >= 4;
+    });
+
+    if (verifiedTestimonials.length === 0) {
+        return (
+            <section id="reviews" className="flex flex-col items-center justify-center py-20 relative z-[20]">
+                <SectionHeading>Client Reviews</SectionHeading>
+                <div className="mt-10 w-full max-w-[720px] rounded-2xl border border-white/10 bg-white/5 px-6 py-8 text-center text-gray-300 shadow-lg shadow-black/20">
+                    Verified client reviews will appear here once real feedback is added to the portfolio.
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section id="reviews" className="flex flex-col items-center justify-center py-20 relative z-[20]">
             <SectionHeading>Client Reviews</SectionHeading>
 
             <div className="flex flex-wrap justify-center gap-6 px-4 max-w-[1200px] w-full mt-10">
-                {testimonials.map((item, index) => (
+                {verifiedTestimonials.map((item, index) => (
                     <motion.div
                         key={item.id}
                         initial={{ opacity: 0, scale: 0.9 }}

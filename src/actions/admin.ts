@@ -262,12 +262,12 @@ export async function deleteTeamMember(id: string) {
 
 export async function getSettings() {
     const db = await getDB();
-    return db.settings || { showTeam: false };
+    return db.settings || { showTeam: false, available: true };
 }
 
 export async function toggleTeamSection(show: boolean) {
     const db = await getDB();
-    if (!db.settings) db.settings = { showTeam: false };
+    if (!db.settings) db.settings = { showTeam: false, available: true };
     db.settings.showTeam = show;
     await saveDB(db);
     revalidatePath("/");

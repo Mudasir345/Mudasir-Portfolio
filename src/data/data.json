@@ -19,7 +19,7 @@
     "github": "https://github.com/Mudasir345",
     "linkedin": "https://www.linkedin.com/in/mudasir345/",
     "whatsapp": "https://wa.me/923047045345",
-    "image": "/uploads/profile/1765912937189-Gemini_Generated_Image_1ew3yl1ew3yl1ew3.jpg"
+    "image": "/uploads/profile/mudasir-profile.jpg"
   },
   "skills": [
     {
@@ -1014,38 +1014,10 @@
       ]
     }
   ],
-  "testimonials": [
-    {
-      "id": "test_1",
-      "name": "Sarah Johnson",
-      "role": "CEO at TechStart",
-      "review": "Mudasir delivered our e-commerce platform ahead of schedule. The 3D animations are stunning and the performance is top-notch. Highly recommended!",
-      "stars": 5
-    },
-    {
-      "id": "test_2",
-      "name": "Michael Chen",
-      "role": "Product Manager",
-      "review": "Exceptional skills in React and Next.js. He understood our complex requirements for the automation bot and built a robust solution that saves us hours daily.",
-      "stars": 5
-    },
-    {
-      "id": "test_3",
-      "name": "David Smith",
-      "role": "Founder, Creative Agency",
-      "review": "The mobile app he built for us is seamless. His attention to detail in UI/UX design really sets him apart from other developers I've worked with.",
-      "stars": 5
-    },
-    {
-      "id": "test_4",
-      "name": "Emily Davis",
-      "role": "Marketing Director",
-      "review": "Professional, responsive, and incredibly talented. The portfolio site he built for our agency has significantly increased our lead conversion.",
-      "stars": 5
-    }
-  ],
+  "testimonials": [],
   "settings": {
     "showTeam": false,
+    "available": true,
     "cvShowCertificates": false,
     "cvShowLanguages": true,
     "cvShowInterests": false,

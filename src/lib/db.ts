@@ -129,6 +129,7 @@ export interface DBData {
     interests?: InterestData[];
     settings: {
         showTeam: boolean;
+        available?: boolean;
         cvShowCertificates?: boolean;
         cvShowLanguages?: boolean;
         cvShowInterests?: boolean;
@@ -168,6 +169,7 @@ export async function getDB(): Promise<DBData> {
             interests: [],
             settings: { 
                 showTeam: false,
+                available: true,
                 cvShowCertificates: true,
                 cvShowLanguages: true,
                 cvShowInterests: true,

@@ -462,6 +462,7 @@ export default function AdminDashboard() {
 
                                 <div className="space-y-3">
                                     {[
+                                        { key: "available", label: "Available for Work" },
                                         { key: "cvShowCertificates", label: "Certificates Section" },
                                         { key: "cvShowLanguages", label: "Languages Section" },
                                         { key: "cvShowInterests", label: "Interests Section" },

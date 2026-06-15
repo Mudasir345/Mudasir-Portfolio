@@ -21,6 +21,8 @@ export const revalidate = 3600;
 
 export default async function Home() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
+  const absoluteUrl = (path?: string) => (path ? new URL(path, siteUrl).toString() : siteUrl);
+
   const [projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests] = await Promise.all([
     getProjects(),
     getServices(),
@@ -50,7 +52,7 @@ export default async function Home() {
     "@type": "Person",
     name: profile.name,
     url: siteUrl,
-    image: profile.image || "/profile.png",
+    image: absoluteUrl(profile.image || "/profile.png"),
     description: profile.bio,
     email: profile.email,
     sameAs: [profile.github, profile.linkedin, profile.whatsapp].filter(Boolean),
@@ -83,8 +85,8 @@ export default async function Home() {
       position: index + 1,
       name: project.title,
       description: project.longDescription || project.description,
-      image: project.image,
-      url: project.liveUrl || project.githubUrl || `${siteUrl}/#projects`,
+      image: absoluteUrl(project.image),
+      url: absoluteUrl(project.liveUrl || project.githubUrl || `${siteUrl}/#projects`),
     })),
   };
 
