@@ -38,6 +38,19 @@ export default async function Home() {
     getInterests()
   ]);
 
+  const educationWithInstitutions = education.map(edu => {
+    if (edu.degree.toLowerCase().includes('matric')) {
+      return { ...edu, institution: 'Govt. Boys high school' };
+    }
+    if (edu.degree.toLowerCase().includes('intermediate')) {
+      return { ...edu, institution: 'Govt. boys graduate college' };
+    }
+    if (edu.degree.toLowerCase().includes('bachelor')) {
+      return { ...edu, institution: 'Bahaudin zakariya university Multan' };
+    }
+    return edu;
+  });
+
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -134,7 +147,7 @@ export default async function Home() {
         </ScrollReveal>
 
         <ScrollReveal width="100%">
-          <Education education={education} />
+          <Education education={educationWithInstitutions} />
         </ScrollReveal>
 
         <ScrollReveal width="100%">
