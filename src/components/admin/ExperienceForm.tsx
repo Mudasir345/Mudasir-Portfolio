@@ -20,6 +20,8 @@ export default function ExperienceForm({ initialData, onSuccess, onCancel }: Exp
         period: "",
         description: "",
         iconType: "Briefcase",
+        createdAt: new Date(),
+        updatedAt: new Date(),
     });
 
     useEffect(() => {
@@ -33,6 +35,8 @@ export default function ExperienceForm({ initialData, onSuccess, onCancel }: Exp
                 period: "",
                 description: "",
                 iconType: "Briefcase",
+                createdAt: new Date(),
+                updatedAt: new Date(),
             });
         }
     }, [initialData]);

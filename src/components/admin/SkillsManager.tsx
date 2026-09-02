@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Plus, X, Code, Server, Database, Wrench, Save } from "lucide-react";
 
 type SkillCategory = "Frontend" | "Backend" | "Database" | "Tools";
+type SkillProficiency = "Beginner" | "Intermediate" | "Advanced" | "Expert";
 
 interface SkillsManagerProps {
     initialSkills: SkillData[];
@@ -25,7 +26,7 @@ export default function SkillsManager({ initialSkills, onSuccess }: SkillsManage
     const [skills, setSkills] = useState<SkillData[]>(initialSkills);
     const [skillName, setSkillName] = useState("");
     const [skillCategory, setSkillCategory] = useState<SkillCategory>("Frontend");
-    const [skillProficiency, setSkillProficiency] = useState<"Beginner" | "Intermediate" | "Advanced" | "Expert">("Advanced");
+    const [skillProficiency, setSkillProficiency] = useState<SkillProficiency>("Advanced");
     const [filterCategory, setFilterCategory] = useState<SkillCategory | "All">("All");
     const [hasChanges, setHasChanges] = useState(false);
 
@@ -41,10 +42,13 @@ export default function SkillsManager({ initialSkills, onSuccess }: SkillsManage
                 alert("Skill already exists!");
                 return;
             }
-            setSkills(prev => [...prev, { 
+            setSkills(prev => [...prev, {
+                id: `skill_${Date.now()}`,
                 name: skillName.trim(), 
                 category: skillCategory, 
-                proficiency: skillProficiency 
+                proficiency: skillProficiency,
+                createdAt: new Date(),
+                updatedAt: new Date(),
             }]);
             setSkillName("");
             setHasChanges(true);
@@ -112,7 +116,7 @@ export default function SkillsManager({ initialSkills, onSuccess }: SkillsManage
 
                     <select
                         value={skillProficiency}
-                        onChange={e => setSkillProficiency(e.target.value as any)}
+                        onChange={e => setSkillProficiency(e.target.value as SkillProficiency)}
                         className="px-4 py-3 bg-[#030014] border border-white/10 rounded-xl text-white focus:border-cyan-500 outline-none transition-all cursor-pointer"
                     >
                         <option value="Beginner">Beginner</option>
@@ -153,7 +157,7 @@ export default function SkillsManager({ initialSkills, onSuccess }: SkillsManage
                 <div className="flex flex-wrap gap-2">
                     <AnimatePresence mode="popLayout">
                         {filteredSkills.map((skill, index) => {
-                            const config = categoryConfig[skill.category];
+                            const config = categoryConfig[skill.category as SkillCategory];
                             const originalIndex = skills.findIndex(s => s.name === skill.name);
                             
                             return (

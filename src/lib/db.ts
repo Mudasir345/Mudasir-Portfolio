@@ -1,189 +1,126 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { PrismaClient } from '@prisma/client';
+import { optimizeAllMediaInObject } from '@/lib/mediaOptimizer';
+import type {
+  profile,
+  skill,
+  experience,
+  education,
+  project,
+  gallery,
+  service,
+  servicedetail,
+  testimonial,
+  teammember,
+  certificate,
+  language,
+  interest,
+  settings,
+} from '@prisma/client';
 
-const dataFilePath = path.join(process.cwd(), "src/data/data.json");
-
-export type ProjectCategory = "Web" | "Mobile" | "Desktop" | "Automation";
-
-export interface ProjectData {
-    title: string;
-    description: string;
-    longDescription?: string; // Detailed case study text
-    features?: string[]; // List of key features
-    challenges?: string[]; // List of challenges overcome
-    techStack: string[];
-    image: string;
-    mediaType?: "image" | "video"; // New field for video support
-    gallery?: { url: string; type: "image" | "video" }[]; // Multi-image support
-    category: ProjectCategory;
-    link?: string;
-    liveUrl?: string;
-    githubUrl?: string;
-    showInCv?: boolean; // Toggle for showing on CV
+// PrismaClient ko global object par declare karein (development ke liye)
+declare global {
+  // eslint-disable-next-line no-var
+  var prisma: PrismaClient | undefined;
 }
 
-export interface TeamMember {
-    id: string;
-    name: string;
-    role: string;
-    image: string;
-    linkedin?: string;
-    github?: string;
+// Next.js mein hot-reloading ki wajah se multiple PrismaClient instances banne se rokein
+export const db =
+  global.prisma ||
+  new PrismaClient({
+    // log: ['query', 'info', 'warn', 'error'],
+  });
+
+if (process.env.NODE_ENV !== 'production') {
+  global.prisma = db;
 }
 
-export interface ServiceDetail {
-    name: string;
-    iconUrl: string;
-}
+// ─── Raw DB Types (admin.ts server actions ke liye) ───────────────────────────
+export type { profile, skill, experience, education, project, gallery, service, servicedetail, testimonial, teammember, certificate, language, interest, settings };
 
-export interface ServiceData {
-    title: string;
-    iconType: string;
-    description: string;
-    details: ServiceDetail[];
-}
+// ─── Enriched Frontend Types (components ke liye) ────────────────────────────
 
-// --- CMS v4.0 New Interfaces ---
+/**
+ * ProfileData — DB profile row + transformed fields
+ * - roles: string[] (DB mein comma-separated string hai)
+ * - stats: nested object (DB mein flat fields hain)
+ */
+export type ProfileData = Omit<profile, 'roles' | 'experienceYears' | 'projectsCompleted' | 'satisfaction' | 'availability'> & {
+  roles: string[];
+  stats: {
+    experienceYears: string;
+    projectsCompleted: string;
+    satisfaction: string;
+    availability: string;
+  };
+};
 
-export interface ProfileData {
-    name: string;
-    image?: string; // Dynamic profile image
-    roles: string[]; // For TypeAnimation
-    bio: string; // Short bio for Hero
-    aboutText: string; // Longer text for About section
+export type SkillData = skill;
+
+export type ExperienceData = experience;
+
+export type EducationData = education;
+
+export type GalleryData = gallery;
+
+/**
+ * ProjectData — project row + gallery + parsed arrays
+ * - techStack, features, challenges are string[] (DB mein comma-separated)
+ */
+export type ProjectData = Omit<project, 'techStack' | 'features' | 'challenges'> & {
+  techStack: string[];
+  features: string[];
+  challenges: string[];
+  gallery: GalleryData[];
+};
+
+export type ServiceDetailData = Pick<servicedetail, 'name' | 'iconUrl'>;
+
+export type ServiceData = Omit<service, never> & {
+  details: ServiceDetailData[];
+};
+
+export type TestimonialStatus = "pending" | "approved" | "rejected" | "spam";
+
+export type TestimonialData = testimonial;
+
+export type TeamMember = teammember;
+
+export type CertificateData = certificate;
+
+export type LanguageData = language;
+
+export type InterestData = interest;
+
+export type SettingsData = settings;
+
+// Project category type
+export type ProjectCategory = 'Web' | 'Mobile' | 'Desktop' | 'Automation';
+
+// ─── DB → Frontend Transformers ───────────────────────────────────────────────
+
+/** Transform raw DB profile to ProfileData */
+export function transformProfile(raw: profile): ProfileData {
+  const data: ProfileData = {
+    ...raw,
+    roles: raw.roles ? raw.roles.split(',').map((r) => r.trim()).filter(Boolean) : [],
     stats: {
-        experienceYears: string;
-        projectsCompleted: string;
-        satisfaction: string;
-        availability: string;
-    };
-    email: string;
-    github: string;
-    linkedin: string;
-    whatsapp: string;
-    declaration?: string; // Appears at the bottom of the CV
+      experienceYears: raw.experienceYears,
+      projectsCompleted: raw.projectsCompleted,
+      satisfaction: raw.satisfaction,
+      availability: raw.availability,
+    },
+  };
+  return optimizeAllMediaInObject(data);
 }
 
-export interface SkillData {
-    name: string;
-    category: "Frontend" | "Backend" | "Database" | "Tools";
-    proficiency?: "Beginner" | "Intermediate" | "Advanced" | "Expert";
-}
-
-export interface ExperienceData {
-    id: string; // Unique ID for keying/editing
-    title: string;
-    company: string;
-    period: string;
-    description: string;
-    iconType: "Briefcase" | "Code";
-}
-
-export interface EducationData {
-    id: string;
-    degree: string;
-    institution: string;
-    period: string;
-    description: string;
-    iconType: "GraduationCap" | "BookOpen" | "School";
-}
-
-export interface TestimonialData {
-    id: string;
-    name: string;
-    role: string;
-    review: string;
-    stars: number;
-}
-
-export interface CertificateData {
-    id: string;
-    title: string;
-    issuer: string;
-    date: string;
-    link?: string;
-}
-
-export interface LanguageData {
-    id: string;
-    name: string;
-    proficiency: string; // Native, Fluent, Intermediate, etc.
-}
-
-export interface InterestData {
-    id: string;
-    name: string;
-}
-
-export interface DBData {
-    profile: ProfileData;
-    projects: ProjectData[];
-    services: ServiceData[];
-    skills: SkillData[];
-    experience: ExperienceData[];
-    education: EducationData[];
-    testimonials: TestimonialData[];
-    team: TeamMember[];
-    certificates?: CertificateData[];
-    languages?: LanguageData[];
-    interests?: InterestData[];
-    settings: {
-        showTeam: boolean;
-        available?: boolean;
-        cvShowCertificates?: boolean;
-        cvShowLanguages?: boolean;
-        cvShowInterests?: boolean;
-        cvShowDeclaration?: boolean;
-    };
-}
-
-export async function getDB(): Promise<DBData> {
-    try {
-        const data = await fs.readFile(dataFilePath, "utf8");
-        return JSON.parse(data);
-    } catch (error) {
-        console.error("Error reading database:", error);
-        // Return default empty structure if file read fails - THIS MUST BE ROBUST
-        return {
-            profile: {
-                name: "Mudasir Choudhry",
-                image: "/profile.jpg",
-                roles: ["Developer"],
-                bio: "",
-                aboutText: "",
-                stats: { experienceYears: "0", projectsCompleted: "0", satisfaction: "100%", availability: "24/7" },
-                email: "",
-                github: "",
-                linkedin: "",
-                whatsapp: ""
-            },
-            projects: [],
-            services: [],
-            skills: [],
-            experience: [],
-            education: [],
-            testimonials: [],
-            team: [],
-            certificates: [],
-            languages: [],
-            interests: [],
-            settings: { 
-                showTeam: false,
-                available: true,
-                cvShowCertificates: true,
-                cvShowLanguages: true,
-                cvShowInterests: true,
-                cvShowDeclaration: true
-            }
-        };
-    }
-}
-
-export async function saveDB(data: DBData): Promise<void> {
-    try {
-        await fs.writeFile(dataFilePath, JSON.stringify(data, null, 2), "utf8");
-    } catch (error) {
-        console.error("Error writing database:", error);
-        throw new Error("Failed to save data");
-    }
+/** Transform raw DB project to ProjectData */
+export function transformProject(raw: project & { gallery: gallery[] }): ProjectData {
+  const data: ProjectData = {
+    ...raw,
+    techStack: raw.techStack ? raw.techStack.split(',').map((t) => t.trim()).filter(Boolean) : [],
+    features: raw.features ? raw.features.split(',').map((f) => f.trim()).filter(Boolean) : [],
+    challenges: raw.challenges ? raw.challenges.split(',').map((c) => c.trim()).filter(Boolean) : [],
+    gallery: raw.gallery,
+  };
+  return optimizeAllMediaInObject(data);
 }

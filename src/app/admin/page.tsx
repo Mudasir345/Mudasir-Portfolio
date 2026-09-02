@@ -20,11 +20,6 @@ export default function AdminLogin() {
         try {
             const isValid = await authenticate(password);
             if (isValid) {
-                // Set a simple cookie or local storage to persist concise session state if needed, 
-                // but for this simple implementation, we'll just redirect. 
-                // Ideally, use a middleware for route protection in a production app.
-                // For this request (no backend), we will store a flag in localStorage for the Dashboard to check.
-                localStorage.setItem("isAdminAuthenticated", "true");
                 router.push("/admin/dashboard");
             } else {
                 setError("Invalid Password");

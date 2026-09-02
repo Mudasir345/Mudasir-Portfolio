@@ -1,43 +1,81 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ProfileData } from "@/lib/db";
 
 interface NavbarProps {
-    profile: ProfileData;
+    profile: ProfileData | null;
     settings?: any;
 }
 
+const SECTIONS = ['about-me', 'skills', 'experience', 'education', 'projects', 'services'] as const;
+type SectionId = typeof SECTIONS[number];
+
 const Navbar = ({ profile, settings }: NavbarProps) => {
     const pathname = usePathname();
-    const [activeSection, setActiveSection] = useState("about-me");
+    const [activeSection, setActiveSection] = useState<SectionId>("about-me");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const rafIdRef = useRef<number | null>(null);
+    const tickingRef = useRef<boolean>(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const sections = ['about-me', 'skills', 'experience', 'education', 'projects', 'services'];
+    const findActiveSection = useCallback((): SectionId | null => {
+        if (typeof document === "undefined") return null;
+        const threshold = Math.max(200, Math.min(window.innerHeight * 0.35, 350));
+        let best: SectionId | null = null;
+        let bestDistance = Infinity;
 
-            const current = sections.find(section => {
-                const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    return rect.top <= 300 && rect.bottom >= 300;
-                }
-                return false;
-            });
-
-            if (current) {
-                setActiveSection(current);
+        for (const section of SECTIONS) {
+            const element = document.getElementById(section);
+            if (!element) continue;
+            const rect = element.getBoundingClientRect();
+            const top = rect.top;
+            const bottom = rect.bottom;
+            const inView = top <= threshold && bottom >= threshold;
+            if (inView) return section;
+            const center = top + (bottom - top) / 2 - threshold;
+            const distance = Math.abs(center);
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                best = section;
             }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+        }
+        return best;
     }, []);
 
-    const navLinks = [
+    const updateActive = useCallback(() => {
+        tickingRef.current = false;
+        const current = findActiveSection();
+        if (current) setActiveSection(current);
+    }, [findActiveSection]);
+
+    const requestTick = useCallback(() => {
+        if (tickingRef.current) return;
+        tickingRef.current = true;
+        rafIdRef.current = window.requestAnimationFrame(updateActive);
+    }, [updateActive]);
+
+    useEffect(() => {
+        if (typeof window === "undefined") return undefined;
+
+        requestTick();
+        window.addEventListener("scroll", requestTick, { passive: true });
+        window.addEventListener("resize", requestTick, { passive: true });
+        window.addEventListener("orientationchange", requestTick, { passive: true });
+
+        return () => {
+            window.removeEventListener("scroll", requestTick);
+            window.removeEventListener("resize", requestTick);
+            window.removeEventListener("orientationchange", requestTick);
+            if (rafIdRef.current !== null) {
+                window.cancelAnimationFrame(rafIdRef.current);
+                rafIdRef.current = null;
+            }
+        };
+    }, [requestTick]);
+
+    const navLinks: Array<{ name: string; href: string; id: SectionId }> = [
         { name: 'About', href: '#about-me', id: 'about-me' },
         { name: 'Skills', href: '#skills', id: 'skills' },
         { name: 'Services', href: '#services', id: 'services' },
@@ -57,7 +95,7 @@ const Navbar = ({ profile, settings }: NavbarProps) => {
                     onClick={() => setIsMobileMenuOpen(false)}
                 >
                     <span className="font-bold ml-[10px] text-gray-300 group-hover:text-white transition-colors duration-300 transform group-hover:scale-105 flex items-center gap-2">
-                        {profile.name}
+                        {profile?.name ?? "Portfolio"}
                         {settings?.available !== false && (
                             <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.15)] relative">
                                 <span className="relative flex h-2 w-2">

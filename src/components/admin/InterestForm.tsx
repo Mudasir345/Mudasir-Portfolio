@@ -16,6 +16,8 @@ export default function InterestForm({ initialData, onSuccess, onCancel }: Inter
     const [formData, setFormData] = useState<InterestData>({
         id: "",
         name: "",
+        createdAt: new Date(),
+        updatedAt: new Date(),
     });
 
     useEffect(() => {
@@ -25,6 +27,8 @@ export default function InterestForm({ initialData, onSuccess, onCancel }: Inter
             setFormData({
                 id: `int_${Date.now()}`,
                 name: "",
+                createdAt: new Date(),
+                updatedAt: new Date(),
             });
         }
     }, [initialData]);

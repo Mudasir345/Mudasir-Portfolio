@@ -15,30 +15,34 @@ import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
 import FloatingContactBtn from "@/components/ui/FloatingContactBtn";
 import HireMe from "@/components/sections/HireMe";
 import Certifications from "@/components/sections/Certifications";
-import { getProjects, getServices, getProfile, getSkills, getExperience, getEducation, getTestimonials, getTeam, getSettings, getCertificates, getLanguages, getInterests } from "@/actions/admin";
+import Scroll3DWrapper from "@/components/3d/Scroll3DWrapper";
+import { getPortfolioData } from "@/actions/admin";
+import type { EducationData, SkillData, ServiceData, ProjectData } from "@/lib/db";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
   const absoluteUrl = (path?: string) => (path ? new URL(path, siteUrl).toString() : siteUrl);
 
-  const [projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests] = await Promise.all([
-    getProjects(),
-    getServices(),
-    getProfile(),
-    getSkills(),
-    getExperience(),
-    getEducation(),
-    getTestimonials(),
-    getTeam(),
-    getSettings(),
-    getCertificates(),
-    getLanguages(),
-    getInterests()
-  ]);
+  const { projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests } = await getPortfolioData();
 
-  const educationWithInstitutions = education.map(edu => {
+  // Profile null guard — DB empty hone ki surat mein fallback
+  if (!profile || !settings) {
+    return (
+      <main className="h-screen w-full flex items-center justify-center bg-[#030014] text-white text-center px-6">
+        <div>
+          <h1 className="text-3xl font-bold mb-4">Portfolio Setup Required</h1>
+          <p className="text-gray-400 mb-6">No profile data found in the database.</p>
+          <a href="/admin" className="px-6 py-3 bg-purple-600 rounded-xl hover:bg-purple-700 transition-colors">
+            Go to Admin Panel
+          </a>
+        </div>
+      </main>
+    );
+  }
+
+  const educationWithInstitutions = education.map((edu: EducationData) => {
     if (edu.degree.toLowerCase().includes('matric')) {
       return { ...edu, institution: 'Govt. Boys high school' };
     }
@@ -69,7 +73,7 @@ export default async function Home() {
     description: profile.bio,
     email: profile.email,
     sameAs: [profile.github, profile.linkedin, profile.whatsapp].filter(Boolean),
-    knowsAbout: skills.map((skill) => skill.name),
+    knowsAbout: skills.map((skill: SkillData) => skill.name),
     jobTitle: profile.roles[0] || "Full Stack Developer",
   };
 
@@ -77,7 +81,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Development Services",
-    itemListElement: services.map((service, index) => ({
+    itemListElement: services.map((service: ServiceData, index: number) => ({
       "@type": "Service",
       position: index + 1,
       name: service.title,
@@ -93,7 +97,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Featured Projects",
-    itemListElement: projects.slice(0, 8).map((project, index) => ({
+    itemListElement: projects.slice(0, 8).map((project: ProjectData, index: number) => ({
       "@type": "CreativeWork",
       position: index + 1,
       name: project.title,
@@ -104,7 +108,9 @@ export default async function Home() {
   };
 
   return (
-    <main className="h-full w-full">
+    <main className="h-full w-full relative">
+      <link rel="preload" as="image" href={profile.image || "/profile.jpg"} fetchPriority="high" />
+      <Scroll3DWrapper />
       <ScrollProgressBar />
       <FloatingContactBtn profile={profile} />
       <script

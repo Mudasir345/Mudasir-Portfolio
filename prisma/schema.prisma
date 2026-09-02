@@ -1,0 +1,185 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model certificate {
+  id        String   @id @default(cuid())
+  title     String
+  issuer    String
+  date      String
+  link      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model education {
+  id          String   @id @default(cuid())
+  degree      String
+  institution String
+  period      String
+  description String   @db.Text
+  iconType    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model experience {
+  id          String   @id @default(cuid())
+  title       String
+  company     String
+  period      String
+  description String   @db.Text
+  iconType    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model gallery {
+  id        String   @id @default(cuid())
+  url       String
+  type      String
+  projectId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  project   project  @relation(fields: [projectId], references: [id], onDelete: Cascade, map: "Gallery_projectId_fkey")
+
+  @@index([projectId], map: "Gallery_projectId_fkey")
+}
+
+model interest {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model language {
+  id          String   @id @default(cuid())
+  name        String
+  proficiency String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model profile {
+  id                String   @id @default(cuid())
+  name              String
+  image             String?
+  roles             String
+  bio               String   @db.Text
+  aboutText         String   @db.Text
+  experienceYears   String
+  projectsCompleted String
+  satisfaction      String
+  availability      String
+  email             String
+  github            String
+  linkedin          String
+  whatsapp          String
+  declaration       String?  @db.Text
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model project {
+  id              String    @id @default(cuid())
+  title           String
+  description     String    @db.Text
+  longDescription String?   @db.Text
+  features        String
+  challenges      String
+  techStack       String
+  image           String
+  mediaType       String?
+  category        String
+  link            String?
+  liveUrl         String?
+  githubUrl       String?
+  showInCv        Boolean?    @default(false)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  gallery         gallery[]
+  testimonials    testimonial[]
+
+  @@index([category], map: "Project_category_idx")
+}
+
+model service {
+  id            String          @id @default(cuid())
+  title         String
+  iconType      String
+  description   String          @db.Text
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  servicedetail servicedetail[]
+}
+
+model servicedetail {
+  id        String   @id @default(cuid())
+  name      String
+  iconUrl   String
+  serviceId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  service   service  @relation(fields: [serviceId], references: [id], onDelete: Cascade, map: "ServiceDetail_serviceId_fkey")
+
+  @@index([serviceId], map: "ServiceDetail_serviceId_fkey")
+}
+
+model settings {
+  id                 String   @id @default(cuid())
+  showTeam           Boolean
+  available          Boolean?
+  cvShowCertificates Boolean?
+  cvShowLanguages    Boolean?
+  cvShowInterests    Boolean?
+  cvShowDeclaration  Boolean?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model skill {
+  id          String   @id @default(cuid())
+  name        String   @unique(map: "Skill_name_key")
+  category    String
+  proficiency String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category], map: "Skill_category_idx")
+}
+
+model teammember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  image     String
+  linkedin  String?
+  github    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  email       String?
+  role        String
+  image       String?
+  review      String   @db.Text
+  stars       Int
+  status      String   @default("pending")
+  isVerified  Boolean  @default(false)
+  projectId   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project     project? @relation(fields: [projectId], references: [id], onDelete: SetNull, map: "Testimonial_projectId_fkey")
+
+  @@index([status], map: "Testimonial_status_idx")
+  @@index([projectId], map: "Testimonial_projectId_fkey")
+}

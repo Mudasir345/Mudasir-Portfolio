@@ -1,13 +1,15 @@
 "use client";
 
 import React from "react";
-import ParticleBackground from "../3d/ParticleBackground";
+import dynamic from 'next/dynamic';
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Smartphone } from "lucide-react";
 import ResumeDownloadBtn from "../resume/ResumeDownloadBtn";
-import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, CertificateData, LanguageData, InterestData, DBData } from '@/lib/db';
+import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, CertificateData, LanguageData, InterestData, SettingsData } from '@/lib/db';
+
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 interface HeroProps {
     profile: ProfileData;
@@ -18,44 +20,45 @@ interface HeroProps {
     certificates: CertificateData[];
     languages: LanguageData[];
     interests: InterestData[];
-    settings: DBData["settings"];
+    settings: SettingsData | null;
 }
 
 const Hero = ({ profile, skills, experience, education, projects, certificates, languages, interests, settings }: HeroProps) => {
+    const prefersReducedMotion = usePrefersReducedMotion();
     // Generate sequence for TypeAnimation from roles array
     const rolesSequence = profile.roles.flatMap(role => [role, 1000]);
 
     return (
         <div className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden" id="about-me">
-            <ParticleBackground />
-
-            {/* Cosmic Glow Effects */}
-            <div className="absolute top-[-20%] left-[-20%] w-[50vw] h-[50vw] bg-purple-600/20 rounded-full blur-[120px] z-0 animate-pulse-slow pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-20%] w-[50vw] h-[50vw] bg-cyan-600/20 rounded-full blur-[120px] z-0 animate-pulse-slow pointer-events-none delay-1000" />
+            {/* Cosmic Glow Effects (Lightweight Radial Gradients for Instant GPU Paint) */}
+            <div className="absolute top-[-20%] left-[-20%] w-[50vw] h-[50vw] rounded-full pointer-events-none z-0" style={{ background: "radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 70%)" }} />
+            <div className="absolute bottom-[-20%] right-[-20%] w-[50vw] h-[50vw] rounded-full pointer-events-none z-0" style={{ background: "radial-gradient(circle, rgba(8, 145, 178, 0.18) 0%, transparent 70%)" }} />
 
             {/* Container */}
             <div className="z-[20] flex w-full max-w-[1200px] flex-col items-center justify-center gap-8 px-5 pb-12 pt-32 sm:px-6 md:flex-row md:justify-between md:gap-16 md:px-8 md:pt-40">
 
                 {/* Profile Image (Left on Desktop) */}
                 <motion.div
-                    initial={{ opacity: 0, x: -50 }}
+                    initial={{ opacity: 1, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                     className="relative order-1 mt-16 flex w-full flex-col items-center md:mt-0 md:w-1/2 md:items-start"
                 >
                     {/* Profile Image Container with Glow */}
                     <div className="group relative h-[220px] w-[220px] sm:h-[260px] sm:w-[260px] md:h-[400px] md:w-[400px]">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full opacity-75 group-hover:opacity-100 transition duration-500"></div>
                         <div className="relative w-full h-full rounded-full p-[4px] bg-[#0c051f] shadow-2xl shadow-purple-900/40">
                             <div className="w-full h-full rounded-full overflow-hidden bg-black relative">
                                 <Image
-                                    src={profile.image || "/profile.jpg"} // Fallback to default
+                                    src={profile.image || "/profile.jpg"}
                                     alt={profile.name}
                                     width={400}
                                     height={400}
-                                    sizes="(max-width: 768px) 260px, 400px"
+                                    quality={80}
+                                    sizes="(max-width: 640px) 220px, (max-width: 768px) 260px, 400px"
                                     className="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-700 ease-in-out"
                                     priority
+                                    fetchPriority="high"
                                 />
                             </div>
                         </div>
@@ -178,4 +181,3 @@ const Hero = ({ profile, skills, experience, education, projects, certificates, 
 };
 
 export default Hero;
-

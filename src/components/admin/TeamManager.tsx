@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { TeamMember } from "@/lib/db";
-import { addTeamMember, deleteTeamMember, updateTeamMember, toggleTeamSection, getSettings } from "@/actions/admin";
+import { addTeamMember, deleteTeamMember, updateTeamMember, getSettings, updateSettings } from "@/actions/admin";
 import MediaUploader from "./MediaUploader";
 import { Plus, Trash2, Edit2, Github, Linkedin, Users, ToggleLeft, ToggleRight, Save, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,7 +19,7 @@ export default function TeamManager({ initialTeam }: TeamManagerProps) {
     const [loading, setLoading] = useState(false);
 
     // Form State
-    const [formData, setFormData] = useState<TeamMember>({
+    const [formData, setFormData] = useState<Omit<TeamMember, 'createdAt' | 'updatedAt'>>({
         id: "",
         name: "",
         role: "",
@@ -32,7 +32,7 @@ export default function TeamManager({ initialTeam }: TeamManagerProps) {
         // Fetch specific settings on mount
         const loadSettings = async () => {
             const settings = await getSettings();
-            setShowTeamSection(settings.showTeam);
+            setShowTeamSection(settings?.showTeam ?? false);
         };
         loadSettings();
     }, []);
@@ -51,7 +51,14 @@ export default function TeamManager({ initialTeam }: TeamManagerProps) {
     };
 
     const handleEdit = (member: TeamMember) => {
-        setFormData(member);
+        setFormData({
+            id: member.id,
+            name: member.name,
+            role: member.role,
+            image: member.image,
+            linkedin: member.linkedin ?? "",
+            github: member.github ?? "",
+        });
         setEditingId(member.id);
         setIsEditing(true);
     };
@@ -68,15 +75,13 @@ export default function TeamManager({ initialTeam }: TeamManagerProps) {
 
         try {
             if (editingId) {
-                // Update
-                const updated = { ...formData };
+                const updated = { name: formData.name, role: formData.role, image: formData.image, linkedin: formData.linkedin, github: formData.github };
                 await updateTeamMember(editingId, updated);
-                setTeam(team.map(t => t.id === editingId ? updated : t));
+                setTeam(team.map(t => t.id === editingId ? { ...t, ...updated } : t));
             } else {
-                // Add
-                const newMember = { ...formData, id: Date.now().toString() };
+                const newMember = { name: formData.name, role: formData.role, image: formData.image, linkedin: formData.linkedin, github: formData.github };
                 await addTeamMember(newMember);
-                setTeam([...team, newMember]);
+                setTeam([...team, { ...newMember, id: Date.now().toString(), createdAt: new Date(), updatedAt: new Date() }]);
             }
             resetForm();
         } catch (error) {
@@ -90,7 +95,7 @@ export default function TeamManager({ initialTeam }: TeamManagerProps) {
     const handleToggle = async () => {
         const newValue = !showTeamSection;
         setShowTeamSection(newValue);
-        await toggleTeamSection(newValue);
+        await updateSettings({ showTeam: newValue });
     };
 
     return (

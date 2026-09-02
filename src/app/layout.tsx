@@ -1,11 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { getProfile, getSettings } from "@/actions/admin";
+import { getFallbackPortfolioData } from "@/lib/fallbackData";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
 const metadataBase = new URL(siteUrl);
 const ogImageUrl = new URL("/og-image.jpg", metadataBase).toString();
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   metadataBase,
@@ -82,17 +92,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [profile, settings] = await Promise.all([getProfile(), getSettings()]);
+  const [profile, settings] = await Promise.all([
+    getProfile().catch(() => null),
+    getSettings().catch(() => null),
+  ]);
+  const fallback = getFallbackPortfolioData();
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
-      </head>
+    <html lang="en" suppressHydrationWarning className={outfit.className}>
       <body className="bg-[#030014] overflow-y-scroll overflow-x-hidden antialiased">
-        <Navbar profile={profile} settings={settings} />
+        <Navbar profile={profile ?? fallback.profile} settings={settings ?? fallback.settings} />
         {children}
       </body>
     </html>

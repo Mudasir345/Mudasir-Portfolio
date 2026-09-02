@@ -13,38 +13,36 @@ interface ProjectFormProps {
     onCancel?: () => void;
 }
 
+const createEmptyProject = (): ProjectData => ({
+    id: `project_${Date.now()}`,
+    title: "",
+    description: "",
+    longDescription: null,
+    features: [],
+    challenges: [],
+    image: "",
+    mediaType: "image",
+    gallery: [],
+    category: "Web",
+    techStack: [],
+    link: null,
+    liveUrl: "",
+    githubUrl: "",
+    showInCv: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+});
+
 export default function ProjectForm({ onSuccess, initialData, onCancel }: ProjectFormProps) {
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState<ProjectData>({
-        title: "",
-        description: "",
-        image: "",
-        mediaType: "image",
-        gallery: [],
-        category: "Web",
-        techStack: [],
-        liveUrl: "",
-        githubUrl: "",
-        showInCv: true,
-    });
+    const [formData, setFormData] = useState<ProjectData>(createEmptyProject);
     const [tagInput, setTagInput] = useState("");
 
     useEffect(() => {
         if (initialData) {
             setFormData(initialData);
         } else {
-            setFormData({
-                title: "",
-                description: "",
-                image: "",
-                mediaType: "image",
-                gallery: [],
-                category: "Web",
-                techStack: [],
-                liveUrl: "",
-                githubUrl: "",
-                showInCv: true,
-            });
+            setFormData(createEmptyProject());
         }
     }, [initialData]);
 
@@ -65,24 +63,13 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
 
         try {
             if (initialData) {
-                await updateProject(initialData.title, formData);
+                await updateProject(initialData.id, formData);
             } else {
                 await addProject(formData);
             }
 
             if (!initialData) {
-                setFormData({
-                    title: "",
-                    description: "",
-                    image: "",
-                    mediaType: "image",
-                    gallery: [],
-                    category: "Web",
-                    techStack: [],
-                    liveUrl: "",
-                    githubUrl: "",
-                    showInCv: true,
-                });
+                setFormData(createEmptyProject());
             }
             onSuccess();
         } catch (error) {
@@ -194,7 +181,17 @@ export default function ProjectForm({ onSuccess, initialData, onCancel }: Projec
                                     onUploadComplete={(path, type) => {
                                         setFormData({
                                             ...formData,
-                                            gallery: [...(formData.gallery || []), { url: path, type: type }]
+                                            gallery: [
+                                                ...(formData.gallery || []),
+                                                {
+                                                    id: `gallery_${Date.now()}`,
+                                                    url: path,
+                                                    type,
+                                                    projectId: formData.id,
+                                                    createdAt: new Date(),
+                                                    updatedAt: new Date(),
+                                                },
+                                            ]
                                         });
                                     }}
                                     onRemove={() => { }}

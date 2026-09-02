@@ -19,6 +19,8 @@ export default function CertificateForm({ initialData, onSuccess, onCancel }: Ce
         issuer: "",
         date: "",
         link: "",
+        createdAt: new Date(),
+        updatedAt: new Date(),
     });
 
     useEffect(() => {
@@ -31,6 +33,8 @@ export default function CertificateForm({ initialData, onSuccess, onCancel }: Ce
                 issuer: "",
                 date: "",
                 link: "",
+                createdAt: new Date(),
+                updatedAt: new Date(),
             });
         }
     }, [initialData]);

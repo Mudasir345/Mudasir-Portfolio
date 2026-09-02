@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { addService, updateService } from "@/actions/admin";
-import { ServiceData, ServiceDetail } from "@/lib/db";
+import { ServiceData, ServiceDetailData } from "@/lib/db";
 import { motion } from "framer-motion";
 import { Plus, X } from "lucide-react";
 
@@ -12,14 +12,19 @@ interface ServiceFormProps {
     onCancel?: () => void;
 }
 
+const createEmptyService = (): ServiceData => ({
+    id: `service_${Date.now()}`,
+    title: "",
+    iconType: "Code",
+    description: "",
+    details: [],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+});
+
 export default function ServiceForm({ onSuccess, initialData, onCancel }: ServiceFormProps) {
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState<ServiceData>({
-        title: "",
-        iconType: "Code",
-        description: "",
-        details: [],
-    });
+    const [formData, setFormData] = useState<ServiceData>(createEmptyService);
 
     // Detail Input State
     const [detailName, setDetailName] = useState("");
@@ -29,12 +34,7 @@ export default function ServiceForm({ onSuccess, initialData, onCancel }: Servic
         if (initialData) {
             setFormData(initialData);
         } else {
-            setFormData({
-                title: "",
-                iconType: "Code",
-                description: "",
-                details: [],
-            });
+            setFormData(createEmptyService());
         }
     }, [initialData]);
 
@@ -61,17 +61,12 @@ export default function ServiceForm({ onSuccess, initialData, onCancel }: Servic
 
         try {
             if (initialData) {
-                await updateService(initialData.title, formData);
+                await updateService(initialData.id, formData);
             } else {
                 await addService(formData);
             }
             if (!initialData) {
-                setFormData({
-                    title: "",
-                    iconType: "Code",
-                    description: "",
-                    details: [],
-                });
+                setFormData(createEmptyService());
             }
             onSuccess();
         } catch (error) {

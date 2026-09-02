@@ -1,0 +1,300 @@
+{
+  "mapping": {
+    "/projects/3d_particles.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486471/portfolio/projects/3d_particles-1787486466715.jpg",
+    "/projects/angular component.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486472/portfolio/projects/angular_component-1787486469167.png",
+    "/projects/arplayer_mockup.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486474/portfolio/projects/arplayer_mockup-1787486471359.jpg",
+    "/projects/arplayer_mockup.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486475/portfolio/projects/arplayer_mockup-1787486472315.jpg",
+    "/projects/bazaria admin (1).png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486476/portfolio/projects/bazaria_admin__1_-1787486473175.png",
+    "/projects/bazaria admin.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486477/portfolio/projects/bazaria_admin-1787486473929.png",
+    "/projects/bazario_customer.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486477/portfolio/projects/bazario_customer-1787486474805.jpg",
+    "/projects/bazario_web.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486478/portfolio/projects/bazario_web-1787486475431.jpg",
+    "/projects/boardnbarrel_mockup.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486479/portfolio/projects/boardnbarrel_mockup-1787486476154.jpg",
+    "/projects/boardnbarrel_mockup.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486480/portfolio/projects/boardnbarrel_mockup-1787486476873.jpg",
+    "/projects/calculator_icon.svg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486480/portfolio/projects/calculator_icon-1787486477770.svg",
+    "/projects/calculator_mockup.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486483/portfolio/projects/calculator_mockup-1787486479676.jpg",
+    "/projects/fb_scraper_fixed.svg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486483/portfolio/projects/fb_scraper_fixed-1787486480701.svg",
+    "/projects/fb_scraper_safe.svg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486485/portfolio/projects/fb_scraper_safe-1787486482734.svg",
+    "/projects/food_recipe_mockup.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486487/portfolio/projects/food_recipe_mockup-1787486484350.jpg",
+    "/projects/food_recipe_mockup.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486489/portfolio/projects/food_recipe_mockup-1787486486176.jpg",
+    "/projects/google_review_bot.svg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486490/portfolio/projects/google_review_bot-1787486487087.svg",
+    "/projects/kal_shopping.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486491/portfolio/projects/kal_shopping-1787486488517.jpg",
+    "/projects/life changely (1).png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486492/portfolio/projects/life_changely__1_-1787486489224.png",
+    "/projects/life_changely.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486493/portfolio/projects/life_changely-1787486489948.jpg",
+    "/projects/merngpt_mockup.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486493/portfolio/projects/merngpt_mockup-1787486490654.jpg",
+    "/projects/merngpt_mockup.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486494/portfolio/projects/merngpt_mockup-1787486491361.jpg",
+    "/projects/notepad_mockup.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486495/portfolio/projects/notepad_mockup-1787486492179.jpg",
+    "/projects/notepad_mockup.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486496/portfolio/projects/notepad_mockup-1787486492987.jpg",
+    "/projects/payroll_mockup.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486497/portfolio/projects/payroll_mockup-1787486494614.jpg",
+    "/projects/payroll_mockup.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486498/portfolio/projects/payroll_mockup-1787486495227.jpg",
+    "/projects/peplexity clone (1).png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486499/portfolio/projects/peplexity_clone__1_-1787486496059.png",
+    "/projects/peplexity clone.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486499/portfolio/projects/peplexity_clone-1787486496799.png",
+    "/projects/perplexity_mockup.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486500/portfolio/projects/perplexity_mockup-1787486497459.jpg",
+    "/projects/perplexity_mockup.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486501/portfolio/projects/perplexity_mockup-1787486498080.jpg",
+    "/projects/portfolio (1).png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486501/portfolio/projects/portfolio__1_-1787486498769.png",
+    "/projects/portfolio.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486502/portfolio/projects/portfolio-1787486499443.png",
+    "/projects/portfolio_mockup.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486503/portfolio/projects/portfolio_mockup-1787486500164.jpg",
+    "/projects/README.md": "https://res.cloudinary.com/as4hjbxb/raw/upload/v1787486503/portfolio/projects/README-1787486500859.md",
+    "/projects/reddit_bot_icon.svg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486504/portfolio/projects/reddit_bot_icon-1787486501383.svg",
+    "/projects/rn_chatbot.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486506/portfolio/projects/rn_chatbot-1787486503581.jpg",
+    "/projects/stopwatch_icon.svg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486507/portfolio/projects/stopwatch_icon-1787486504360.svg",
+    "/projects/trave_social.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486508/portfolio/projects/trave_social-1787486505700.jpg",
+    "/projects/tutorial_comp.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486509/portfolio/projects/tutorial_comp-1787486506465.jpg",
+    "/projects/visertube_mockup.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486510/portfolio/projects/visertube_mockup-1787486507274.jpg",
+    "/projects/visertube_mockup.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486511/portfolio/projects/visertube_mockup-1787486507931.jpg",
+    "/projects/web ai chat (1).png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486511/portfolio/projects/web_ai_chat__1_-1787486508735.png",
+    "/projects/web_chatbot.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486512/portfolio/projects/web_chatbot-1787486509428.jpg",
+    "/uploads/projects/1765860493589-WhatsApp_Image_2025-12-10_at_21.06.00_0ddf66cf__1_.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486513/portfolio/projects/1765860493589-WhatsApp_Image_2025-12-10_at_21_06_00_0ddf66cf__1_-1787486510155.jpg",
+    "/uploads/projects/1765860509527-WhatsApp_Image_2025-12-10_at_18.28.25_69146a9f__1_.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486514/portfolio/projects/1765860509527-WhatsApp_Image_2025-12-10_at_18_28_25_69146a9f__1_-1787486510995.jpg",
+    "/uploads/profile/mudasir-profile.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486514/portfolio/profile/mudasir-profile-1787486511724.jpg",
+    "/profile.png": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486515/portfolio/profile/profile-1787486512620.png",
+    "/profile.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486516/portfolio/profile/profile-1787486513591.jpg",
+    "/og-image.jpg": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486517/portfolio/misc/og-image-1787486514556.jpg"
+  },
+  "uploadedFiles": {
+    "D:\\Portfolio\\public\\projects\\3d_particles.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486471/portfolio/projects/3d_particles-1787486466715.jpg",
+      "cacheKey": "277930-1779301420132",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\angular component.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486472/portfolio/projects/angular_component-1787486469167.png",
+      "cacheKey": "352306-1779303660970",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\arplayer_mockup.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486474/portfolio/projects/arplayer_mockup-1787486471359.jpg",
+      "cacheKey": "95834-1775679034451",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\arplayer_mockup.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486475/portfolio/projects/arplayer_mockup-1787486472315.jpg",
+      "cacheKey": "532782-1775190011816",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\bazaria admin (1).png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486476/portfolio/projects/bazaria_admin__1_-1787486473175.png",
+      "cacheKey": "364219-1779303971871",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\bazaria admin.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486477/portfolio/projects/bazaria_admin-1787486473929.png",
+      "cacheKey": "381894-1779303659899",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\bazario_customer.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486477/portfolio/projects/bazario_customer-1787486474805.jpg",
+      "cacheKey": "145735-1779301420078",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\bazario_web.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486478/portfolio/projects/bazario_web-1787486475431.jpg",
+      "cacheKey": "277930-1779301420132",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\boardnbarrel_mockup.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486479/portfolio/projects/boardnbarrel_mockup-1787486476154.jpg",
+      "cacheKey": "159113-1775679034403",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\boardnbarrel_mockup.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486480/portfolio/projects/boardnbarrel_mockup-1787486476873.jpg",
+      "cacheKey": "700040-1775190141216",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\calculator_icon.svg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486480/portfolio/projects/calculator_icon-1787486477770.svg",
+      "cacheKey": "6331-1774679026926",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\calculator_mockup.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486483/portfolio/projects/calculator_mockup-1787486479676.jpg",
+      "cacheKey": "633295-1774679026938",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\fb_scraper_fixed.svg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486483/portfolio/projects/fb_scraper_fixed-1787486480701.svg",
+      "cacheKey": "3144-1774679026939",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\fb_scraper_safe.svg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486485/portfolio/projects/fb_scraper_safe-1787486482734.svg",
+      "cacheKey": "3144-1774679026944",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\food_recipe_mockup.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486487/portfolio/projects/food_recipe_mockup-1787486484350.jpg",
+      "cacheKey": "157439-1775679034211",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\food_recipe_mockup.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486489/portfolio/projects/food_recipe_mockup-1787486486176.jpg",
+      "cacheKey": "670988-1774679026957",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\google_review_bot.svg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486490/portfolio/projects/google_review_bot-1787486487087.svg",
+      "cacheKey": "4301-1774679026958",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\kal_shopping.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486491/portfolio/projects/kal_shopping-1787486488517.jpg",
+      "cacheKey": "273955-1779301420055",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\life changely (1).png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486492/portfolio/projects/life_changely__1_-1787486489224.png",
+      "cacheKey": "327494-1779303966713",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\life_changely.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486493/portfolio/projects/life_changely-1787486489948.jpg",
+      "cacheKey": "277930-1779301420132",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\merngpt_mockup.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486493/portfolio/projects/merngpt_mockup-1787486490654.jpg",
+      "cacheKey": "147895-1775679034256",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\merngpt_mockup.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486494/portfolio/projects/merngpt_mockup-1787486491361.jpg",
+      "cacheKey": "695617-1774679026969",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\notepad_mockup.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486495/portfolio/projects/notepad_mockup-1787486492179.jpg",
+      "cacheKey": "123522-1775679034166",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\notepad_mockup.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486496/portfolio/projects/notepad_mockup-1787486492987.jpg",
+      "cacheKey": "590322-1774679026976",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\payroll_mockup.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486497/portfolio/projects/payroll_mockup-1787486494614.jpg",
+      "cacheKey": "74813-1775679034122",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\payroll_mockup.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486498/portfolio/projects/payroll_mockup-1787486495227.jpg",
+      "cacheKey": "449263-1774679026986",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\peplexity clone (1).png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486499/portfolio/projects/peplexity_clone__1_-1787486496059.png",
+      "cacheKey": "334654-1779303972504",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\peplexity clone.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486499/portfolio/projects/peplexity_clone-1787486496799.png",
+      "cacheKey": "368681-1779303659023",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\perplexity_mockup.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486500/portfolio/projects/perplexity_mockup-1787486497459.jpg",
+      "cacheKey": "118527-1775679034302",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\perplexity_mockup.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486501/portfolio/projects/perplexity_mockup-1787486498080.jpg",
+      "cacheKey": "576971-1774679026993",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\portfolio (1).png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486501/portfolio/projects/portfolio__1_-1787486498769.png",
+      "cacheKey": "332039-1779303970363",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\portfolio.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486502/portfolio/projects/portfolio-1787486499443.png",
+      "cacheKey": "364682-1779303657530",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\portfolio_mockup.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486503/portfolio/projects/portfolio_mockup-1787486500164.jpg",
+      "cacheKey": "277930-1779301420132",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\README.md": {
+      "url": "https://res.cloudinary.com/as4hjbxb/raw/upload/v1787486503/portfolio/projects/README-1787486500859.md",
+      "cacheKey": "563-1774679026926",
+      "resourceType": "raw"
+    },
+    "D:\\Portfolio\\public\\projects\\reddit_bot_icon.svg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486504/portfolio/projects/reddit_bot_icon-1787486501383.svg",
+      "cacheKey": "4281-1774679026994",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\rn_chatbot.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486506/portfolio/projects/rn_chatbot-1787486503581.jpg",
+      "cacheKey": "177502-1779301420106",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\stopwatch_icon.svg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486507/portfolio/projects/stopwatch_icon-1787486504360.svg",
+      "cacheKey": "1877-1774679026994",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\trave_social.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486508/portfolio/projects/trave_social-1787486505700.jpg",
+      "cacheKey": "177502-1779301420106",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\tutorial_comp.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486509/portfolio/projects/tutorial_comp-1787486506465.jpg",
+      "cacheKey": "277930-1779301420132",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\visertube_mockup.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486510/portfolio/projects/visertube_mockup-1787486507274.jpg",
+      "cacheKey": "163985-1775679034085",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\visertube_mockup.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486511/portfolio/projects/visertube_mockup-1787486507931.jpg",
+      "cacheKey": "676294-1775190050065",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\web ai chat (1).png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486511/portfolio/projects/web_ai_chat__1_-1787486508735.png",
+      "cacheKey": "316507-1779303961970",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\projects\\web_chatbot.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486512/portfolio/projects/web_chatbot-1787486509428.jpg",
+      "cacheKey": "277930-1779301420132",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\uploads\\projects\\1765860493589-WhatsApp_Image_2025-12-10_at_21.06.00_0ddf66cf__1_.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486513/portfolio/projects/1765860493589-WhatsApp_Image_2025-12-10_at_21_06_00_0ddf66cf__1_-1787486510155.jpg",
+      "cacheKey": "237396-1774679027004",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\uploads\\projects\\1765860509527-WhatsApp_Image_2025-12-10_at_18.28.25_69146a9f__1_.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486514/portfolio/projects/1765860509527-WhatsApp_Image_2025-12-10_at_18_28_25_69146a9f__1_-1787486510995.jpg",
+      "cacheKey": "210965-1774679027007",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\uploads\\profile\\mudasir-profile.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486514/portfolio/profile/mudasir-profile-1787486511724.jpg",
+      "cacheKey": "96534-1774679026999",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\profile.png": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486515/portfolio/profile/profile-1787486512620.png",
+      "cacheKey": "1499308-1774679026924",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\profile.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486516/portfolio/profile/profile-1787486513591.jpg",
+      "cacheKey": "87440-1775679034352",
+      "resourceType": "image"
+    },
+    "D:\\Portfolio\\public\\og-image.jpg": {
+      "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486517/portfolio/misc/og-image-1787486514556.jpg",
+      "cacheKey": "42889-1775679278196",
+      "resourceType": "image"
+    }
+  }
+}

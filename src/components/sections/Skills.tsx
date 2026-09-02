@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import SectionHeading from "../ui/SectionHeading";
 import { motion } from "framer-motion";
 import { SkillData } from "@/lib/db";
@@ -52,7 +53,7 @@ const getSimpleIconSlug = (name: string): string => {
         "git": "git",
         "github": "github",
         "docker": "docker",
-        "aws": "amazonwebservices",
+        "aws": "amazonaws",
         "python": "python",
         "django": "django",
         "flask": "flask",
@@ -60,6 +61,7 @@ const getSimpleIconSlug = (name: string): string => {
         "firebase": "firebase",
         "prisma": "prisma",
         "graphql": "graphql",
+        "graph api": "graphql",
         "apollo": "apollographql",
         "redux": "redux",
         "sass": "sass",
@@ -94,9 +96,11 @@ const getSimpleIconSlug = (name: string): string => {
         "rust": "rust",
         "php": "php",
         "laravel": "laravel",
+        "angular": "angular",
         "kubernetes": "kubernetes",
         "terraform": "terraform",
-        "jira": "jira"
+        "jira": "jira",
+        "ci/cd": "githubactions"
     };
     
     const key = name.toLowerCase().trim();
@@ -106,9 +110,13 @@ const getSimpleIconSlug = (name: string): string => {
 };
 
 function SkillBadge({ skill }: { skill: SkillData }) {
-    const [error, setError] = useState(false);
-    const slug = getSimpleIconSlug(skill.name);
-    const iconUrl = `https://cdn.simpleicons.org/${slug}/fff`;
+    const [imgSrc, setImgSrc] = useState(() => {
+        if (skill.name.toLowerCase() === 'rest api') {
+            return null;
+        }
+        const slug = getSimpleIconSlug(skill.name);
+        return `https://cdn.simpleicons.org/${slug}`;
+    });
 
     return (
         <motion.div
@@ -117,14 +125,18 @@ function SkillBadge({ skill }: { skill: SkillData }) {
         >
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300" />
             
-            {!error && (
-                <img
-                    src={iconUrl}
-                    alt=""
-                    className="w-4 h-4 object-contain transition-transform duration-300 group-hover/skill:scale-110"
-                    onError={() => setError(true)}
-                    loading="lazy"
-                />
+            {imgSrc && (
+                <div className="relative w-4 h-4 shrink-0">
+                    <Image
+                        src={imgSrc}
+                        alt=""
+                        fill
+                        className="object-contain transition-transform duration-300 group-hover/skill:scale-110"
+                        onError={() => setImgSrc(null)}
+                        loading="lazy"
+                        sizes="16px"
+                    />
+                </div>
             )}
             
             <span className="relative z-10">{skill.name}</span>
@@ -190,4 +202,3 @@ const Skills = ({ skills }: SkillsProps) => {
 };
 
 export default Skills;
-

@@ -1,20 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, CertificateData, LanguageData, InterestData } from '@/lib/db';
+import React, { useState, useTransition } from 'react';
 import { FileDown, Loader2 } from 'lucide-react';
-
-// Dynamically import PDFDownloadLink to avoid SSR issues with @react-pdf/renderer
-const PDFDownloadLink = dynamic(
-    () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
-    {
-        ssr: false,
-        loading: () => <button className="px-6 py-3 rounded-full bg-white/10 text-white flex items-center gap-2"><Loader2 className="animate-spin" size={20} /> Loading PDF...</button>,
-    }
-);
-
-import ResumeDocument from './ResumeDocument';
+import { generateResume } from '@/actions/resume';
+import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, CertificateData, LanguageData, InterestData } from '@/lib/db';
 
 interface ResumeDownloadBtnProps {
     profile: ProfileData;
@@ -29,27 +18,56 @@ interface ResumeDownloadBtnProps {
 }
 
 const ResumeDownloadBtn = (props: ResumeDownloadBtnProps) => {
-    const [isClient, setIsClient] = useState(false);
+    const [isPending, startTransition] = useTransition();
 
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
+    const handleDownload = async () => {
+        startTransition(async () => {
+            try {
+                const stream = await generateResume(props);
+                
+                // Create a new response from the stream
+                const response = new Response(stream);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
 
-    if (!isClient) return null;
+                // Create a temporary link to trigger the download
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `${props.profile.name.replace(/\s+/g, '_')}_Resume.pdf`);
+                document.body.appendChild(link);
+                link.click();
+
+                // Clean up the temporary link and URL
+                if(link.parentNode) {
+                    link.parentNode.removeChild(link);
+                }
+                window.URL.revokeObjectURL(url);
+
+            } catch (error) {
+                console.error("Failed to generate or download resume:", error);
+                alert("Sorry, there was an error generating the resume. Please try again.");
+            }
+        });
+    };
 
     return (
-        <PDFDownloadLink
-            document={<ResumeDocument {...props} />}
-            fileName={`${props.profile.name.replace(/\s+/g, '_')}_Resume.pdf`}
-            className="group px-5 sm:px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all flex items-center gap-2 backdrop-blur-sm cursor-pointer z-[50] whitespace-nowrap text-sm sm:text-base"
+        <button
+            onClick={handleDownload}
+            disabled={isPending}
+            className="group px-5 sm:px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all flex items-center gap-2 backdrop-blur-sm cursor-pointer z-[50] whitespace-nowrap text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
         >
-            {({ blob, url, loading, error }) => (
+            {isPending ? (
                 <>
-                    {loading ? <Loader2 className="animate-spin" size={20} /> : <FileDown size={20} className="text-cyan-400 group-hover:scale-110 transition-transform" />}
-                    {loading ? "Generating..." : "Download CV"}
+                    <Loader2 className="animate-spin" size={20} />
+                    <span>Generating...</span>
+                </>
+            ) : (
+                <>
+                    <FileDown size={20} className="text-cyan-400 group-hover:scale-110 transition-transform" />
+                    <span>Download CV</span>
                 </>
             )}
-        </PDFDownloadLink>
+        </button>
     );
 };
 

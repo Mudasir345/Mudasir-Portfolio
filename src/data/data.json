@@ -19,7 +19,7 @@
     "github": "https://github.com/Mudasir345",
     "linkedin": "https://www.linkedin.com/in/mudasir345/",
     "whatsapp": "https://wa.me/923047045345",
-    "image": "/uploads/profile/mudasir-profile.jpg"
+    "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486514/portfolio/profile/mudasir-profile-1787486511724.jpg"
   },
   "skills": [
     {
@@ -40,6 +40,14 @@
     },
     {
       "name": "Next.js",
+      "category": "Frontend"
+    },
+    {
+      "name": "React Native",
+      "category": "Frontend"
+    },
+    {
+      "name": "Flutter",
       "category": "Frontend"
     },
     {
@@ -139,21 +147,13 @@
       "period": "2023 - Present",
       "description": "Delivered 20+ custom web applications and automation bots for international clients. Specialized in Next.js, React, and Python automation. Maintained a 5-star rating.",
       "iconType": "Briefcase"
-    },
-    {
-      "id": "exp_2",
-      "title": "Web Developer Intern",
-      "company": "Tech Solutions Inc.",
-      "period": "2022 - 2023",
-      "description": "Collaborated with senior developers to build responsive frontend interfaces using HTML, CSS, and JavaScript. Improved website load speed by 40%.",
-      "iconType": "Code"
     }
   ],
   "education": [
     {
       "id": "edu_1",
       "degree": "BS Information Technology",
-      "institution": "University",
+      "institution": "Bahauddin Zakariya University, Multan",
       "period": "2021 - 2025",
       "description": "Specialized in Software Engineering, Web Technologies, and Database Management. Built multiple full-stack projects during the coursework.",
       "iconType": "GraduationCap"
@@ -161,7 +161,7 @@
     {
       "id": "edu_2",
       "degree": "Intermediate (Computer Science)",
-      "institution": "College",
+      "institution": "Government College, Multan",
       "period": "2019 - 2021",
       "description": "Focused on Fundamentals of Programming, Computer Networks, and Database Systems. Secured excellent grades.",
       "iconType": "BookOpen"
@@ -169,7 +169,7 @@
     {
       "id": "edu_3",
       "degree": "Matriculation (Science)",
-      "institution": "School",
+      "institution": "Government High School, Multan",
       "period": "2017 - 2019",
       "description": "Completed secondary education with a major in Computer Science and Mathematics. Laid the foundation for a tech career.",
       "iconType": "School"
@@ -201,13 +201,13 @@
         "MySQL",
         "WebSockets"
       ],
-      "image": "/projects/bazaria admin.png",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486477/portfolio/projects/bazaria_admin-1787486473929.png",
       "category": "Web",
       "githubUrl": "https://github.com/Mudasir345/Portfolio-Projects/tree/main/WEB-APPLICATIONS/10-Bazario-Admin-Backend",
       "mediaType": "image",
       "gallery": [
         {
-          "url": "/projects/bazaria admin (1).png",
+          "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486476/portfolio/projects/bazaria_admin__1_-1787486473175.png",
           "type": "image"
         }
       ]
@@ -244,7 +244,7 @@
         "jQuery",
         "ApexCharts"
       ],
-      "image": "/projects/visertube_mockup.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486510/portfolio/projects/visertube_mockup-1787486507274.jpg",
       "category": "Web",
       "githubUrl": "https://github.com/Mudasir345/visertube",
       "mediaType": "image",
@@ -281,7 +281,7 @@
         "Stripe API",
         "Apple Pay"
       ],
-      "image": "/projects/boardnbarrel_mockup.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486479/portfolio/projects/boardnbarrel_mockup-1787486476154.jpg",
       "category": "Web",
       "liveUrl": "https://boardnbarrel.com.au/",
       "githubUrl": "https://github.com/Mudasir345/BoardNbarel",
@@ -291,18 +291,20 @@
     {
       "title": "Life Changely — AI Coaching Platform",
       "description": "- Developed a comprehensive MERN stack platform designed to provide AI-powered sales coaching and mentorship.\n- Integrated OpenAI's GPT models to analyze user inputs and provide constructive, context-aware feedback.\n- Built real-time Video and Audio communication infrastructure utilizing WebRTC protocols.\n- Designed an intuitive dashboard for users to track their progress, schedule sessions, and review AI feedback logs.",
-      "longDescription": "Life Changely is a holistic web platform built to revolutionize personal and sales coaching. Leveraging the MERN stack alongside OpenAI, it provides users with personalized coaching paths. The platform features integrated WebRTC video calling, real-time chat, and an AI analyzer that reviews session transcripts to offer actionable improvements.",
+      "longDescription": "Life Changely is a comprehensive AI-powered coaching platform that combines the MERN stack with advanced machine learning to deliver personalized coaching experiences. Beyond basic video calling, the platform features an intelligent session analyzer powered by OpenAI that reviews transcripts, identifies coaching gaps, and provides data-driven recommendations. Real-time communication uses WebRTC with custom signaling for reliability, while the dashboard provides detailed progress tracking and outcome metrics for both coaches and learers. The platform supports multiple coaching methodologies and integrates Stripe for flexible subscription tiers.",
       "features": [
-        "OpenAI-Powered Feedback Analyzer",
-        "WebRTC Real-Time Video & Audio Calls",
-        "Secure User Authentication & Session Tracking",
-        "Progress Dashboards & Analytics",
-        "Stripe Payment Integration for Coaching Tiers"
+        "OpenAI-Powered Session Analysis & Feedback Generation",
+        "WebRTC Real-Time Video/Audio with Custom Signaling",
+        "Secure User Authentication with Session Tracking",
+        "Progress Analytics & Outcome Dashboards",
+        "Stripe Payment Integration for Coaching Subscription Tiers",
+        "Transcript Storage & AI-Driven Improvement Recommendations"
       ],
       "challenges": [
-        "Managing complex WebRTC signaling connections through custom Socket.io servers.",
-        "Parsing and passing audio transcripts securely to the OpenAI API for near real-time feedback.",
-        "Ensuring complete data privacy for coaching sessions."
+        "Building reliable WebRTC signaling through Socket.io with automatic reconnection logic.",
+        "Processing and analyzing coaching session audio transcripts in near real-time via the OpenAI API.",
+        "Ensuring GDPR compliance and data privacy for sensitive coaching conversations.",
+        "Implementing intelligent session scheduling and automated reminder systems."
       ],
       "techStack": [
         "MongoDB",
@@ -312,7 +314,7 @@
         "WebRTC",
         "OpenAI API"
       ],
-      "image": "/projects/life changely (1).png",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486492/portfolio/projects/life_changely__1_-1787486489224.png",
       "category": "Web",
       "githubUrl": "https://github.com/Mudasir345/Life-Changely",
       "mediaType": "image",
@@ -350,7 +352,7 @@
         "Nodemailer",
         "cPanel Deployment"
       ],
-      "image": "/projects/arplayer_mockup.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486474/portfolio/projects/arplayer_mockup-1787486471359.jpg",
       "category": "Web",
       "liveUrl": "https://arplayer.smartbillcalculator.online",
       "githubUrl": "https://github.com/Mudasir345/ar-player",
@@ -380,13 +382,13 @@
         "Tailwind CSS",
         "Pinecone"
       ],
-      "image": "/projects/peplexity clone.png",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486499/portfolio/projects/peplexity_clone-1787486496799.png",
       "category": "Web",
       "githubUrl": "https://github.com/Mudasir345/PerplexityAI-Clone",
       "mediaType": "image",
       "gallery": [
         {
-          "url": "/projects/peplexity clone (1).png",
+          "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486499/portfolio/projects/peplexity_clone__1_-1787486496059.png",
           "type": "image"
         }
       ]
@@ -415,13 +417,13 @@
         "Framer Motion",
         "TypeScript"
       ],
-      "image": "/projects/portfolio.png",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486502/portfolio/projects/portfolio-1787486499443.png",
       "category": "Web",
       "githubUrl": "https://github.com/Mudasir345/portfolio",
       "mediaType": "image",
       "gallery": [
         {
-          "url": "/projects/portfolio (1).png",
+          "url": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486501/portfolio/projects/portfolio__1_-1787486498769.png",
           "type": "image"
         }
       ]
@@ -449,7 +451,7 @@
         "MediaPipe",
         "JavaScript"
       ],
-      "image": "/projects/3d_particles.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486471/portfolio/projects/3d_particles-1787486466715.jpg",
       "category": "Web",
       "liveUrl": "https://interactive3dparticals.netlify.app/",
       "githubUrl": "https://github.com/Mudasir345/Interactive-3D-Particles",
@@ -477,7 +479,7 @@
         "Express.js",
         "Gemini API"
       ],
-      "image": "/projects/web ai chat (1).png",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486511/portfolio/projects/web_ai_chat__1_-1787486508735.png",
       "category": "Web",
       "githubUrl": "https://github.com/Mudasir345/Web-Based-AI-Chatbot",
       "mediaType": "image",
@@ -505,7 +507,7 @@
         "RxJS",
         "Tailwind CSS"
       ],
-      "image": "/projects/angular component.png",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486472/portfolio/projects/angular_component-1787486469167.png",
       "category": "Web",
       "githubUrl": "https://github.com/Mudasir345/Tutorial-Component",
       "mediaType": "image",
@@ -535,7 +537,7 @@
         "Firebase",
         "Gemini AI"
       ],
-      "image": "/projects/bazario_customer.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486477/portfolio/projects/bazario_customer-1787486474805.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/Portfolio-Projects/tree/main/MOBILE-APPLICATIONS/09-Bazario-Customer-App",
       "mediaType": "image"
@@ -565,7 +567,7 @@
         "Socket.io",
         "Firebase"
       ],
-      "image": "/projects/kal_shopping.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486491/portfolio/projects/kal_shopping-1787486488517.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/kal-shopping",
       "mediaType": "image"
@@ -594,7 +596,7 @@
         "Cloudinary",
         "Passport.js"
       ],
-      "image": "/projects/trave_social.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486508/portfolio/projects/trave_social-1787486505700.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/Trave-Social",
       "mediaType": "image"
@@ -622,7 +624,7 @@
         "OpenAI API",
         "Gemini API"
       ],
-      "image": "/projects/merngpt_mockup.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486493/portfolio/projects/merngpt_mockup-1787486490654.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/React-Native-MernGPT-Chatbot",
       "mediaType": "image"
@@ -650,7 +652,7 @@
         "Express.js",
         "Gemini API"
       ],
-      "image": "/projects/rn_chatbot.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486506/portfolio/projects/rn_chatbot-1787486503581.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/React-Native-Chatbot-App",
       "mediaType": "image"
@@ -677,7 +679,7 @@
         "Redux Toolkit",
         "TheMealDB API"
       ],
-      "image": "/projects/food_recipe_mockup.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486487/portfolio/projects/food_recipe_mockup-1787486484350.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/Food-Recipe",
       "mediaType": "image"
@@ -704,7 +706,7 @@
         "AsyncStorage",
         "React Navigation"
       ],
-      "image": "/projects/notepad_mockup.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486495/portfolio/projects/notepad_mockup-1787486492179.jpg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/ReacT-Native-NotePad",
       "mediaType": "image"
@@ -731,7 +733,7 @@
         "Math.js",
         "Jest (Unit Testing)"
       ],
-      "image": "/projects/calculator_icon.svg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486480/portfolio/projects/calculator_icon-1787486477770.svg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/React-Native-Calculator",
       "mediaType": "image"
@@ -758,7 +760,7 @@
         "AsyncStorage",
         "Native Modules"
       ],
-      "image": "/projects/stopwatch_icon.svg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486507/portfolio/projects/stopwatch_icon-1787486504360.svg",
       "category": "Mobile",
       "githubUrl": "https://github.com/Mudasir345/React-Native-Stop-watch",
       "mediaType": "image"
@@ -786,7 +788,7 @@
         "Selenium (Activity Simulation)",
         "Docker Container"
       ],
-      "image": "/projects/reddit_bot_icon.svg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486504/portfolio/projects/reddit_bot_icon-1787486501383.svg",
       "category": "Automation",
       "githubUrl": "https://github.com/Mudasir345/reddit-automation",
       "mediaType": "image"
@@ -816,7 +818,7 @@
         "React.js",
         "Docker"
       ],
-      "image": "/projects/google_review_bot.svg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486490/portfolio/projects/google_review_bot-1787486487087.svg",
       "category": "Automation",
       "githubUrl": "https://github.com/Mudasir345/Google-review-bot",
       "mediaType": "image"
@@ -844,7 +846,7 @@
         "DOM Manipulation",
         "Service Workers"
       ],
-      "image": "/projects/fb_scraper_safe.svg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486485/portfolio/projects/fb_scraper_safe-1787486482734.svg",
       "category": "Automation",
       "githubUrl": "https://github.com/Mudasir345/facebook-marketplace-scraper",
       "mediaType": "image"
@@ -871,7 +873,7 @@
         "MySQL",
         "WinForms"
       ],
-      "image": "/projects/payroll_mockup.jpg",
+      "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486497/portfolio/projects/payroll_mockup-1787486494614.jpg",
       "category": "Desktop",
       "githubUrl": "https://github.com/Mudasir345/PayRoll-System",
       "mediaType": "image"
@@ -993,7 +995,7 @@
     {
       "title": "Automation Bots",
       "iconType": "Bot",
-      "description": "Creating custom automation scripts and bots to streamline workflows. Data scraping and trading bots.",
+      "description": "Building intelligent automation systems for complex workflows. Custom bots for data processing, browser automation, and intelligent scraping with advanced error handling and reliability.",
       "details": [
         {
           "name": "Python",

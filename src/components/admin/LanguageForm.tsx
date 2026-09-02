@@ -17,6 +17,8 @@ export default function LanguageForm({ initialData, onSuccess, onCancel }: Langu
         id: "",
         name: "",
         proficiency: "Fluent",
+        createdAt: new Date(),
+        updatedAt: new Date(),
     });
 
     useEffect(() => {
@@ -27,6 +29,8 @@ export default function LanguageForm({ initialData, onSuccess, onCancel }: Langu
                 id: `lang_${Date.now()}`,
                 name: "",
                 proficiency: "Fluent",
+                createdAt: new Date(),
+                updatedAt: new Date(),
             });
         }
     }, [initialData]);

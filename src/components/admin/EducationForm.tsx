@@ -20,6 +20,8 @@ export default function EducationForm({ initialData, onSuccess, onCancel }: Educ
         period: "",
         description: "",
         iconType: "GraduationCap",
+        createdAt: new Date(),
+        updatedAt: new Date(),
     });
 
     useEffect(() => {
@@ -33,6 +35,8 @@ export default function EducationForm({ initialData, onSuccess, onCancel }: Educ
                 period: "",
                 description: "",
                 iconType: "GraduationCap",
+                createdAt: new Date(),
+                updatedAt: new Date(),
             });
         }
     }, [initialData]);
