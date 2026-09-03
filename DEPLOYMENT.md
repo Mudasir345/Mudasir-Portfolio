@@ -39,11 +39,14 @@ Once your service is running, note these details:
 ```
 Service URI: mysql://avnadmin:YOUR_PASSWORD@HOST:PORT/defaultdb?ssl-mode=REQUIRED
 Host: mysql-your-instance.aivencloud.com
-Port: 13153
+Port: 13153 (MySQL) - Use this, NOT MySQLX port 13157
 User: avnadmin
 Password: YOUR_AIVEN_PASSWORD
 Database: defaultdb
 SSL Mode: REQUIRED
+
+IMPORTANT: Use the MySQL connection string (port 13153), NOT MySQLX (port 13157)
+MySQLX is for different protocol - Prisma and standard MySQL clients need the MySQL connection
 ```
 
 ### 3. Test Database Connection
@@ -138,11 +141,13 @@ Install Command: npm install
 
 ### Step 4: Add Environment Variables
 
+**IMPORTANT:** Add these environment variables in Vercel Project Settings → Environment Variables, NOT in vercel.json. The vercel.json file has been fixed to remove the env section that was causing the "DATABASE_URL should be string" error.
+
 In Vercel Project Settings → Environment Variables, add:
 
 | Variable | Value | Description |
 |----------|-------|-------------|
-| `DATABASE_URL` | `mysql://avnadmin:PASSWORD@HOST:PORT/defaultdb?ssl-mode=REQUIRED` | Aiven MySQL connection |
+| `DATABASE_URL` | `mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-1a089c81-mudasirchoudhry345-352d.a.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED` | Aiven MySQL connection (use port 13153, NOT 13157) |
 | `ADMIN_PASSWORD` | `your-strong-password` | Admin panel password |
 | `ADMIN_SESSION_SECRET` | `32-char-random-secret` | Session encryption key |
 | `NEXT_PUBLIC_WEB3FORMS_KEY` | `your-web3forms-key` | Contact form API |
@@ -150,7 +155,7 @@ In Vercel Project Settings → Environment Variables, add:
 | `EMAIL_USER` | `your-gmail@gmail.com` | Backup email sender |
 | `EMAIL_PASS` | `your-gmail-app-password` | Gmail app password |
 | `NEXT_PUBLIC_WHATSAPP` | `https://wa.me/92300000000000` | WhatsApp link |
-| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | `as4hjbxb` | Cloudinary cloud name |
+| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | `your-cloud-name` | Cloudinary cloud name |
 | `CLOUDINARY_API_KEY` | `your-api-key` | Cloudinary API key |
 | `CLOUDINARY_API_SECRET` | `your-api-secret` | Cloudinary secret |
 | `CLOUDINARY_URL` | `cloudinary://API_KEY:SECRET@CLOUD_NAME` | Cloudinary URL |
@@ -231,6 +236,12 @@ npx prisma db seed
 DATABASE_URL=mysql://avnadmin:PASSWORD@HOST:PORT/defaultdb?ssl-mode=REQUIRED
 ```
 
+**MySQL vs MySQLX Port Issue:**
+- **Use MySQL connection (port 13153)** - This is for standard MySQL protocol
+- **NOT MySQLX connection (port 13157)** - This is for MySQL X Protocol
+- Prisma and standard MySQL clients require the MySQL connection
+- Aiven provides both, but you must use the MySQL one for this project
+
 ### Build Failures
 
 **Problem:** Build fails in Vercel but works locally
@@ -248,6 +259,23 @@ DATABASE_URL=mysql://avnadmin:PASSWORD@HOST:PORT/defaultdb?ssl-mode=REQUIRED
 - Ensure variables are set in Production environment
 - Redeploy after adding variables
 - Check variable names match exactly (case-sensitive)
+
+### DATABASE_URL Validation Error
+
+**Problem:** "Invalid request: `env.DATABASE_URL` should be string"
+
+**Solution:**
+- **This error occurs when environment variables are defined in vercel.json**
+- **Remove the "env" section from vercel.json** (we've already fixed this)
+- **Add environment variables directly in Vercel Project Settings:**
+  1. Go to your Vercel project
+  2. Navigate to Settings → Environment Variables
+  3. Add each variable manually (DATABASE_URL, ADMIN_PASSWORD, etc.)
+  4. Select "Production" environment
+  5. Click "Save"
+  6. Redeploy your application
+
+**Important:** Never define sensitive environment variables in vercel.json - always use Vercel's Environment Variables settings.
 
 ### Prisma Issues
 

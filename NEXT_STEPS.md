@@ -26,7 +26,9 @@ Your `.env.production` file currently has placeholder values. Update it with you
 
 ```env
 # Database (Aiven MySQL)
-DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-your-instance.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
+# IMPORTANT: Use the MySQL connection string, NOT MySQLX
+# MySQL uses port 13153, MySQLX uses port 13157 - use the MySQL one
+DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-1a089c81-mudasirchoudhry345-352d.a.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
 
 # Admin Authentication (USE STRONG VALUES!)
 ADMIN_PASSWORD=your-very-strong-admin-password-123!
@@ -83,7 +85,8 @@ Update `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` with strong values.
    In Vercel Project Settings → Environment Variables, add these:
 
    ```
-   DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-your-instance.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
+   # IMPORTANT: Use MySQL connection (port 13153), NOT MySQLX (port 13157)
+   DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-1a089c81-mudasirchoudhry345-352d.a.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
    ADMIN_PASSWORD=your-strong-password
    ADMIN_SESSION_SECRET=your-32-char-secret
    NEXT_PUBLIC_WEB3FORMS_KEY=your-web3forms-access-key
@@ -108,8 +111,8 @@ Update `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` with strong values.
 After deployment, apply the database schema to your Aiven database:
 
 ```bash
-# Set your database URL
-set DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-your-instance.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
+# Set your database URL (use MySQL connection, not MySQLX)
+set DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-1a089c81-mudasirchoudhry345-352d.a.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
 
 # Generate Prisma client
 npx prisma generate
@@ -147,7 +150,8 @@ After deployment, update the `NEXT_PUBLIC_SITE_URL` in Vercel:
 - Your Aiven MySQL database is SSL-enabled (REQUIRED)
 - The database name is `defaultdb`
 - User is `avnadmin`
-- Port is `13153`
+- Port is `13153` (MySQL) - Use this, NOT MySQLX port `13157`
+- Connection format: `mysql://avnadmin:PASSWORD@HOST:13153/defaultdb?ssl-mode=REQUIRED`
 
 ### Cloudinary
 - Cloud name: `your-cloud-name`
@@ -166,6 +170,8 @@ If you encounter issues:
    - Ensure SSL mode is set to REQUIRED
    - Check Aiven service is running
    - Verify credentials are correct
+   - **IMPORTANT:** Use MySQL connection (port 13153), NOT MySQLX (port 13157)
+   - **Error "DATABASE_URL should be string":** Make sure you're adding environment variables in Vercel Project Settings, not in vercel.json file
 
 2. **Build Failures:**
    - Check Vercel build logs
