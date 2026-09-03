@@ -1,0 +1,65 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "env": {
+    "DATABASE_URL": {
+      "description": "Aiven MySQL database connection string",
+      "value": "@database_url"
+    },
+    "ADMIN_PASSWORD": {
+      "description": "Strong password for admin panel access",
+      "value": "@admin_password"
+    },
+    "ADMIN_SESSION_SECRET": {
+      "description": "32-character secret for admin sessions",
+      "value": "@admin_session_secret"
+    },
+    "NEXT_PUBLIC_WEB3FORMS_KEY": {
+      "description": "Web3Forms API key for contact forms",
+      "value": "@web3forms_key"
+    },
+    "CONTACT_EMAIL": {
+      "description": "Email to receive contact form submissions",
+      "value": "@contact_email"
+    },
+    "EMAIL_USER": {
+      "description": "Gmail address for backup email delivery",
+      "value": "@email_user"
+    },
+    "EMAIL_PASS": {
+      "description": "Gmail app password for SMTP",
+      "value": "@email_pass"
+    },
+    "NEXT_PUBLIC_WHATSAPP": {
+      "description": "WhatsApp contact link",
+      "value": "@whatsapp_link"
+    },
+    "NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME": {
+      "description": "Cloudinary cloud name",
+      "value": "@cloudinary_cloud_name"
+    },
+    "CLOUDINARY_API_KEY": {
+      "description": "Cloudinary API key",
+      "value": "@cloudinary_api_key"
+    },
+    "CLOUDINARY_API_SECRET": {
+      "description": "Cloudinary API secret",
+      "value": "@cloudinary_api_secret"
+    },
+    "CLOUDINARY_URL": {
+      "description": "Cloudinary URL",
+      "value": "@cloudinary_url"
+    },
+    "NEXT_PUBLIC_SITE_URL": {
+      "description": "Production site URL",
+      "value": "@site_url"
+    }
+  },
+  "regions": ["iad1"],
+  "functions": {
+    "app/api/**": {
+      "maxDuration": 30
+    }
+  }
+}

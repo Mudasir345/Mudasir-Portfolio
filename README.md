@@ -169,11 +169,76 @@ The project uses Prisma with MySQL. Key models include:
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
-1. Push your code to GitHub
-2. Import project in Vercel
-3. Add environment variables
-4. Deploy
+### Vercel (Recommended with Aiven MySQL)
+
+**Prerequisites:**
+- GitHub repository with your code
+- Aiven MySQL database instance
+- Cloudinary account (for media storage)
+- Web3Forms account (for contact forms)
+
+**Step-by-Step Deployment:**
+
+1. **Prepare Production Environment:**
+   ```bash
+   # Copy the production example file
+   cp .env.production.example .env.production
+   # Fill in your actual production values
+   ```
+
+2. **Configure Aiven Database:**
+   - Use your Aiven MySQL credentials in `DATABASE_URL`
+   - Format: `mysql://avnadmin:PASSWORD@HOST:PORT/defaultdb?ssl-mode=REQUIRED`
+   - Example: `mysql://avnadmin:AVNS_xxx@mysql-xxx.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED`
+
+3. **Set Up Vercel Project:**
+   - Go to [Vercel Dashboard](https://vercel.com/dashboard)
+   - Click "Add New Project"
+   - Import your GitHub repository
+
+4. **Configure Environment Variables in Vercel:**
+   Add these environment variables in Vercel Project Settings:
+   
+   ```
+   DATABASE_URL=mysql://avnadmin:YOUR_PASSWORD@mysql-1a089c81-mudasirchoudhry345-352d.a.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
+   ADMIN_PASSWORD=your-strong-admin-password
+   ADMIN_SESSION_SECRET=your-32-char-random-secret
+   NEXT_PUBLIC_WEB3FORMS_KEY=your-web3forms-key
+   CONTACT_EMAIL=mudasirchoudhry345@gmail.com
+   EMAIL_USER=your-gmail@gmail.com
+   EMAIL_PASS=your-gmail-app-password
+   NEXT_PUBLIC_WHATSAPP=https://wa.me/923047045345
+   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=as4hjbxb
+   CLOUDINARY_API_KEY=your-cloudinary-api-key
+   CLOUDINARY_API_SECRET=your-cloudinary-api-secret
+   CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+   NEXT_PUBLIC_SITE_URL=https://your-app.vercel.app
+   ```
+
+5. **Run Database Migrations:**
+   ```bash
+   # Generate Prisma client
+   npx prisma generate
+   
+   # Push schema to production database
+   npx prisma db push
+   ```
+
+6. **Deploy:**
+   - Click "Deploy" in Vercel
+   - Wait for deployment to complete
+   - Access your site at the provided URL
+
+7. **Post-Deployment:**
+   - Update `NEXT_PUBLIC_SITE_URL` with your actual Vercel URL
+   - Test admin panel at `/admin`
+   - Test contact forms
+   - Verify database connectivity
+
+**Production Environment Files:**
+- `.env.production` - Production environment variables (local testing)
+- `.env.production.example` - Template for production setup
+- `vercel.json` - Vercel configuration file
 
 ### Other Platforms
 The project can be deployed to any platform that supports Next.js:
