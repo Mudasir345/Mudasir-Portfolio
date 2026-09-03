@@ -236,9 +236,11 @@ The project uses Prisma with MySQL. Key models include:
    - Verify database connectivity
 
 **Production Environment Files:**
-- `.env.production` - Production environment variables (local testing)
+- `.env.production` - Production environment variables (local testing, not committed)
 - `.env.production.example` - Template for production setup
 - `vercel.json` - Vercel configuration file
+
+📖 **For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md)**
 
 ### Other Platforms
 The project can be deployed to any platform that supports Next.js:
