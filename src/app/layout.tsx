@@ -17,6 +17,9 @@ const ogImageUrl = new URL("/og-image.jpg", metadataBase).toString();
 
 export const dynamic = "force-dynamic";
 
+// Prevent build-time database connection issues
+export const fetchCache = "force-no-store";
+
 export const metadata: Metadata = {
   metadataBase,
   manifest: "/manifest.json",

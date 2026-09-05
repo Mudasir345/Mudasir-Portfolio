@@ -188,9 +188,14 @@ export async function deleteService(id: string) {
 
 // --- Profile ---
 export async function getProfile() {
-    const raw = await db.profile.findFirst();
-    if (!raw) return null;
-    return transformProfile(raw);
+    try {
+        const raw = await db.profile.findFirst();
+        if (!raw) return null;
+        return transformProfile(raw);
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+        return null;
+    }
 }
 
 export async function updateProfile(data: import("@/lib/db").ProfileData) {
@@ -594,8 +599,13 @@ export async function deleteInterest(id: string) {
 
 // --- Settings ---
 export async function getSettings() {
-    // There's only one settings object, so we find the first one.
-    return await db.settings.findFirst();
+    try {
+        // There's only one settings object, so we find the first one.
+        return await db.settings.findFirst();
+    } catch (error) {
+        console.error('Error fetching settings:', error);
+        return null;
+    }
 }
 
 export async function updateSettings(data: Partial<Omit<Settings, "id" | "createdAt" | "updatedAt">>) {
@@ -633,7 +643,8 @@ export async function getPortfolioData() {
         ]);
 
         if (!profile || !settings) {
-            throw new Error("Portfolio database has not been seeded yet.");
+            console.log("Portfolio database has not been seeded yet, will use fallback data");
+            return null; // Return null instead of throwing error
         }
 
         return { projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests, usingFallback: false };

@@ -20,12 +20,25 @@ import { getPortfolioData } from "@/actions/admin";
 import type { EducationData, SkillData, ServiceData, ProjectData } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default async function Home() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
   const absoluteUrl = (path?: string) => (path ? new URL(path, siteUrl).toString() : siteUrl);
 
-  const { projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests } = await getPortfolioData();
+  let portfolioData;
+  try {
+    portfolioData = await getPortfolioData();
+  } catch (error) {
+    console.error('Error fetching portfolio data:', error);
+    portfolioData = null;
+  }
+
+  // Use fallback data if database is not available
+  const { getFallbackPortfolioData } = await import("@/lib/fallbackData");
+  const fallback = getFallbackPortfolioData();
+
+  const { projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests } = portfolioData || fallback;
 
   // Profile null guard — DB empty hone ki surat mein fallback
   if (!profile || !settings) {
