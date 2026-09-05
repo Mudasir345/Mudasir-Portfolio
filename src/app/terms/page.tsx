@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     description: "Terms of Service for Mudasir Choudhry Portfolio — the conditions governing your use of this website.",
 };
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export default function TermsOfService() {
     return (
         <div className="min-h-screen bg-[#030014] text-white relative overflow-hidden">

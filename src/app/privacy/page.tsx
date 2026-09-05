@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     description: "Privacy Policy for Mudasir Choudhry Portfolio — how we handle your data when you use the contact form.",
 };
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export default function PrivacyPolicy() {
     return (
         <div className="min-h-screen bg-[#030014] text-white relative overflow-hidden">

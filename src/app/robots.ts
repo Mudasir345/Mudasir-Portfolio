@@ -1,5 +1,8 @@
 import { MetadataRoute } from 'next';
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export default function robots(): MetadataRoute.Robots {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mudasirch.netlify.app';
 

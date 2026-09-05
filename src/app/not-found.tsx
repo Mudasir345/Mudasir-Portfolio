@@ -2,6 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { ArrowLeft, Home } from "lucide-react";
 
+// Prevent build-time data fetching
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-[#030014] text-white flex flex-col items-center justify-center relative overflow-hidden px-6">

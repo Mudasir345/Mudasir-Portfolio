@@ -38,10 +38,15 @@ export async function logout() {
 
 // --- Projects ---
 export async function getProjects() {
-    const rows = await db.project.findMany({
-        include: { gallery: true },
-    });
-    return rows.map(transformProject);
+    try {
+        const rows = await db.project.findMany({
+            include: { gallery: true },
+        });
+        return rows.map(transformProject);
+    } catch (error) {
+        console.error('Error fetching projects:', error);
+        return [];
+    }
 }
 
 export async function addProject(project: import("@/lib/db").ProjectData) {
@@ -122,13 +127,18 @@ export async function deleteProject(id: string) {
 
 // --- Services ---
 export async function getServices() {
-    const rows = await db.service.findMany({
-        include: { servicedetail: true },
-    });
-    return rows.map((s) => ({
-        ...s,
-        details: s.servicedetail.map((d) => ({ name: d.name, iconUrl: d.iconUrl })),
-    }));
+    try {
+        const rows = await db.service.findMany({
+            include: { servicedetail: true },
+        });
+        return rows.map((s) => ({
+            ...s,
+            details: s.servicedetail.map((d) => ({ name: d.name, iconUrl: d.iconUrl })),
+        }));
+    } catch (error) {
+        console.error('Error fetching services:', error);
+        return [];
+    }
 }
 
 export async function addService(service: import("@/lib/db").ServiceData) {
@@ -234,7 +244,12 @@ export async function updateProfile(data: import("@/lib/db").ProfileData) {
 
 // --- Skills ---
 export async function getSkills() {
-    return await db.skill.findMany();
+    try {
+        return await db.skill.findMany();
+    } catch (error) {
+        console.error('Error fetching skills:', error);
+        return [];
+    }
 }
 
 export async function updateSkillList(skills: Array<{ name: string; category: string; proficiency?: string | null }>) {
@@ -255,7 +270,12 @@ export async function updateSkillList(skills: Array<{ name: string; category: st
 
 // --- Experience ---
 export async function getExperience() {
-    return await db.experience.findMany();
+    try {
+        return await db.experience.findMany();
+    } catch (error) {
+        console.error('Error fetching experience:', error);
+        return [];
+    }
 }
 
 export async function saveExperience(experience: Partial<Experience> & { title: string; company: string; period: string; description: string; iconType: string }) {
@@ -281,7 +301,12 @@ export async function deleteExperience(id: string) {
 
 // --- Education ---
 export async function getEducation() {
-    return await db.education.findMany();
+    try {
+        return await db.education.findMany();
+    } catch (error) {
+        console.error('Error fetching education:', error);
+        return [];
+    }
 }
 
 export async function saveEducation(education: Partial<Education> & { degree: string; institution: string; period: string; description: string; iconType: string }) {
@@ -313,10 +338,15 @@ export async function getTestimonials() {
 
 /** Sirf approved + 4+ star testimonials — public home page ke liye */
 export async function getApprovedTestimonials() {
-    return await db.testimonial.findMany({
-        where: { status: "approved" },
-        orderBy: { createdAt: "desc" },
-    });
+    try {
+        return await db.testimonial.findMany({
+            where: { status: "approved" },
+            orderBy: { createdAt: "desc" },
+        });
+    } catch (error) {
+        console.error('Error fetching approved testimonials:', error);
+        return [];
+    }
 }
 
 /** Sirf pending testimonials — admin dashboard queue ke liye */
@@ -492,7 +522,12 @@ export async function deleteTestimonial(id: string) {
 
 // --- Team ---
 export async function getTeam() {
-    return await db.teammember.findMany();
+    try {
+        return await db.teammember.findMany();
+    } catch (error) {
+        console.error('Error fetching team:', error);
+        return [];
+    }
 }
 
 export async function addTeamMember(member: Omit<TeamMember, "id" | "createdAt" | "updatedAt">) {
@@ -521,7 +556,12 @@ export async function deleteTeamMember(id: string) {
 
 // --- Certificates ---
 export async function getCertificates() {
-    return await db.certificate.findMany();
+    try {
+        return await db.certificate.findMany();
+    } catch (error) {
+        console.error('Error fetching certificates:', error);
+        return [];
+    }
 }
 
 export async function saveCertificate(cert: Partial<Certificate> & { title: string; issuer: string; date: string }) {
@@ -547,7 +587,12 @@ export async function deleteCertificate(id: string) {
 
 // --- Languages ---
 export async function getLanguages() {
-    return await db.language.findMany();
+    try {
+        return await db.language.findMany();
+    } catch (error) {
+        console.error('Error fetching languages:', error);
+        return [];
+    }
 }
 
 export async function saveLanguage(lang: Partial<Language> & { name: string; proficiency: string }) {
@@ -573,7 +618,12 @@ export async function deleteLanguage(id: string) {
 
 // --- Interests ---
 export async function getInterests() {
-    return await db.interest.findMany();
+    try {
+        return await db.interest.findMany();
+    } catch (error) {
+        console.error('Error fetching interests:', error);
+        return [];
+    }
 }
 
 export async function saveInterest(interest: Partial<Interest> & { name: string }) {
