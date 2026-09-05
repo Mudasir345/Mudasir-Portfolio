@@ -38,7 +38,7 @@ Once your service is running, note these details:
 
 ```
 Service URI: mysql://avnadmin:YOUR_PASSWORD@HOST:PORT/defaultdb?ssl-mode=REQUIRED
-Host: mysql-your-instance.aivencloud.com
+Host: mysql-portfolio-mudasirchoudhry345-352d.c.aivencloud.com
 Port: 13153 (MySQL) - Use this, NOT MySQLX port 13157
 User: avnadmin
 Password: YOUR_AIVEN_PASSWORD
@@ -147,19 +147,19 @@ In Vercel Project Settings → Environment Variables, add:
 
 | Variable | Value | Description |
 |----------|-------|-------------|
-| `DATABASE_URL` | `mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-1a089c81-mudasirchoudhry345-352d.a.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED` | Aiven MySQL connection (use port 13153, NOT 13157) |
-| `ADMIN_PASSWORD` | `your-strong-password` | Admin panel password |
-| `ADMIN_SESSION_SECRET` | `32-char-random-secret` | Session encryption key |
-| `NEXT_PUBLIC_WEB3FORMS_KEY` | `your-web3forms-key` | Contact form API |
-| `CONTACT_EMAIL` | `your-email@example.com` | Contact form recipient |
-| `EMAIL_USER` | `your-gmail@gmail.com` | Backup email sender |
+| `DATABASE_URL` | `mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-portfolio-mudasirchoudhry345-352d.c.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED` | Aiven MySQL connection (use port 13153, NOT 13157) |
+| `ADMIN_PASSWORD` | `Mudasir@Dev2026!Strong` | Admin panel password |
+| `ADMIN_SESSION_SECRET` | `7958ee6cce67d9f801c1f0754d961515db8ee3d7ba1625bb545cfd0cbc0196ef` | Session encryption key |
+| `NEXT_PUBLIC_WEB3FORMS_KEY` | `248d2e00-17c7-4ff6-9a46-69c9a6c704eb` | Contact form API |
+| `CONTACT_EMAIL` | `mudasirchoudhry345@gmail.com` | Contact form recipient |
+| `EMAIL_USER` | `mudasirchoudhry345@gmail.com` | Backup email sender |
 | `EMAIL_PASS` | `your-gmail-app-password` | Gmail app password |
-| `NEXT_PUBLIC_WHATSAPP` | `https://wa.me/92300000000000` | WhatsApp link |
-| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | `your-cloud-name` | Cloudinary cloud name |
-| `CLOUDINARY_API_KEY` | `your-api-key` | Cloudinary API key |
-| `CLOUDINARY_API_SECRET` | `your-api-secret` | Cloudinary secret |
-| `CLOUDINARY_URL` | `cloudinary://API_KEY:SECRET@CLOUD_NAME` | Cloudinary URL |
-| `NEXT_PUBLIC_SITE_URL` | `https://your-app.vercel.app` | Production URL |
+| `NEXT_PUBLIC_WHATSAPP` | `https://wa.me/923047045345` | WhatsApp link |
+| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | `as4hjbxb` | Cloudinary cloud name |
+| `CLOUDINARY_API_KEY` | `714457478286268` | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | `S0i0g6LQhosH4oePgG8bio4hY2A` | Cloudinary secret |
+| `CLOUDINARY_URL` | `cloudinary://714457478286268:S0i0g6LQhosH4oePgG8bio4hY2A@as4hjbxb` | Cloudinary URL |
+| `NEXT_PUBLIC_SITE_URL` | `https://mudasir.dev` | Production URL |
 
 **Important:** Select appropriate environments for each variable:
 - Production (required)

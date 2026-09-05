@@ -28,7 +28,7 @@ Your `.env.production` file currently has placeholder values. Update it with you
 # Database (Aiven MySQL)
 # IMPORTANT: Use the MySQL connection string, NOT MySQLX
 # MySQL uses port 13153, MySQLX uses port 13157 - use the MySQL one
-DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-1a089c81-mudasirchoudhry345-352d.a.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
+DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-portfolio-mudasirchoudhry345-352d.c.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
 
 # Admin Authentication (USE STRONG VALUES!)
 ADMIN_PASSWORD=your-very-strong-admin-password-123!
@@ -86,9 +86,9 @@ Update `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` with strong values.
 
    ```
    # IMPORTANT: Use MySQL connection (port 13153), NOT MySQLX (port 13157)
-   DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-1a089c81-mudasirchoudhry345-352d.a.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
-   ADMIN_PASSWORD=your-strong-password
-   ADMIN_SESSION_SECRET=your-32-char-secret
+   DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-portfolio-mudasirchoudhry345-352d.c.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
+   ADMIN_PASSWORD=your-strong-admin-password
+   ADMIN_SESSION_SECRET=your-32-char-random-secret
    NEXT_PUBLIC_WEB3FORMS_KEY=your-web3forms-access-key
    CONTACT_EMAIL=your-email@example.com
    EMAIL_USER=your-gmail@gmail.com
@@ -98,7 +98,7 @@ Update `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` with strong values.
    CLOUDINARY_API_KEY=your-cloudinary-api-key
    CLOUDINARY_API_SECRET=your-cloudinary-api-secret
    CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
-   NEXT_PUBLIC_SITE_URL=https://your-app.vercel.app
+   NEXT_PUBLIC_SITE_URL=https://mudasir.dev
    ```
 
 4. **Deploy**
@@ -112,7 +112,7 @@ After deployment, apply the database schema to your Aiven database:
 
 ```bash
 # Set your database URL (use MySQL connection, not MySQLX)
-set DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-1a089c81-mudasirchoudhry345-352d.a.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
+set DATABASE_URL=mysql://avnadmin:YOUR_AIVEN_PASSWORD@mysql-portfolio-mudasirchoudhry345-352d.c.aivencloud.com:13153/defaultdb?ssl-mode=REQUIRED
 
 # Generate Prisma client
 npx prisma generate
@@ -151,10 +151,11 @@ After deployment, update the `NEXT_PUBLIC_SITE_URL` in Vercel:
 - The database name is `defaultdb`
 - User is `avnadmin`
 - Port is `13153` (MySQL) - Use this, NOT MySQLX port `13157`
+- Host: `mysql-portfolio-mudasirchoudhry345-352d.c.aivencloud.com`
 - Connection format: `mysql://avnadmin:PASSWORD@HOST:13153/defaultdb?ssl-mode=REQUIRED`
 
 ### Cloudinary
-- Cloud name: `your-cloud-name`
+- Cloud name: `as4hjbxb`
 - Make sure your upload presets are configured
 - Check folder permissions in Cloudinary dashboard
 
