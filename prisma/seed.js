@@ -9,14 +9,14 @@ async function clearDatabase() {
   console.log('🧹 Purana data delete kiya ja raha hai...');
   // Delete in reverse order of creation due to foreign key constraints
   await prisma.gallery.deleteMany({});
-  await prisma.serviceDetail.deleteMany({});
+  await prisma.servicedetail.deleteMany({});
   await prisma.project.deleteMany({});
   await prisma.service.deleteMany({});
   await prisma.skill.deleteMany({});
   await prisma.experience.deleteMany({});
   await prisma.education.deleteMany({});
   await prisma.testimonial.deleteMany({});
-  await prisma.teamMember.deleteMany({});
+  await prisma.teammember.deleteMany({});
   await prisma.certificate.deleteMany({});
   await prisma.language.deleteMany({});
   await prisma.interest.deleteMany({});
@@ -54,7 +54,7 @@ async function seedSimpleModels(data) {
   if (data.experience && data.experience.length > 0) await prisma.experience.createMany({ data: data.experience });
   if (data.education && data.education.length > 0) await prisma.education.createMany({ data: data.education });
   if (data.testimonials && data.testimonials.length > 0) await prisma.testimonial.createMany({ data: data.testimonials });
-  if (data.team && data.team.length > 0) await prisma.teamMember.createMany({ data: data.team });
+  if (data.team && data.team.length > 0) await prisma.teammember.createMany({ data: data.team });
   if (data.certificates && data.certificates.length > 0) await prisma.certificate.createMany({ data: data.certificates });
   if (data.languages && data.languages.length > 0) await prisma.language.createMany({ data: data.languages });
   if (data.interests && data.interests.length > 0) await prisma.interest.createMany({ data: data.interests });
@@ -95,7 +95,7 @@ async function seedServices(services) {
 
     if (details && details.length > 0) {
       for (const item of details) {
-        await prisma.serviceDetail.create({
+        await prisma.servicedetail.create({
           data: { ...item, serviceId: createdService.id },
         });
       }

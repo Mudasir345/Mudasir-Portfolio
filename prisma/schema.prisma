@@ -91,9 +91,9 @@ model project {
   title           String
   description     String    @db.Text
   longDescription String?   @db.Text
-  features        String
-  challenges      String
-  techStack       String
+  features        String    @db.Text
+  challenges      String    @db.Text
+  techStack       String    @db.Text
   image           String
   mediaType       String?
   category        String
