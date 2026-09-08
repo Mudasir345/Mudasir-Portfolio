@@ -68,7 +68,7 @@ const fallbackProjects: ProjectData[] = [
     mediaType: "image",
     category: "Web",
     link: "",
-    liveUrl: "https://mudasirch.netlify.app",
+    liveUrl: "https://mudasirdev.vercel.app",
     githubUrl: "https://github.com/Mudasir345/portfolio",
     showInCv: true,
     createdAt: fallbackDate,

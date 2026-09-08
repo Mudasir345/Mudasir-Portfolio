@@ -112,7 +112,7 @@ async function tryWeb3Forms(
   message: string,
 ): Promise<{ success: boolean; error?: string }> {
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || process.env.WEB3FORMS_KEY;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirdev.vercel.app";
 
   console.group("📧 [sendEmail] TRYING Web3Forms =========================================");
   console.log("1. Env key check:", {
@@ -276,7 +276,7 @@ async function tryFormSubmit(
   message: string,
 ): Promise<{ success: boolean; error?: string }> {
   const CONTACT_EMAIL = getContactEmail();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirdev.vercel.app";
   const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`;
 
   console.group("📧 [sendEmail] TRYING #2 FormSubmit.co (FREE, no signup) ===============");

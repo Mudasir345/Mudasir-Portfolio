@@ -116,7 +116,7 @@ CLOUDINARY_API_SECRET=your-api-secret
 NEXT_PUBLIC_WHATSAPP=https://wa.me/92300000000000
 
 # Site URL
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_SITE_URL=https://mudasirdev.vercel.app
 ```
 
 ## 👨‍💻 Admin Panel
@@ -212,7 +212,7 @@ The project uses Prisma with MySQL. Key models include:
    CLOUDINARY_API_KEY=your-cloudinary-api-key
    CLOUDINARY_API_SECRET=your-cloudinary-api-secret
    CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
-   NEXT_PUBLIC_SITE_URL=https://your-app.vercel.app
+   NEXT_PUBLIC_SITE_URL=https://mudasirdev.vercel.app
    ```
 
 5. **Run Database Migrations:**

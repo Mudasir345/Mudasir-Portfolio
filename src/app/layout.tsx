@@ -11,7 +11,7 @@ const outfit = Outfit({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirdev.vercel.app";
 const metadataBase = new URL(siteUrl);
 const ogImageUrl = new URL("/og-image.jpg", metadataBase).toString();
 

@@ -22,7 +22,7 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 export default async function Home() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirch.netlify.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirdev.vercel.app";
   const absoluteUrl = (path?: string) => (path ? new URL(path, siteUrl).toString() : siteUrl);
 
   let portfolioData;
