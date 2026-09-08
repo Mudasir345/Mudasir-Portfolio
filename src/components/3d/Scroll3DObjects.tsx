@@ -28,6 +28,7 @@ export const Scroll3DObjects = ({
     const shapeMeshRef = useRef<Mesh | null>(null);
     const pointLightRef = useRef<PointLight | null>(null);
     const smoothedProgressRef = useRef(0);
+    const frameBudgetRef = useRef(0);
 
     // Particle Sphere positions
     const [sphere] = useState(() =>
@@ -48,17 +49,24 @@ export const Scroll3DObjects = ({
     useFrame(({ mouse }, delta) => {
         if (!isVisible || !scrollState.current) return;
 
+        // The visual effect does not need to update at every display refresh.
+        // Capping scene updates near 30fps keeps scroll and input responsive.
+        frameBudgetRef.current += delta;
+        if (frameBudgetRef.current < 1 / 30) return;
+        const frameDelta = frameBudgetRef.current;
+        frameBudgetRef.current = 0;
+
         const { targetProgress, velocity } = scrollState.current;
 
         // Smooth progress interpolation
-        smoothedProgressRef.current += (targetProgress - smoothedProgressRef.current) * Math.min(delta * 4, 1);
+        smoothedProgressRef.current += (targetProgress - smoothedProgressRef.current) * Math.min(frameDelta * 4, 1);
         const currentProgress = smoothedProgressRef.current;
 
         // 1. Particle Starfield Movement & Warp effect on scroll speed
         if (pointsRef.current) {
             // Constant base rotation
-            pointsRef.current.rotation.x -= delta * 0.08;
-            pointsRef.current.rotation.y -= delta * 0.1;
+            pointsRef.current.rotation.x -= frameDelta * 0.08;
+            pointsRef.current.rotation.y -= frameDelta * 0.1;
 
             // Mouse interaction
             pointsRef.current.rotation.x += mouse.y * interactionScale;
@@ -70,7 +78,7 @@ export const Scroll3DObjects = ({
             // Warp speed effect on fast scroll
             const scaleSpeed = 1 + velocity * 0.15;
             pointsRef.current.scale.setScalar(
-                THREE.MathUtils.lerp(pointsRef.current.scale.x, scaleSpeed, delta * 3)
+                THREE.MathUtils.lerp(pointsRef.current.scale.x, scaleSpeed, frameDelta * 3)
             );
         }
 
@@ -82,11 +90,11 @@ export const Scroll3DObjects = ({
             const targetRotX = currentProgress * Math.PI * 4;
             const targetRotY = currentProgress * Math.PI * 3 + mouse.x * 0.5;
 
-            geometryGroupRef.current.position.y += (targetY - geometryGroupRef.current.position.y) * delta * 2.5;
-            geometryGroupRef.current.position.z += (targetZ - geometryGroupRef.current.position.z) * delta * 2.5;
+            geometryGroupRef.current.position.y += (targetY - geometryGroupRef.current.position.y) * frameDelta * 2.5;
+            geometryGroupRef.current.position.z += (targetZ - geometryGroupRef.current.position.z) * frameDelta * 2.5;
             
-            shapeMeshRef.current.rotation.x += delta * 0.4 + (targetRotX - shapeMeshRef.current.rotation.x) * delta;
-            shapeMeshRef.current.rotation.y += delta * 0.5 + (targetRotY - shapeMeshRef.current.rotation.y) * delta;
+            shapeMeshRef.current.rotation.x += frameDelta * 0.4 + (targetRotX - shapeMeshRef.current.rotation.x) * frameDelta;
+            shapeMeshRef.current.rotation.y += frameDelta * 0.5 + (targetRotY - shapeMeshRef.current.rotation.y) * frameDelta;
         }
 
         // 3. Dynamic Color Shift on Scroll
@@ -108,11 +116,11 @@ export const Scroll3DObjects = ({
     return (
         <group>
             {/* Dynamic Light Rig */}
-            <ambientLight intensity={0.4} />
-            <pointLight ref={pointLightRef} position={[2, 2, 2]} intensity={2.5} distance={10} />
+            <ambientLight intensity={0.35} />
+            <pointLight ref={pointLightRef} position={[2, 2, 2]} intensity={2} distance={10} />
 
             {/* Particle Starfield */}
-            <group rotation={[0, 0, Math.PI / 4]}>
+            {count > 0 && <group rotation={[0, 0, Math.PI / 4]}>
                 <Points
                     ref={pointsRef}
                     positions={sphere}
@@ -127,7 +135,7 @@ export const Scroll3DObjects = ({
                         depthWrite={false}
                     />
                 </Points>
-            </group>
+            </group>}
 
             {/* Subtle Floating 3D Geometric Ring Mesh (Interactive Scroll Object) */}
             {!isMobile && (

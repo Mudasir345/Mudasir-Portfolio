@@ -43,11 +43,9 @@ const ProjectCard = ({ src, title, description, techStack, liveUrl, githubUrl, o
                                 <video
                                     src={src}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                    autoPlay
                                     muted
-                                    loop
                                     playsInline
-                                    preload="metadata"
+                                    preload="none"
                                 />
                             </div>
                         ) : (

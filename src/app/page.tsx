@@ -9,7 +9,6 @@ import Education from "@/components/sections/Education";
 import Contact from "@/components/sections/Contact";
 import Testimonials from "@/components/sections/Testimonials";
 import Footer from "@/components/layout/Footer";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Team from "@/components/sections/Team";
 import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
 import FloatingContactBtn from "@/components/ui/FloatingContactBtn";
@@ -145,55 +144,22 @@ export default async function Home() {
           settings={settings}
         />
 
-        <ScrollReveal width="100%">
-          <About profile={profile} />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%">
-          <Skills skills={skills} />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%">
-          <Services initialServices={services} />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%">
-          <Process />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%">
-          <Experience experience={experience} />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%">
-          <Education education={educationWithInstitutions} />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%">
-          <Certifications certificates={certificates} />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%">
-          <Projects initialProjects={projects} />
-        </ScrollReveal>
+        <About profile={profile} />
+        <Skills skills={skills} />
+        <Services initialServices={services} />
+        <Process />
+        <Experience experience={experience} />
+        <Education education={educationWithInstitutions} />
+        <Certifications certificates={certificates} />
+        <Projects initialProjects={projects} />
 
         {settings.showTeam && (
-          <ScrollReveal width="100%">
-            <Team team={team} />
-          </ScrollReveal>
+          <Team team={team} />
         )}
 
-        <ScrollReveal width="100%">
-          <Testimonials testimonials={testimonials} />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%">
-          <HireMe profile={profile} settings={settings} />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%">
-          <Contact profile={profile} />
-        </ScrollReveal>
+        <Testimonials testimonials={testimonials} />
+        <HireMe profile={profile} settings={settings} />
+        <Contact profile={profile} />
 
         <Footer profile={profile} />
       </div>

@@ -12,6 +12,19 @@ export default function Scroll3DWrapper() {
     const [shouldRender, setShouldRender] = useState(false);
 
     useEffect(() => {
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const narrowScreen = window.matchMedia("(max-width: 767px)");
+        const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+        const weakDevice =
+            reducedMotion.matches ||
+            narrowScreen.matches ||
+            (typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4) ||
+            (typeof deviceMemory === "number" && deviceMemory <= 4);
+
+        // A fixed WebGL canvas is expensive on low-power devices and while the user
+        // is trying to scroll. The CSS background remains visible in this case.
+        if (weakDevice) return;
+
         // Use requestIdleCallback if supported, falling back to 250ms delay
         // This ensures the main thread finishes 100% of LCP DOM rendering, image paint, and font layout
         if (typeof window !== "undefined" && "requestIdleCallback" in window) {
@@ -19,13 +32,13 @@ export default function Scroll3DWrapper() {
                 () => {
                     setShouldRender(true);
                 },
-                { timeout: 300 }
+                { timeout: 1200 }
             );
             return () => window.cancelIdleCallback(idleHandle);
         } else {
             const timer = setTimeout(() => {
                 setShouldRender(true);
-            }, 250);
+            }, 700);
             return () => clearTimeout(timer);
         }
     }, []);

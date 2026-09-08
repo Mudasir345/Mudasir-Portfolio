@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 
 const clamp = (value: number, min: number, max: number): number =>
   Math.max(min, Math.min(max, value));
@@ -17,13 +17,16 @@ function calcScrollProgress(): number {
 }
 
 export default function ScrollProgressBar() {
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressRef = useRef<HTMLDivElement | null>(null);
   const rafIdRef = useRef<number | null>(null);
   const tickingRef = useRef<boolean>(false);
 
   const updateProgress = useCallback(() => {
     tickingRef.current = false;
-    setScrollProgress(calcScrollProgress());
+    const progress = calcScrollProgress();
+    if (progressRef.current) {
+      progressRef.current.style.transform = `scaleX(${progress / 100})`;
+    }
   }, []);
 
   const requestTick = useCallback(() => {
@@ -59,14 +62,14 @@ export default function ScrollProgressBar() {
       role="progressbar"
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-valuenow={Math.round(scrollProgress)}
+      aria-valuenow={0}
     >
       <div
+        ref={progressRef}
         className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 shadow-[0_0_10px_rgba(112,66,248,0.5)] will-change-transform"
         style={{
-          width: `${scrollProgress}%`,
-          transform: "translateZ(0)",
-          transition: "width 75ms ease-out",
+          transform: "scaleX(0)",
+          transformOrigin: "left center",
         }}
       />
     </div>

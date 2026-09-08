@@ -10,9 +10,9 @@ export const Scroll3DScene = () => {
     const scrollState = use3DScroll();
     
     const [settings, setSettings] = useState({
-        count: 3200,
-        dpr: 1.2,
-        interactionScale: 0.0007,
+        count: 900,
+        dpr: 1,
+        interactionScale: 0.00035,
         isMobile: false,
     });
     const [isVisible, setIsVisible] = useState(true);
@@ -24,7 +24,7 @@ export const Scroll3DScene = () => {
         const updateSettings = () => {
             if (reducedMotion.matches) {
                 setSettings({
-                    count: 1000,
+                    count: 0,
                     dpr: 1,
                     interactionScale: 0.0002,
                     isMobile: true,
@@ -34,7 +34,7 @@ export const Scroll3DScene = () => {
 
             if (media.matches) {
                 setSettings({
-                    count: 1600,
+                    count: 0,
                     dpr: 1,
                     interactionScale: 0.0004,
                     isMobile: true,
@@ -43,9 +43,9 @@ export const Scroll3DScene = () => {
             }
 
             setSettings({
-                count: 3200,
-                dpr: 1.25,
-                interactionScale: 0.0007,
+                count: 900,
+                dpr: 1,
+                interactionScale: 0.00035,
                 isMobile: false,
             });
         };
@@ -75,7 +75,7 @@ export const Scroll3DScene = () => {
         >
             <Canvas
                 camera={{ position: [0, 0, 1], fov: 75 }}
-                dpr={[1, settings.dpr]}
+                dpr={settings.dpr}
                 gl={{
                     antialias: false,
                     alpha: true,

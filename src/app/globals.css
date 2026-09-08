@@ -72,6 +72,41 @@ canvas {
   @apply bg-glass backdrop-blur-md border border-white/10 shadow-lg;
 }
 
+/* Sections outside the viewport do not need layout/paint work until approached. */
+main > .flex > section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 850px;
+}
+
+/* Blur is visually nice but disproportionately expensive in Firefox and on
+   mobile GPUs. Keep the visual language while avoiding continuous compositing. */
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .glass-card,
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl {
+    backdrop-filter: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Custom scrollbar for modals */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
