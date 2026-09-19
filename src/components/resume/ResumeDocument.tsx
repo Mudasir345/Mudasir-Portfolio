@@ -259,6 +259,9 @@ const ResumeDocument = ({ profile, skills, experience, education, projects, cert
                                         </View>
                                         <Text style={styles.itemDateRight}>{exp.period}</Text>
                                     </View>
+                                    {exp.location ? (
+                                        <Text style={styles.itemTitleSub}>{exp.location}</Text>
+                                    ) : null}
                                     {renderDescription(exp.description)}
                                 </View>
                             ))}

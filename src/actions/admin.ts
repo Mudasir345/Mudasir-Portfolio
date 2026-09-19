@@ -20,7 +20,7 @@ import type {
     settings as Settings,
     servicedetail as ServiceDetail,
     gallery as Gallery,
-} from "@prisma/client";
+} from "@/lib/db";
 
 // --- Authentication ---
 export async function authenticate(password: string) {
@@ -39,10 +39,10 @@ export async function logout() {
 // --- Projects ---
 export async function getProjects() {
     try {
-        const rows = await db.project.findMany({
-            include: { gallery: true },
-        });
-        return rows.map(transformProject);
+        // MongoDB mein gallery already embedded inside project document — no include() needed!
+        const rows = await db.project.findMany();
+        // Cast — proxy findMany returns project[] which already have gallery array
+        return (rows as unknown as Project[]).map(transformProject);
     } catch (error) {
         console.error('Error fetching projects:', error);
         return [];
@@ -52,6 +52,7 @@ export async function getProjects() {
 export async function addProject(project: import("@/lib/db").ProjectData) {
     await requireAdmin();
     const { gallery, ...projectData } = project;
+    // Create base project — db proxy auto-creates ids & injects embedded gallery
     const createdProject = await db.project.create({
         data: {
             title: projectData.title,
@@ -67,24 +68,21 @@ export async function addProject(project: import("@/lib/db").ProjectData) {
             features: Array.isArray(projectData.features) ? projectData.features.join(',') : String(projectData.features ?? ''),
             challenges: Array.isArray(projectData.challenges) ? projectData.challenges.join(',') : String(projectData.challenges ?? ''),
             techStack: Array.isArray(projectData.techStack) ? projectData.techStack.join(',') : String(projectData.techStack ?? ''),
+            // Embed gallery directly inside project document (no separate collection)
+            gallery: (gallery ?? []).map((g) => ({ url: g.url, type: g.type })),
         } as any,
     });
 
-    if (gallery && gallery.length > 0) {
-        await db.gallery.createMany({
-            data: gallery.map((item) => ({ url: item.url, type: item.type, projectId: createdProject.id })) as any,
-        });
-    }
-
     revalidatePath("/");
     revalidatePath("/admin/dashboard");
-    return { success: true };
+    return { success: true, id: (createdProject as any)?.id };
 }
 
 export async function updateProject(id: string, project: import("@/lib/db").ProjectData) {
     await requireAdmin();
     const { gallery, ...projectData } = project;
 
+    // Update project + embedded gallery (full replace, same as old deleteMany+createMany pattern)
     await db.project.update({
         where: { id },
         data: {
@@ -101,16 +99,10 @@ export async function updateProject(id: string, project: import("@/lib/db").Proj
             features: Array.isArray(projectData.features) ? projectData.features.join(',') : String(projectData.features ?? ''),
             challenges: Array.isArray(projectData.challenges) ? projectData.challenges.join(',') : String(projectData.challenges ?? ''),
             techStack: Array.isArray(projectData.techStack) ? projectData.techStack.join(',') : String(projectData.techStack ?? ''),
+            // Full replace embedded gallery (same as old: deleteMany + createMany)
+            gallery: (gallery ?? []).map((g) => ({ id: g.id, url: g.url, type: g.type })),
         } as any,
     });
-
-    // Replace gallery images
-    await db.gallery.deleteMany({ where: { projectId: id } });
-    if (gallery && gallery.length > 0) {
-        await db.gallery.createMany({
-            data: gallery.map((item) => ({ url: item.url, type: item.type, projectId: id })) as any,
-        });
-    }
 
     revalidatePath("/");
     revalidatePath("/admin/dashboard");
@@ -119,6 +111,7 @@ export async function updateProject(id: string, project: import("@/lib/db").Proj
 
 export async function deleteProject(id: string) {
     await requireAdmin();
+    // Project delete = embedded gallery auto-deleted (inherent cascade benefit of embedded docs)
     await db.project.delete({ where: { id } });
     revalidatePath("/");
     revalidatePath("/admin/dashboard");
@@ -128,12 +121,11 @@ export async function deleteProject(id: string) {
 // --- Services ---
 export async function getServices() {
     try {
-        const rows = await db.service.findMany({
-            include: { servicedetail: true },
-        });
-        return rows.map((s) => ({
+        // Servicedetail already embedded inside service document — no join include() needed!
+        const rows = await db.service.findMany();
+        return (rows as unknown as Service[]).map((s) => ({
             ...s,
-            details: s.servicedetail.map((d) => ({ name: d.name, iconUrl: d.iconUrl })),
+            details: (s.servicedetail || []).map((d) => ({ name: d.name, iconUrl: d.iconUrl })),
         }));
     } catch (error) {
         console.error('Error fetching services:', error);
@@ -144,19 +136,15 @@ export async function getServices() {
 export async function addService(service: import("@/lib/db").ServiceData) {
     await requireAdmin();
     const { details, ...serviceData } = service;
-    const createdService = await db.service.create({
+    // Create service + embed servicedetail inside (no separate table)
+    await db.service.create({
         data: {
             title: serviceData.title,
             iconType: serviceData.iconType,
             description: serviceData.description,
+            servicedetail: (details ?? []).map((d) => ({ name: d.name, iconUrl: d.iconUrl })),
         } as any,
     });
-
-    if (details && details.length > 0) {
-        await db.servicedetail.createMany({
-            data: details.map((item) => ({ name: item.name, iconUrl: item.iconUrl, serviceId: createdService.id })) as any,
-        });
-    }
 
     revalidatePath("/");
     revalidatePath("/admin/dashboard");
@@ -172,16 +160,10 @@ export async function updateService(id: string, service: import("@/lib/db").Serv
             title: serviceData.title,
             iconType: serviceData.iconType,
             description: serviceData.description,
+            // Full replace embedded servicedetail array (same behavior as old)
+            servicedetail: (details ?? []).map((d) => ({ id: (d as any).id, name: d.name, iconUrl: d.iconUrl })),
         } as any,
     });
-
-    // Replace details
-    await db.servicedetail.deleteMany({ where: { serviceId: id } });
-    if (details && details.length > 0) {
-        await db.servicedetail.createMany({
-            data: details.map((item) => ({ name: item.name, iconUrl: item.iconUrl, serviceId: id })) as any,
-        });
-    }
 
     revalidatePath("/");
     revalidatePath("/admin/dashboard");
@@ -190,6 +172,7 @@ export async function updateService(id: string, service: import("@/lib/db").Serv
 
 export async function deleteService(id: string) {
     await requireAdmin();
+    // Service delete = embedded servicedetail auto cascade delete
     await db.service.delete({ where: { id } });
     revalidatePath("/");
     revalidatePath("/admin/dashboard");
@@ -684,7 +667,7 @@ export async function updateSettings(data: Partial<Omit<Settings, "id" | "create
     return { success: true };
 }
 
-/** Fetch public portfolio content in one place and keep the visitor-facing site available if MySQL is offline. */
+/** Fetch public portfolio content in one place and keep the visitor-facing site available if the primary database is offline. */
 export async function getPortfolioData() {
     try {
         const [projects, services, profile, skills, experience, education, testimonials, team, settings, certificates, languages, interests] = await Promise.all([

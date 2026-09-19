@@ -32,6 +32,7 @@ model experience {
   id          String   @id @default(cuid())
   title       String
   company     String
+  location    String?
   period      String
   description String   @db.Text
   iconType    String

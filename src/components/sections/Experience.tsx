@@ -3,7 +3,7 @@
 import React from "react";
 import SectionHeading from "../ui/SectionHeading";
 import { motion } from "framer-motion";
-import { Briefcase, Code } from "lucide-react";
+import { Briefcase, Code, MapPin } from "lucide-react";
 import { ExperienceData } from "@/lib/db";
 import ReactMarkdown from "react-markdown";
 
@@ -59,9 +59,17 @@ const Experience = ({ experience }: ExperienceProps) => {
                                             </span>
                                         </div>
 
-                                        <h4 className="text-lg font-medium text-purple-400 mb-4 flex items-center gap-2">
-                                            @{item.company}
-                                        </h4>
+                                        <div className="mb-4">
+                                            <h4 className="text-lg font-medium text-purple-400 flex items-center gap-2">
+                                                @{item.company}
+                                            </h4>
+                                            {item.location && (
+                                                <p className="text-sm text-gray-400 mt-1 flex items-center gap-1.5">
+                                                    <MapPin size={14} className="text-cyan-400 shrink-0" />
+                                                    {item.location}
+                                                </p>
+                                            )}
+                                        </div>
 
                                         <div className="text-gray-300 text-sm leading-relaxed space-y-2 prose prose-invert max-w-none">
                                             <ReactMarkdown

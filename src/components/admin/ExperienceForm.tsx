@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { saveExperience } from "@/actions/admin";
 import { ExperienceData } from "@/lib/db";
-import { Briefcase, Code, Building, Calendar, FileText, Type } from "lucide-react";
+import { Briefcase, Code, Building, Calendar, FileText, Type, MapPin } from "lucide-react";
 
 interface ExperienceFormProps {
     initialData?: ExperienceData | null;
@@ -17,6 +17,7 @@ export default function ExperienceForm({ initialData, onSuccess, onCancel }: Exp
         id: "",
         title: "",
         company: "",
+        location: "",
         period: "",
         description: "",
         iconType: "Briefcase",
@@ -26,12 +27,13 @@ export default function ExperienceForm({ initialData, onSuccess, onCancel }: Exp
 
     useEffect(() => {
         if (initialData) {
-            setFormData(initialData);
+            setFormData({ location: "", ...initialData });
         } else {
             setFormData({
                 id: `exp_${Date.now()}`,
                 title: "",
                 company: "",
+                location: "",
                 period: "",
                 description: "",
                 iconType: "Briefcase",
@@ -123,6 +125,23 @@ export default function ExperienceForm({ initialData, onSuccess, onCancel }: Exp
                             <option value="Code">💻 Code (Technical)</option>
                         </select>
                     </div>
+                </div>
+            </div>
+
+            {/* Location (optional) */}
+            <div className="space-y-2">
+                <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    Location <span className="normal-case text-gray-600 font-normal">(optional — leave empty to hide)</span>
+                </label>
+                <div className="relative group">
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-cyan-500 transition-colors" size={18} />
+                    <input
+                        type="text"
+                        placeholder="e.g. Rawalpindi, Punjab, Pakistan"
+                        value={formData.location ?? ""}
+                        onChange={e => setFormData({ ...formData, location: e.target.value })}
+                        className="w-full pl-10 pr-4 py-3 bg-[#030014] border border-white/10 rounded-xl text-white focus:border-cyan-500 outline-none transition-all focus:ring-1 focus:ring-cyan-500"
+                    />
                 </div>
             </div>
 

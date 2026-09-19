@@ -18,8 +18,7 @@ import Scroll3DWrapper from "@/components/3d/Scroll3DWrapper";
 import { getPortfolioData } from "@/actions/admin";
 import type { EducationData, SkillData, ServiceData, ProjectData } from "@/lib/db";
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+export const revalidate = 3600;
 
 export default async function Home() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirdev.vercel.app";

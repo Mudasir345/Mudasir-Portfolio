@@ -15,11 +15,6 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirdev.vercel.a
 const metadataBase = new URL(siteUrl);
 const ogImageUrl = new URL("/og-image.jpg", metadataBase).toString();
 
-export const dynamic = "force-dynamic";
-
-// Prevent build-time database connection issues
-export const fetchCache = "force-no-store";
-
 export const metadata: Metadata = {
   metadataBase,
   manifest: "/manifest.json",
@@ -103,6 +98,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning className={outfit.className}>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://res.cloudinary.com" />
+      <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
+      <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
       <body className="bg-[#030014] overflow-y-scroll overflow-x-hidden antialiased">
         <Navbar profile={profile ?? fallback.profile} settings={settings ?? fallback.settings} />
         {children}

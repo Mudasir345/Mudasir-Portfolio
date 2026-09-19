@@ -141,11 +141,20 @@
   ],
   "experience": [
     {
+      "id": "exp_pser_1",
+      "title": "Enumerator — PSER (Punjab Socio-Economic Registry)",
+      "company": "The Urban Unit",
+      "location": "Rawalpindi",
+      "period": "Dec 2025 - Aug 2026",
+      "description": "Worked as a **Field Enumerator** on **PSER (Punjab Socio-Economic Registry)** — a flagship Punjab Government project under the **Planning & Development Board**, executed by **The Urban Unit**, to build a dynamic and verified socio-economic database of every citizen and household in Punjab.\n\n- Conducted **door-to-door household surveys** across assigned zones in **Rawalpindi**, registering families through the PSER mobile application.\n- Collected accurate socio-economic data — household members, CNIC / B-Form, income, assets, employment, education, disability and housing details.\n- Ensured **maximum data accuracy** through on-the-spot document verification (CNIC / B-Form) and follow-up visits for incomplete or flagged records.\n- Maintained and synced daily collected data, resolved discrepancies and consistently met daily registration targets under supervisor review.",
+      "iconType": "Briefcase"
+    },
+    {
       "id": "exp_1",
       "title": "Freelance Full Stack Developer",
       "company": "Upwork / Fiverr",
       "period": "2023 - Present",
-      "description": "Delivered 20+ custom web applications and automation bots for international clients. Specialized in Next.js, React, and Python automation. Maintained a 5-star rating.",
+      "description": "Working as an independent **Full Stack Developer** on Upwork and Fiverr, delivering production-grade web applications and automation tools for international clients.\n\n- Built and shipped **20+ custom projects** — full-stack web apps, dashboards, landing pages and automation bots — using **Next.js, React, TypeScript, Node.js and Python**.\n- Owned the **complete delivery lifecycle**: requirements, architecture, development, deployment and post-launch support.\n- Optimized every project for **performance, responsiveness and SEO**, consistently meeting tight deadlines.\n- Maintained a **5-star client rating** with a strong record of repeat clients and on-time delivery.",
       "iconType": "Briefcase"
     }
   ],
@@ -177,6 +186,7 @@
   ],
   "projects": [
     {
+      "id": "cmu8mreih3fgrficjbb3ghrwc",
       "title": "Bazario Marketplace — Admin & Backend",
       "description": "- Architected the core enterprise backend using Laravel 8 to power the massive Bazario multi-platform ecosystem.\n- Integrated 7+ global payment gateways (Stripe, PayPal, Crypto, local options) using a unified payment adapter interface.\n- Engineered a highly interactive, component-driven Admin Dashboard using React 17 and Redux Toolkit.\n- Configured extensive cloud infrastructure including AWS S3 for object storage and WebSockets for real-time concurrency.",
       "longDescription": "The Bazario Marketplace Admin & Backend represents the core engine of the Bazario ecosystem. Built on Laravel 8, it securely handles massive concurrency and synchronizes data across web and mobile endpoints. The frontend Admin Dashboard is built with React 17 and Redux Toolkit, providing administrators with real-time analytics, user management, and seamless control over a multi-vendor marketplace. Integrated with 7+ global payment systems, it is built to scale globally.",
@@ -213,6 +223,7 @@
       ]
     },
     {
+      "id": "cmu8mreih7mm99bgbk1ljyc9y",
       "title": "ViserTube — Full-Stack Video Streaming & Monetization SaaS",
       "description": "- Architected a production-grade, multi-tenant video streaming SaaS on Laravel 11 with 58 Eloquent models, 27 database migrations, and 50+ controllers — supporting video uploads, embed codes, and direct URLs.\n- Engineered a dual-mode advertising engine: a legacy click/impression system and an advanced Campaign Ads system with geo-targeting, category-targeting, daily budget caps, and a real-time ad eligibility oracle.\n- Integrated 32 payment gateways (Stripe, Razorpay, PayPal, Binance, bKash, Flutterwave, and 26 more) with a unified adapter pattern for creator monetization, subscriptions, and advertiser campaign payments.\n- Implemented enterprise security: TOTP 2FA (Google Authenticator), KYC verification, OAuth 2.0 (Socialite), Email/SMS OTP, AES-encrypted video paths, and HTMLPurifier XSS sanitization.",
       "longDescription": "ViserTube is a production-grade, full-stack video streaming and monetization SaaS platform built on Laravel 11. Inspired by the architecture of modern video-sharing platforms, it delivers a complete ecosystem for content creators, advertisers, and platform administrators — offering video hosting, channel management, multi-gateway payments, a dual-mode advertising engine, real-time analytics, and creator monetization — all under one unified codebase. The platform supports triple-source video (uploaded files, embed codes, direct URLs), multi-resolution playback, Shorts, and a CMS-style page builder.",
@@ -251,9 +262,10 @@
       "showInCv": true
     },
     {
-      "title": "Board N Barrel — E-Commerce, POS & Restaurant Management System",
+      "id": "cmu8mreiheq2r6uzym0ddcrrj",
+      "title": "Splasha — E-Commerce, POS & Restaurant Management System",
       "description": "- Built a full-stack, multi-module web platform unifying a customer-facing e-commerce storefront, an internal Admin Dashboard, a touch-optimized Point of Sale (POS) system, and a Kitchen Display System (KDS) into one synchronized architecture.\n- Engineered real-time synchronization between three distinct client types (Customer Web Store, POS terminals, KDS screens) using PHP WebSockets (Ratchet), ensuring order state is always consistent across all surfaces.\n- Integrated Stripe API and Apple Pay for secure online payment processing; developed custom credit card input chunking and tokenization logic for the checkout flow.\n- Implemented comprehensive HR and inventory modules: staff role management, shift and roster creation, low-stock alerts, stock reorder workflows, and barcode scanning/receipt printing for POS cashiers.",
-      "longDescription": "Board N Barrel is a full-fledged, scalable, and multi-module web application designed for restaurant and retail operations. It combines an e-commerce storefront for customers with a robust internal ecosystem encompassing an Admin Dashboard, a Point of Sale (POS) system, and a Kitchen Display System (KDS). This project bridges the gap between online ordering and in-store operations, synchronizing sales, inventory, and staff management into a single unified platform using PHP WebSockets for real-time data flow across all three clients.",
+      "longDescription": "Splasha is a full-fledged, scalable, and multi-module web application designed for restaurant and retail operations. It combines an e-commerce storefront for customers with a robust internal ecosystem encompassing an Admin Dashboard, a Point of Sale (POS) system, and a Kitchen Display System (KDS). This project bridges the gap between online ordering and in-store operations, synchronizing sales, inventory, and staff management into a single unified platform using PHP WebSockets for real-time data flow across all three clients.",
       "features": [
         "Real-Time WebSocket Sync (Customer Store → POS → Kitchen Display)",
         "Stripe & Apple Pay Integration with Custom Credit Card Tokenization",
@@ -283,12 +295,13 @@
       ],
       "image": "https://res.cloudinary.com/as4hjbxb/image/upload/v1787486479/portfolio/projects/boardnbarrel_mockup-1787486476154.jpg",
       "category": "Web",
-      "liveUrl": "https://boardnbarrel.com.au/",
+      "liveUrl": "https://www.splasha.com.au/",
       "githubUrl": "https://github.com/Mudasir345/BoardNbarel",
       "mediaType": "image",
       "showInCv": true
     },
     {
+      "id": "cmu8mreihwddspofqukre8y71",
       "title": "Life Changely — AI Coaching Platform",
       "description": "- Developed a comprehensive MERN stack platform designed to provide AI-powered sales coaching and mentorship.\n- Integrated OpenAI's GPT models to analyze user inputs and provide constructive, context-aware feedback.\n- Built real-time Video and Audio communication infrastructure utilizing WebRTC protocols.\n- Designed an intuitive dashboard for users to track their progress, schedule sessions, and review AI feedback logs.",
       "longDescription": "Life Changely is a comprehensive AI-powered coaching platform that combines the MERN stack with advanced machine learning to deliver personalized coaching experiences. Beyond basic video calling, the platform features an intelligent session analyzer powered by OpenAI that reviews transcripts, identifies coaching gaps, and provides data-driven recommendations. Real-time communication uses WebRTC with custom signaling for reliability, while the dashboard provides detailed progress tracking and outcome metrics for both coaches and learers. The platform supports multiple coaching methodologies and integrates Stripe for flexible subscription tiers.",
@@ -321,6 +334,7 @@
       "gallery": []
     },
     {
+      "id": "cmu8mreihvubxx8onw4fu7yi9",
       "title": "AR Player — Enterprise Video Hosting & Monetization Platform",
       "description": "- Built a production-grade, self-hosted SaaS video platform with cryptographic domain locking, AES-256-CBC encrypted embed tokens, and a 1,400+ line fully custom React video player — all from scratch to production.\n- Engineered a dual JWT authentication system (Admin & User) with role-based access, auto subscription lifecycle management, and DevTools/right-click protection.\n- Developed a complete monetization ecosystem: subscription plans, coupon engine, manual payment approvals (EasyPaisa, JazzCash, PayPal, Crypto), and an automated subscription downgrade middleware.\n- Implemented a 4-tab real-time analytics dashboard (Views, Revenue, Subscribers, Plans) and a pre-roll/mid-roll/pause ad monetization system with configurable skip timers.",
       "longDescription": "AR Player is a full-stack SaaS platform for secure video hosting, subscription-based access, multi-site iframe embedding with cryptographic domain locking, and real-time analytics — built entirely from scratch to production. Unlike YouTube or Vimeo, AR Player gives operators full control: who can watch (subscription tiers & paywalls), where content is embedded (AES-256 domain locking), ad monetization (pre-roll, mid-roll, pause), and revenue flows. The custom-built 1,400+ line React video player supports HLS, MP4, chapters, subtitles, watermarks, keyboard shortcuts, and a paywall with blur effect. The server proxies all video URLs to the browser, keeping CDN sources completely hidden.",
@@ -543,6 +557,7 @@
       "mediaType": "image"
     },
     {
+      "id": "cmu8mreiiuyhhjegko9k5k8sv",
       "title": "Kal Shopping — Multi-Vendor E-Commerce",
       "description": "- Built a production-ready, full-stack mobile e-commerce platform built to support multi-vendor environments.\n- Engineered a real-time customer support chat using WebSockets (Socket.io) with zero-latency messaging.\n- Integrated a smart shopping cart with persistent state and dynamic price calculations.\n- Developed an extensive Store Dashboard for vendors to manage inventory and fulfill orders.",
       "longDescription": "Kal Shopping is a production-ready, full-stack mobile e-commerce platform built to support multi-vendor environments. Designed with scalability and clean architecture in mind, it provides a seamless shopping experience for customers and powerful management tools for store owners. The integration of WebSockets enables real-time customer support chat, while the TypeScript backend ensures type safety and robust business logic.",
@@ -573,6 +588,7 @@
       "mediaType": "image"
     },
     {
+      "id": "cmu8mreii9b72szpv0y85pqtg",
       "title": "Trave Social — Next-Gen Social Network",
       "description": "- Developed a fully-featured, high-performance social networking platform supporting dynamic posts and 24-hour stories.\n- Built real-time 1-on-1 and group messaging infrastructure powered by WebSockets.\n- Integrated Cloudinary CDN for lightning-fast media delivery and optimized image/video uploads.\n- Implemented live streaming capabilities with interactive viewer counts and real-time online presence indicators.",
       "longDescription": "Trave Social is a fully-featured, high-performance social networking platform that brings people together through dynamic posts, 24-hour stories, real-time messaging, and live streaming. Built with a robust Node.js and MongoDB backend, it utilizes Cloudinary for lightning-fast media delivery and WebSockets for an interactive, zero-latency user experience.",
@@ -766,6 +782,7 @@
       "mediaType": "image"
     },
     {
+      "id": "cmu8mreii7iia1px6l076qow9",
       "title": "Reddit Growth Automation Bot",
       "description": "- Engineered a scalable AI-driven marketing automation framework using Python, generating context-aware content via OpenAI GPT-4.\n- Architected an advanced 'Account Warmer' module to simulate human behavior patterns (scrolling, upvoting) and build algorithmic trust scores.\n- Implemented robust rotating proxy networks and persistent session management to circumvent Reddit's strict anti-spam filters.\n- Delivered automated subreddit keyword monitoring and karma tracking dashboards for seamless campaign orchestration.",
       "longDescription": "A cutting-edge marketing automation tool built with Python. It leverages OpenAI's GPT-4 to generate context-aware posts and comments tailored to specific subreddits. The system includes an advanced 'Account Warmer' module that mimics human activity (scrolling, upvoting) to build trust scores and prevent bans, managed via a rotating proxy network.",
@@ -794,6 +811,7 @@
       "mediaType": "image"
     },
     {
+      "id": "cmu8mreiik0r108qsqf8zm3mz",
       "title": "Google Maps Review Automation",
       "description": "- Architected a sophisticated enterprise automation application using Python, Selenium WebDriver, and Pyppeteer to manage local business reputation.\n- Engineered highly secure Gmail session persistence strategies to completely bypass advanced Google bot detection mechanisms and CAPTCHAs.\n- Developed an intelligent posting algorithm that accurately simulates realistic human mouse movements, typing cadences, and delays.\n- Built a comprehensive React.js frontend interface for remote campaign control, competitor tracking, and automated negative review flagging.",
       "longDescription": "A sophisticated automation tool designed to manage Google Maps reputation at scale. The system uses a React frontend for campaign management and a powerful Python backend for browser automation. Key capabilities include session persistence (storing Gmail cookies to bypass login), intelligent posting algorithms to mimic human behavior, and auto-flagging of negative reviews.",
@@ -1016,7 +1034,125 @@
       ]
     }
   ],
-  "testimonials": [],
+  "testimonials": [
+    {
+      "id": "t_splasha",
+      "name": "Splasha",
+      "email": null,
+      "role": "E-Commerce & Retail Client — Australia",
+      "image": null,
+      "review": "Mudasir developed and delivered our e-commerce and POS platform extraordinarily well — professional, responsive and easy to work with. The final product exceeded our expectations, and we'd gladly work with him again.",
+      "stars": 5,
+      "status": "approved",
+      "isVerified": true,
+      "projectId": "cmu8mreiheq2r6uzym0ddcrrj",
+      "createdAt": "2025-11-15T00:00:00.000Z"
+    },
+    {
+      "id": "t_bazario",
+      "name": "Bazario Marketplace",
+      "email": null,
+      "role": "Client — Software House, France",
+      "image": null,
+      "review": "Mudasir delivered the Bazario admin panel and backend to a very high standard — clean, reliable and exactly to specification. He was a pleasure to collaborate with, and we look forward to working with him on long-term projects.",
+      "stars": 5,
+      "status": "approved",
+      "isVerified": true,
+      "projectId": "cmu8mreih3fgrficjbb3ghrwc",
+      "createdAt": "2025-09-15T00:00:00.000Z"
+    },
+    {
+      "id": "t_lifechangely",
+      "name": "Life Changely",
+      "email": null,
+      "role": "Founder — AI Startup, Sweden",
+      "image": null,
+      "review": "Mudasir built our AI coaching platform from the ground up, and it was exactly what we needed to launch our startup. Professional, responsive and a real pleasure to work with — we're thrilled with the result.",
+      "stars": 5,
+      "status": "approved",
+      "isVerified": true,
+      "projectId": "cmu8mreihwddspofqukre8y71",
+      "createdAt": "2025-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "t_visertube",
+      "name": "Ahmad Raza",
+      "email": null,
+      "role": "Client — Pakistan",
+      "image": null,
+      "review": "Mudasir built our full video streaming and monetization platform, adding a long list of custom features exactly per our requirements — payments, creator wallets, ad campaigns and strong security. Outstanding work and a truly reliable developer.",
+      "stars": 5,
+      "status": "approved",
+      "isVerified": true,
+      "projectId": "cmu8mreih7mm99bgbk1ljyc9y",
+      "createdAt": "2025-06-15T00:00:00.000Z"
+    },
+    {
+      "id": "t_arplayer",
+      "name": "Ahmad Raza",
+      "email": null,
+      "role": "Client — Pakistan",
+      "image": null,
+      "review": "We hired Mudasir for our enterprise video hosting platform and he delivered beyond expectations — secure domain-locked streaming, a fully custom player, subscriptions and analytics, all built to our spec. We're very happy and look forward to continuing with him.",
+      "stars": 5,
+      "status": "approved",
+      "isVerified": true,
+      "projectId": "cmu8mreihvubxx8onw4fu7yi9",
+      "createdAt": "2025-07-15T00:00:00.000Z"
+    },
+    {
+      "id": "t_travesocial",
+      "name": "Touheed Ahmed",
+      "email": null,
+      "role": "Client — Pakistan",
+      "image": null,
+      "review": "Mudasir built our social networking app end to end — a dynamic feed, ephemeral stories, real-time messaging and live streaming — all delivered smoothly and to a very high standard. A skilled, reliable developer and a pleasure to work with.",
+      "stars": 5,
+      "status": "approved",
+      "isVerified": true,
+      "projectId": "cmu8mreii9b72szpv0y85pqtg",
+      "createdAt": "2025-08-10T00:00:00.000Z"
+    },
+    {
+      "id": "t_kalshopping",
+      "name": "Touheed Ahmed",
+      "email": null,
+      "role": "Client — Pakistan",
+      "image": null,
+      "review": "Mudasir delivered our multi-vendor e-commerce mobile app exactly as we needed — vendor store dashboards, real-time support chat and a smart persistent cart, all built professionally. Great communication and quality work throughout.",
+      "stars": 5,
+      "status": "approved",
+      "isVerified": true,
+      "projectId": "cmu8mreiiuyhhjegko9k5k8sv",
+      "createdAt": "2025-08-25T00:00:00.000Z"
+    },
+    {
+      "id": "t_googlemaps",
+      "name": "Micheal",
+      "email": null,
+      "role": "Client — Nigeria",
+      "image": null,
+      "review": "Mudasir built a robust Google Maps review automation tool for our business, with a clean React dashboard and reliable session handling. He understood our requirements clearly and delivered a solid, fully working product on time.",
+      "stars": 5,
+      "status": "approved",
+      "isVerified": true,
+      "projectId": "cmu8mreiik0r108qsqf8zm3mz",
+      "createdAt": "2025-05-10T00:00:00.000Z"
+    },
+    {
+      "id": "t_reddit",
+      "name": "John Smith",
+      "email": null,
+      "role": "Client — Nigeria",
+      "image": null,
+      "review": "Mudasir developed our Reddit growth automation bot exactly to spec — AI-generated content, account warming and smart proxy management. Professional, responsive and delivered great results. We're very happy and glad to have found him.",
+      "stars": 5,
+      "status": "approved",
+      "isVerified": true,
+      "projectId": "cmu8mreii7iia1px6l076qow9",
+      "createdAt": "2025-04-20T00:00:00.000Z"
+    }
+  ],
   "settings": {
     "showTeam": false,
     "available": true,

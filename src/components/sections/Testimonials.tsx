@@ -92,84 +92,110 @@ function StarPicker({
 
 /** ─── Individual Review Card ──────────────────────────── */
 function TestimonialCard({ item, index }: { item: TestimonialData; index: number }) {
-    const avatar =
+    const avatarColor = getAvatarColor(item.name);
+    const avatarInner =
         item.image && item.image.trim().length > 0 ? (
-            <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 ring-2 ring-white/10">
-                <Image
-                    src={item.image}
-                    alt={item.name}
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-cover"
-                />
-            </div>
+            <Image
+                src={item.image}
+                alt={item.name}
+                width={44}
+                height={44}
+                className="h-full w-full object-cover"
+            />
         ) : (
-            <div
-                className={`w-10 h-10 rounded-full bg-gradient-to-br ${getAvatarColor(
-                    item.name
-                )} flex items-center justify-center text-white font-bold text-xs shadow-md shrink-0`}
-            >
+            <span className="text-sm font-extrabold tracking-wide text-white">
                 {getInitials(item.name)}
-            </div>
+            </span>
         );
+    const avatar = (
+        <div className="relative shrink-0">
+            <span
+                className={`absolute -inset-[2px] rounded-full bg-gradient-to-br ${avatarColor} opacity-60 blur-[3px] transition-opacity duration-300 group-hover:opacity-100`}
+                aria-hidden="true"
+            />
+            <div
+                className={`relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br ${avatarColor} ring-2 ring-white/15`}
+            >
+                {avatarInner}
+            </div>
+        </div>
+    );
 
     return (
-        <motion.div
+        <motion.article
             key={item.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: Math.min(index * 0.08, 0.4) }}
-            viewport={{ once: true }}
-            whileHover={{ y: -6 }}
-            className="flex flex-col p-6 sm:p-7 glass-card rounded-2xl border border-[#7042f861] w-full md:w-[47%] lg:w-[31%] relative transition-shadow hover:shadow-purple-500/10 hover:shadow-2xl"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, margin: "-60px" }}
+            whileHover={{ y: -8 }}
+            className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.07] via-white/[0.03] to-white/[0.01] p-6 shadow-[0_10px_40px_-16px_rgba(0,0,0,0.75)] backdrop-blur-xl transition-[border-color,box-shadow,transform] duration-300 hover:border-purple-400/40 hover:shadow-[0_24px_70px_-20px_rgba(112,66,248,0.5)] sm:p-7"
         >
+            {/* top accent line */}
+            <span
+                className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-purple-400/70 to-transparent"
+                aria-hidden="true"
+            />
+            {/* hover spotlight */}
+            <span
+                className="pointer-events-none absolute -right-16 -top-20 h-44 w-44 rounded-full bg-purple-500/25 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+                aria-hidden="true"
+            />
+            {/* quote watermark */}
             <Quote
-                className="absolute top-4 right-4 text-[#7042f8] opacity-20"
-                size={36}
+                className="pointer-events-none absolute -bottom-3 -left-2 h-28 w-28 text-white/[0.035] transition-colors duration-500 group-hover:text-purple-400/10"
+                strokeWidth={1.25}
+                aria-hidden="true"
             />
 
-            <div className="flex flex-row items-center justify-between mb-4 pr-10">
-                <StarPicker value={item.stars} size={16} readOnly />
+            {/* rating row */}
+            <div className="relative mb-5 flex items-center justify-between gap-3">
+                <StarPicker value={item.stars} size={17} readOnly />
                 {item.stars === 5 && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 font-bold uppercase tracking-wide">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-yellow-400/25 bg-yellow-400/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-yellow-300">
+                        <Star size={10} className="fill-yellow-300 text-yellow-300" />
                         Top Rated
                     </span>
                 )}
             </div>
 
-            <p className="text-gray-300 mb-6 italic text-sm sm:text-[15px] leading-relaxed line-clamp-6">
-                &ldquo;{item.review}&rdquo;
+            {/* review */}
+            <p className="relative mb-6 text-[15px] leading-relaxed text-gray-200/90">
+                <span className="mr-0.5 font-serif text-xl leading-none text-purple-300/70">&ldquo;</span>
+                {item.review}
+                <span className="ml-0.5 font-serif text-xl leading-none text-purple-300/70">&rdquo;</span>
             </p>
 
-            <div className="mt-auto flex items-center gap-3 pt-4 border-t border-white/5">
+            {/* footer */}
+            <div className="relative mt-auto flex items-center gap-3 border-t border-white/[0.07] pt-5">
                 {avatar}
-                <div className="flex flex-col min-w-0">
+                <div className="flex min-w-0 flex-col">
                     <div className="flex items-center gap-1.5">
-                        <h4 className="text-sm font-bold text-white leading-tight truncate">
+                        <h4 className="truncate text-sm font-bold leading-tight text-white">
                             {item.name}
                         </h4>
                         {item.isVerified ? (
                             <span
-                                className="inline-flex items-center justify-center w-4 h-4 bg-emerald-500/15 text-emerald-400 rounded-full border border-emerald-500/30 shrink-0"
+                                className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/15 text-emerald-400"
                                 title="Verified Review — confirmed by Mudasir to be from a real client"
                             >
                                 <Check size={9} strokeWidth={3} />
                             </span>
                         ) : (
                             <span
-                                className="inline-flex items-center justify-center px-1.5 h-4 text-[9px] font-bold bg-gray-500/10 text-gray-400 rounded-full border border-gray-500/20 shrink-0 uppercase tracking-wide"
+                                className="inline-flex h-4 shrink-0 items-center justify-center rounded-full border border-gray-500/20 bg-gray-500/10 px-1.5 text-[9px] font-bold uppercase tracking-wide text-gray-400"
                                 title="Public submission — not yet verified"
                             >
                                 Unverified
                             </span>
                         )}
                     </div>
-                    <span className="text-[11px] text-cyan-400 font-medium truncate">
+                    <span className="truncate text-[11px] font-medium text-cyan-300/90">
                         {item.role}
                     </span>
                 </div>
             </div>
-        </motion.div>
+        </motion.article>
     );
 }
 
@@ -458,9 +484,14 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
     return (
         <section
             id="reviews"
-            className="flex flex-col items-center justify-center py-20 relative z-[20]"
+            className="relative z-[20] flex flex-col items-center justify-center overflow-hidden py-20 sm:py-24"
         >
-            <div className="w-full max-w-[1280px] px-4 sm:px-6">
+            {/* ambient background */}
+            <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+                <div className="absolute left-1/2 top-[-6rem] h-[380px] w-[720px] max-w-[110vw] -translate-x-1/2 rounded-full bg-purple-600/12 blur-[120px]" />
+                <div className="absolute bottom-[-4rem] right-[-3rem] h-[300px] w-[300px] rounded-full bg-cyan-500/10 blur-[110px]" />
+            </div>
+            <div className="relative z-10 w-full max-w-[1280px] px-4 sm:px-6">
                 {/* Heading Row + Write a Review CTA */}
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 mb-10">
                     <div>
@@ -543,7 +574,7 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
                         )}
                     </div>
                 ) : (
-                    <div className="flex flex-wrap justify-center gap-5 sm:gap-6 w-full">
+                    <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
                         {verifiedTestimonials.map((item, index) => (
                             <TestimonialCard
                                 key={item.id}
@@ -556,44 +587,65 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
 
                 {/* ─── Social Proof Footer Row ─────────── */}
                 {verifiedTestimonials.length > 0 && (
-                    <div className="mt-14 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-center">
-                        <div>
-                            <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                                {verifiedTestimonials.length}
-                            </div>
-                            <div className="text-xs uppercase tracking-widest text-gray-500 font-semibold mt-1">
-                                Happy Clients
-                            </div>
-                        </div>
-                        <div className="hidden sm:block w-px h-10 bg-white/10" />
-                        <div>
-                            <div className="text-3xl sm:text-4xl font-extrabold text-yellow-400 flex items-center justify-center gap-1">
-                                {(
+                    <div className="mt-14 grid w-full grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
+                        {[
+                            {
+                                value: String(verifiedTestimonials.length),
+                                label: "Happy Clients",
+                                valueClass:
+                                    "bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent",
+                                icon: <User size={16} className="text-purple-300" />,
+                            },
+                            {
+                                value: (
                                     verifiedTestimonials.reduce(
                                         (sum, t) => sum + (t.stars || 0),
                                         0
                                     ) / verifiedTestimonials.length
-                                ).toFixed(1)}
-                                <Star
-                                    size={24}
-                                    className="fill-yellow-400 translate-y-[-2px]"
-                                />
-                            </div>
-                            <div className="text-xs uppercase tracking-widest text-gray-500 font-semibold mt-1">
-                                Average Rating
-                            </div>
-                        </div>
-                        <div className="hidden sm:block w-px h-10 bg-white/10" />
-                        <div>
-                            <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                                {
+                                ).toFixed(1),
+                                label: "Average Rating",
+                                valueClass: "text-yellow-400",
+                                icon: <Star size={16} className="fill-yellow-400 text-yellow-400" />,
+                            },
+                            {
+                                value: String(
                                     verifiedTestimonials.filter(t => t.isVerified).length
-                                }
-                            </div>
-                            <div className="text-xs uppercase tracking-widest text-gray-500 font-semibold mt-1">
-                                Verified Reviews
-                            </div>
-                        </div>
+                                ),
+                                label: "Verified Reviews",
+                                valueClass:
+                                    "bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent",
+                                icon: <CheckCircle2 size={16} className="text-emerald-400" />,
+                            },
+                        ].map((stat, i) => (
+                            <motion.div
+                                key={stat.label}
+                                initial={{ opacity: 0, y: 18 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                                viewport={{ once: true }}
+                                whileHover={{ y: -4 }}
+                                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] px-6 py-7 text-center shadow-[0_10px_36px_-18px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-colors duration-300 hover:border-cyan-400/30"
+                            >
+                                <span
+                                    className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                                    aria-hidden="true"
+                                />
+                                <div className="mb-3 flex items-center justify-center gap-2">
+                                    {stat.icon}
+                                    <span className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
+                                        {stat.label}
+                                    </span>
+                                </div>
+                                <div
+                                    className={`flex items-center justify-center gap-1 text-4xl font-extrabold sm:text-5xl ${stat.valueClass}`}
+                                >
+                                    {stat.value}
+                                    {stat.label === "Average Rating" && (
+                                        <Star size={26} className="fill-yellow-400 translate-y-[-3px]" />
+                                    )}
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
                 )}
             </div>

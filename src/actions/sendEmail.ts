@@ -2,6 +2,26 @@
 
 import nodemailer from "nodemailer";
 
+const DEV = process.env.NODE_ENV === "development";
+
+type LogFn = (...args: unknown[]) => void;
+const NOOP = () => {};
+const _: { g: LogFn; ge: LogFn; l: LogFn; w: LogFn; e: LogFn } = DEV
+  ? {
+      g: (...a) => console.group(...a),
+      ge: () => console.groupEnd(),
+      l: (...a) => console.log(...a),
+      w: (...a) => console.warn(...a),
+      e: (...a) => console.error(...a),
+    }
+  : {
+      g: NOOP,
+      ge: NOOP,
+      l: NOOP,
+      w: (...a) => console.warn(...a),
+      e: (...a) => console.error(...a),
+    };
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_LEN = {
   name: 100,
@@ -114,8 +134,8 @@ async function tryWeb3Forms(
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || process.env.WEB3FORMS_KEY;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirdev.vercel.app";
 
-  console.group("📧 [sendEmail] TRYING Web3Forms =========================================");
-  console.log("1. Env key check:", {
+  _.g("📧 [sendEmail] TRYING Web3Forms =========================================");
+  _.l("1. Env key check:", {
     NEXT_PUBLIC_WEB3FORMS_KEY_set: Boolean(process.env.NEXT_PUBLIC_WEB3FORMS_KEY),
     WEB3FORMS_KEY_set: Boolean(process.env.WEB3FORMS_KEY),
     resolvedKeyPrefix: accessKey ? accessKey.slice(0, 8) + "…" : "MISSING",
@@ -123,8 +143,8 @@ async function tryWeb3Forms(
   });
 
   if (!accessKey || accessKey.length < 10) {
-    console.error("❌ Web3Forms FAILED: Access key not configured or too short (< 10 chars)");
-    console.groupEnd();
+    _.e("❌ Web3Forms FAILED: Access key not configured or too short (< 10 chars)");
+    _.ge();
     return { success: false, error: "Web3Forms key not configured. Add NEXT_PUBLIC_WEB3FORMS_KEY to .env" };
   }
 
@@ -141,7 +161,7 @@ async function tryWeb3Forms(
     botcheck: "",
   };
 
-  console.log("2. Payload built:", {
+  _.l("2. Payload built:", {
     from_name: basePayload.from_name,
     to: basePayload.to,
     subject: basePayload.subject,
@@ -165,7 +185,7 @@ async function tryWeb3Forms(
   type AttemptFn = () => Promise<{ res: Response; tryName: string }>;
   const attempts: Array<AttemptFn> = [
     async () => {
-      console.log("3a. TRY JSON POST (application/json) ...");
+      _.l("3a. TRY JSON POST (application/json) ...");
       return {
         tryName: "JSON POST",
         res: await fetch("https://api.web3forms.com/submit", {
@@ -180,7 +200,7 @@ async function tryWeb3Forms(
       };
     },
     async () => {
-      console.log("3b. RETRY form-encoded POST (application/x-www-form-urlencoded) ...");
+      _.l("3b. RETRY form-encoded POST (application/x-www-form-urlencoded) ...");
       const params = new URLSearchParams();
       Object.entries(basePayload).forEach(([k, v]) => params.append(k, v));
       return {
@@ -208,11 +228,11 @@ async function tryWeb3Forms(
       lastTryName = tryName;
     } catch (networkErr) {
       const msg = networkErr instanceof Error ? networkErr.message : String(networkErr);
-      console.error(`❌ Web3Forms NETWORK ERROR (${lastTryName || "fetch"}):`, msg);
+      _.e(`❌ Web3Forms NETWORK ERROR (${lastTryName || "fetch"}):`, msg);
       continue;
     }
     lastRes = res;
-    console.log(`4. HTTP Response (${lastTryName}):`, {
+    _.l(`4. HTTP Response (${lastTryName}):`, {
       status: res.status,
       statusText: res.statusText,
       ok: res.ok,
@@ -223,10 +243,10 @@ async function tryWeb3Forms(
     if (!ct.includes("json")) {
       const rawText = await res.text().catch(() => "<unable to read body>");
       const snippet = rawText.slice(0, 400);
-      console.warn(`   ⚠️  Response not JSON (content-type="${ct}") — first 400 chars:`);
-      console.warn(`   ${snippet.replace(/\s+/g, " ").slice(0, 400)}`);
+      _.w(`   ⚠️  Response not JSON (content-type="${ct}") — first 400 chars:`);
+      _.w(`   ${snippet.replace(/\s+/g, " ").slice(0, 400)}`);
       if (res.status === 403) {
-        console.warn("   ⚠️  HTTP 403 = Cloudflare WAF blocked server-side fetch. Will try FormSubmit.co next.");
+        _.w("   ⚠️  HTTP 403 = Cloudflare WAF blocked server-side fetch. Will try FormSubmit.co next.");
       }
       continue;
     }
@@ -234,27 +254,27 @@ async function tryWeb3Forms(
     let json: Record<string, unknown> = {};
     try {
       json = (await res.json()) as Record<string, unknown>;
-      console.log("5. Response JSON:", JSON.stringify(json, null, 2));
+      _.l("5. Response JSON:", JSON.stringify(json, null, 2));
     } catch (parseErr) {
       const msg = parseErr instanceof Error ? parseErr.message : String(parseErr);
-      console.error("❌ Web3Forms JSON PARSE ERROR:", msg);
+      _.e("❌ Web3Forms JSON PARSE ERROR:", msg);
       continue;
     }
 
     const isSuccess = Boolean(json?.success);
     if (isSuccess) {
-      console.log(`✅ Web3Forms SUCCESS via ${lastTryName}! Message delivered.`);
-      console.groupEnd();
+      _.l(`✅ Web3Forms SUCCESS via ${lastTryName}! Message delivered.`);
+      _.ge();
       return { success: true };
     }
 
     const apiMessage = typeof json?.message === "string" ? json.message : "No error message from API";
-    console.error(`❌ Web3Forms ${lastTryName} FAILED: API returned success=false`);
-    console.error("   API error message:", apiMessage);
+    _.e(`❌ Web3Forms ${lastTryName} FAILED: API returned success=false`);
+    _.e("   API error message:", apiMessage);
   }
 
   if (lastRes && lastRes.status === 403) {
-    console.groupEnd();
+    _.ge();
     return {
       success: false,
       error:
@@ -263,8 +283,8 @@ async function tryWeb3Forms(
   }
 
   const status = lastRes?.status ?? "no-response";
-  console.error("❌ Web3Forms ALL ATTEMPTS FAILED.");
-  console.groupEnd();
+  _.e("❌ Web3Forms ALL ATTEMPTS FAILED.");
+  _.ge();
   return { success: false, error: `Web3Forms error: HTTP ${status} (tried 2 formats, no success)` };
 }
 
@@ -279,9 +299,9 @@ async function tryFormSubmit(
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mudasirdev.vercel.app";
   const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`;
 
-  console.group("📧 [sendEmail] TRYING #2 FormSubmit.co (FREE, no signup) ===============");
-  console.log("1. Endpoint:", endpoint);
-  console.log("2. Deliver to email:", CONTACT_EMAIL);
+  _.g("📧 [sendEmail] TRYING #2 FormSubmit.co (FREE, no signup) ===============");
+  _.l("1. Endpoint:", endpoint);
+  _.l("2. Deliver to email:", CONTACT_EMAIL);
 
   const body: Record<string, string> = {
     name,
@@ -296,7 +316,7 @@ async function tryFormSubmit(
 
   let res: Response;
   try {
-    console.log("3. POST JSON to FormSubmit.co/ajax ...");
+    _.l("3. POST JSON to FormSubmit.co/ajax ...");
     res = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -310,7 +330,7 @@ async function tryFormSubmit(
       body: JSON.stringify(body),
       cache: "no-store",
     });
-    console.log("4. HTTP Response:", {
+    _.l("4. HTTP Response:", {
       status: res.status,
       statusText: res.statusText,
       ok: res.ok,
@@ -318,21 +338,21 @@ async function tryFormSubmit(
     });
   } catch (networkErr) {
     const msg = networkErr instanceof Error ? networkErr.message : String(networkErr);
-    console.error("❌ FormSubmit.co NETWORK ERROR:", msg);
-    console.groupEnd();
+    _.e("❌ FormSubmit.co NETWORK ERROR:", msg);
+    _.ge();
     return { success: false, error: `FormSubmit network error: ${msg}` };
   }
 
   let json: Record<string, unknown> = {};
   try {
     json = (await res.json()) as Record<string, unknown>;
-    console.log("5. Response JSON:", JSON.stringify(json, null, 2));
+    _.l("5. Response JSON:", JSON.stringify(json, null, 2));
   } catch (parseErr) {
     const msg = parseErr instanceof Error ? parseErr.message : String(parseErr);
-    console.error("❌ FormSubmit.co JSON PARSE ERROR:", msg);
+    _.e("❌ FormSubmit.co JSON PARSE ERROR:", msg);
     const rawText = await res.text().catch(() => "<unable to read body>");
-    console.error("   Raw body (first 500):", rawText.slice(0, 500));
-    console.groupEnd();
+    _.e("   Raw body (first 500):", rawText.slice(0, 500));
+    _.ge();
     return {
       success: false,
       error: `FormSubmit.co HTTP ${res.status} — non-JSON response. ${msg}`,
@@ -341,10 +361,10 @@ async function tryFormSubmit(
 
   const success = json.success === true || json.status === "success" || res.ok;
   if (success) {
-    console.log("✅ FormSubmit.co SUCCESS! Email queued for delivery.");
-    console.log("   Note: First time ONLY — FormSubmit sends a verification email to", CONTACT_EMAIL);
-    console.log('   Please click "Activate Form" in that email for submissions to start working.');
-    console.groupEnd();
+    _.l("✅ FormSubmit.co SUCCESS! Email queued for delivery.");
+    _.l("   Note: First time ONLY — FormSubmit sends a verification email to", CONTACT_EMAIL);
+    _.l('   Please click "Activate Form" in that email for submissions to start working.');
+    _.ge();
     return { success: true };
   }
 
@@ -354,8 +374,8 @@ async function tryFormSubmit(
       : typeof json.error === "string"
         ? json.error
         : "Unknown error from FormSubmit.co";
-  console.error("❌ FormSubmit.co FAILED:", apiMessage);
-  console.groupEnd();
+  _.e("❌ FormSubmit.co FAILED:", apiMessage);
+  _.ge();
   return { success: false, error: `FormSubmit.co: ${apiMessage} (HTTP ${res.status})` };
 }
 
@@ -366,7 +386,7 @@ async function tryNodemailer(
   phone: string,
   message: string,
 ): Promise<{ success: boolean; error?: string }> {
-  console.group("📧 [sendEmail] TRYING #3 Nodemailer (Gmail SMTP) ====================");
+  _.g("📧 [sendEmail] TRYING #3 Nodemailer (Gmail SMTP) ====================");
   const emailUser = process.env.EMAIL_USER;
   const emailPass = process.env.EMAIL_PASS;
 
@@ -379,27 +399,27 @@ async function tryNodemailer(
       emailPass === "your-16-character-gmail-app-password" ||
       emailPass === "REPLACE_WITH_YOUR_GMAIL_APP_PASSWORD",
   };
-  console.log("1. Credentials check:", checks);
+  _.l("1. Credentials check:", checks);
 
   if (!emailUser || !emailPass || checks.isPlaceholder || emailPass.length < 10) {
-    console.warn("⚠️  Skipping Nodemailer: not configured (placeholder or missing creds)");
-    console.groupEnd();
+    _.w("⚠️  Skipping Nodemailer: not configured (placeholder or missing creds)");
+    _.ge();
     return { success: false, error: "Nodemailer not configured. Set valid EMAIL_USER + EMAIL_PASS (Gmail App Password)" };
   }
 
   try {
-    console.log("2. Creating Gmail transporter...");
+    _.l("2. Creating Gmail transporter...");
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: { user: emailUser, pass: emailPass },
     });
 
-    console.log("3. Verifying transporter connection...");
+    _.l("3. Verifying transporter connection...");
     const verified = await transporter.verify().catch((e) => {
-      console.warn("   Transporter verify failed:", e instanceof Error ? e.message : String(e));
+      _.w("   Transporter verify failed:", e instanceof Error ? e.message : String(e));
       return false;
     });
-    console.log("   Transporter verified:", verified);
+    _.l("   Transporter verified:", verified);
 
     const safeName = name.replace(/[<>\\]/g, "").slice(0, 80);
     const safePhone = phone.replace(/[<>\\]/g, "").slice(0, 30);
@@ -442,18 +462,18 @@ async function tryNodemailer(
 </html>`,
     };
 
-    console.log("4. Sending email via SMTP...");
+    _.l("4. Sending email via SMTP...");
     const info = await transporter.sendMail(mailOptions);
-    console.log("✅ Nodemailer SUCCESS!");
-    console.log("   Message ID:", info.messageId);
-    console.log("   Accepted:", info.accepted);
-    console.groupEnd();
+    _.l("✅ Nodemailer SUCCESS!");
+    _.l("   Message ID:", info.messageId);
+    _.l("   Accepted:", info.accepted);
+    _.ge();
     return { success: true };
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error("❌ Nodemailer FAILED:", msg);
-    console.error("   Stack:", err instanceof Error ? err.stack : "N/A");
-    console.groupEnd();
+    _.e("❌ Nodemailer FAILED:", msg);
+    _.e("   Stack:", err instanceof Error ? err.stack : "N/A");
+    _.ge();
     return { success: false, error: `SMTP error: ${msg}` };
   }
 }
@@ -471,8 +491,8 @@ export const sendEmail = async (formData: FormData): Promise<SendEmailResult> =>
   const message = sanitize(messageRaw, MAX_LEN.message);
   const website = sanitize(honeypot, MAX_LEN.website);
 
-  console.group("%c🚀 [sendEmail] Server action invoked =========================", "color:#7c3aed; font-weight:bold");
-  console.log("Received fields:", {
+  _.g("%c🚀 [sendEmail] Server action invoked =========================", "color:#7c3aed; font-weight:bold");
+  _.l("Received fields:", {
     name_len: name.length,
     senderEmail,
     phone_provided: phone !== "Not provided",
@@ -483,8 +503,8 @@ export const sendEmail = async (formData: FormData): Promise<SendEmailResult> =>
   const fieldErrors: Record<string, string> = {};
 
   if (website.length > 0) {
-    console.log("🤖 Honeypot triggered (bot detected) → Silent success return");
-    console.groupEnd();
+    _.l("🤖 Honeypot triggered (bot detected) → Silent success return");
+    _.ge();
     return {
       ok: true,
       delivered: false,
@@ -501,8 +521,8 @@ export const sendEmail = async (formData: FormData): Promise<SendEmailResult> =>
   if (message.length < 5) fieldErrors.message = "Please write a message (at least 5 characters).";
 
   if (Object.keys(fieldErrors).length > 0) {
-    console.warn("⚠️  Validation failed:", fieldErrors);
-    console.groupEnd();
+    _.w("⚠️  Validation failed:", fieldErrors);
+    _.ge();
     return {
       ok: false,
       delivered: false,
@@ -522,7 +542,7 @@ export const sendEmail = async (formData: FormData): Promise<SendEmailResult> =>
   const w3f = await tryWeb3Forms(name, senderEmail, phone, message);
   if (w3f.success) {
     const firstName = name.split(" ")[0] || name;
-    console.groupEnd();
+    _.ge();
     return {
       ok: true,
       delivered: true,
@@ -534,7 +554,7 @@ export const sendEmail = async (formData: FormData): Promise<SendEmailResult> =>
   const fs = await tryFormSubmit(name, senderEmail, phone, message);
   if (fs.success) {
     const firstName = name.split(" ")[0] || name;
-    console.groupEnd();
+    _.ge();
     return {
       ok: true,
       delivered: true,
@@ -546,7 +566,7 @@ export const sendEmail = async (formData: FormData): Promise<SendEmailResult> =>
   const smtp = await tryNodemailer(name, senderEmail, phone, message);
   if (smtp.success) {
     const firstName = name.split(" ")[0] || name;
-    console.groupEnd();
+    _.ge();
     return {
       ok: true,
       delivered: true,
@@ -559,8 +579,8 @@ export const sendEmail = async (formData: FormData): Promise<SendEmailResult> =>
     `Web3Forms: ${w3f.error || "unknown error"} | ` +
     `FormSubmit.co: ${fs.error || "unknown error"} | ` +
     `Nodemailer: ${smtp.error || "skipped"}`;
-  console.error("💥 ALL 3 delivery methods FAILED → fallback to mailto. Debug:", debugInfo);
-  console.groupEnd();
+  _.e("💥 ALL 3 delivery methods FAILED → fallback to mailto. Debug:", debugInfo);
+  _.ge();
 
   return makeFallbackResult(mailtoLink, whatsappLink, CONTACT_EMAIL, undefined, debugInfo);
 };
