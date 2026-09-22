@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ProjectData } from "@/lib/db";
 import { X, ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Portal from "./Portal";
 
 interface ProjectModalProps {
     project: ProjectData | null;
@@ -51,6 +52,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
     return (
         <AnimatePresence>
             {project && (
+                <Portal>{/* body-level mount: #projects' containment would otherwise size this against the section box */}
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto sm:overflow-hidden">
                     {/* Backdrop */}
                     <motion.div
@@ -318,6 +320,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                         </div>
                     </motion.div>
                 </div>
+                </Portal>
             )}
         </AnimatePresence>
     );
