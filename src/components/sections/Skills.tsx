@@ -3,7 +3,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import SectionHeading from "../ui/SectionHeading";
+import Section from "../ui/Section";
 import { motion } from "framer-motion";
+import { fadeUp } from "@/lib/motionVariants";
 import { SkillData } from "@/lib/db";
 
 const containerVariants = {
@@ -145,8 +147,8 @@ function SkillBadge({ skill }: { skill: SkillData }) {
                 <span className={`relative z-10 text-[9px] font-extrabold tracking-wide uppercase px-1.5 py-0.5 rounded-md border ${
                     skill.proficiency === "Expert" ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/20" :
                     skill.proficiency === "Advanced" ? "bg-purple-500/10 text-purple-400 border-purple-500/20" :
-                    skill.proficiency === "Intermediate" ? "bg-blue-500/10 text-blue-400 border-blue-500/20" :
-                    "bg-gray-500/10 text-gray-400 border-gray-500/20"
+                    skill.proficiency === "Intermediate" ? "bg-purple-400/10 text-purple-300 border-purple-400/20" :
+                    "bg-white/5 text-gray-300 border-white/10"
                 }`}>
                     {skill.proficiency}
                 </span>
@@ -164,10 +166,10 @@ const Skills = ({ skills }: SkillsProps) => {
     }, {} as Record<string, SkillData[]>);
 
     return (
-        <section className="flex flex-col items-center justify-center gap-10 h-full relative overflow-hidden py-20 z-[20]" id="skills">
-            <SectionHeading>My Tech Stack</SectionHeading>
+        <Section id="skills">
+            <SectionHeading eyebrow="What I Use">My Tech Stack</SectionHeading>
 
-            <div className="flex flex-wrap justify-center gap-8 px-5 max-w-[1400px] w-full mt-10">
+            <div className="grid w-full max-w-[1200px] mx-auto grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mt-10">
                 {categories.map((category, catIndex) => {
                     const categorySkills = groupedSkills[category];
                     if (!categorySkills?.length) return null;
@@ -175,12 +177,12 @@ const Skills = ({ skills }: SkillsProps) => {
                     return (
                         <motion.div
                             key={category}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: catIndex * 0.1, duration: 0.5 }}
-                            className="flex flex-col gap-6 bg-[#0d0426]/50 border border-white/10 rounded-3xl p-8 backdrop-blur-md w-full md:w-[45%] lg:w-[40%] relative group hover:border-cyan-500/30 transition-colors duration-500"
+                            {...fadeUp(catIndex)}
+                            whileHover={{ y: -6 }}
+                            className="card-premium card-premium-hover flex flex-col gap-6 p-8 relative group overflow-hidden"
                         >
+                            <span className="card-accent-line" aria-hidden="true" />
+                            <span className="card-spotlight" aria-hidden="true" />
                             {/* Category Glow */}
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-cyan-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -197,7 +199,7 @@ const Skills = ({ skills }: SkillsProps) => {
                     );
                 })}
             </div>
-        </section>
+        </Section>
     );
 };
 

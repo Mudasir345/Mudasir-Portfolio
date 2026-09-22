@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import SectionHeading from "../ui/SectionHeading";
+import Section from "../ui/Section";
 import ProjectCard from "../ui/ProjectCard";
 import ProjectModal from "../ui/ProjectModal";
 import { ProjectCategory, ProjectData } from "@/lib/db";
@@ -22,21 +23,21 @@ const Projects = ({ initialProjects }: ProjectsProps) => {
         : initialProjects.filter(project => project.category === activeCategory);
 
     return (
-        <section className="flex flex-col items-center justify-center py-20 z-[20] min-h-screen" id="projects">
-            <SectionHeading>My Projects</SectionHeading>
+        <Section id="projects" className="scroll-mt-28">
+            <SectionHeading eyebrow="Selected Work">My Projects</SectionHeading>
 
             {/* Category Filter Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 mb-10 px-5">
+            <div className="mx-auto mb-10 flex w-fit flex-wrap items-center justify-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1.5 backdrop-blur-md">
                 {categories.map((category) => (
                     <button
                         key={category}
                         onClick={() => setActiveCategory(category)}
-                        className={`relative px-6 py-2 rounded-full text-sm font-medium transition-colors z-10 ${activeCategory === category ? "text-white" : "text-gray-400 hover:text-white"}`}
+                        className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors z-10 ${activeCategory === category ? "text-white" : "text-gray-400 hover:text-white"}`}
                     >
                         {activeCategory === category && (
                             <motion.div
                                 layoutId="activeTab"
-                                className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full -z-10 shadow-[0_0_20px_rgba(112,66,248,0.5)]"
+                                className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 shadow-[0_0_20px_rgba(112,66,248,0.5)]"
                                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                             />
                         )}
@@ -48,18 +49,18 @@ const Projects = ({ initialProjects }: ProjectsProps) => {
             {/* Projects Grid */}
             <motion.div
                 layout
-                className="grid w-full max-w-[1400px] grid-cols-1 gap-6 px-4 sm:px-6 md:grid-cols-2 md:gap-10 md:px-10 lg:grid-cols-3"
+                className="grid w-full grid-cols-1 justify-items-center gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3"
             >
                 <AnimatePresence mode="popLayout">
                     {filteredProjects.map((project) => (
                         <motion.div
                             layout
-                            initial={{ opacity: 0, scale: 0.8 }}
+                            initial={{ opacity: 0, scale: 0.92 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ duration: 0.3 }}
+                            exit={{ opacity: 0, scale: 0.92 }}
+                            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                             key={project.id} // Use unique DB id as key
-                            className="flex justify-center"
+                            className="flex w-full justify-center"
                         >
                             <ProjectCard
                                 src={project.image}
@@ -79,7 +80,7 @@ const Projects = ({ initialProjects }: ProjectsProps) => {
                 project={selectedProject}
                 onClose={() => setSelectedProject(null)}
             />
-        </section>
+        </Section>
     );
 };
 

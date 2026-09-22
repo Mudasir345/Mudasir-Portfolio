@@ -8,10 +8,9 @@
   --color-glass: rgba(255, 255, 255, 0.05);
   --font-sans: "Outfit", "Segoe UI", sans-serif;
 
-  /* ─── Custom Animations (were missing — Hero glow/gradient/tilt were broken) ─── */
+  /* ─── Custom Animations (pulse-slow: error pages, gradient-x: Hero) ─── */
   --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
   --animate-gradient-x: gradient-x 5s ease infinite;
-  --animate-tilt: tilt 10s ease-in-out infinite;
 }
 
 /* Keyframes for custom animations */
@@ -24,11 +23,6 @@
   0%        { background-position: 0% center; }
   50%       { background-position: 100% center; }
   100%      { background-position: 0% center; }
-}
-
-@keyframes tilt {
-  0%, 100% { transform: rotate(-2deg); }
-  50%      { transform: rotate(2deg);  }
 }
 
 :root {
@@ -70,6 +64,44 @@ canvas {
 /* Utilities */
 .glass-card {
   @apply bg-glass backdrop-blur-md border border-white/10 shadow-lg;
+}
+
+/* ─── Premium card system (Testimonials baseline) ─── */
+.card-premium {
+  @apply relative rounded-3xl border border-white/10 backdrop-blur-xl;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.01)
+  );
+  box-shadow: 0 10px 40px -16px rgba(0, 0, 0, 0.75);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-premium-hover:hover {
+  border-color: rgba(192, 132, 252, 0.4);
+  box-shadow: 0 24px 70px -20px rgba(112, 66, 248, 0.5);
+}
+
+/* Top gradient accent line — place on a span at card top */
+.card-accent-line {
+  @apply pointer-events-none absolute inset-x-8 top-0 h-px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(192, 132, 252, 0.7),
+    transparent
+  );
+}
+
+/* Soft purple spotlight blob — fades in on group-hover */
+.card-spotlight {
+  @apply pointer-events-none absolute -right-16 -top-20 h-44 w-44 rounded-full opacity-0 blur-3xl transition-opacity duration-500;
+  background: rgba(112, 66, 248, 0.25);
+}
+.group:hover .card-spotlight {
+  opacity: 1;
 }
 
 /* Sections outside the viewport do not need layout/paint work until approached. */

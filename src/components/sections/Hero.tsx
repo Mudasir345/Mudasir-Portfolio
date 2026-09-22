@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Smartphone } from "lucide-react";
+import { Github, Linkedin, Mail, Smartphone, ChevronDown } from "lucide-react";
 import ResumeDownloadBtn from "../resume/ResumeDownloadBtn";
 import { ProfileData, SkillData, ExperienceData, EducationData, ProjectData, CertificateData, LanguageData, InterestData, SettingsData } from '@/lib/db';
 
@@ -31,8 +31,8 @@ const Hero = ({ profile, skills, experience, education, projects, certificates, 
     return (
         <div className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden" id="about-me">
             {/* Cosmic Glow Effects (Lightweight Radial Gradients for Instant GPU Paint) */}
-            <div className="absolute top-[-20%] left-[-20%] w-[50vw] h-[50vw] rounded-full pointer-events-none z-0" style={{ background: "radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 70%)" }} />
-            <div className="absolute bottom-[-20%] right-[-20%] w-[50vw] h-[50vw] rounded-full pointer-events-none z-0" style={{ background: "radial-gradient(circle, rgba(8, 145, 178, 0.18) 0%, transparent 70%)" }} />
+            <div className="absolute top-[-20%] left-[-20%] w-[50vw] h-[50vw] rounded-full pointer-events-none z-0 bg-[radial-gradient(circle,rgba(112,66,248,0.18)_0%,transparent_70%)]" />
+            <div className="absolute bottom-[-20%] right-[-20%] w-[50vw] h-[50vw] rounded-full pointer-events-none z-0 bg-[radial-gradient(circle,rgba(0,246,255,0.15)_0%,transparent_70%)]" />
 
             {/* Container */}
             <div className="z-[20] flex w-full max-w-[1200px] flex-col items-center justify-center gap-8 px-5 pb-12 pt-32 sm:px-6 md:flex-row md:justify-between md:gap-16 md:px-8 md:pt-40">
@@ -45,7 +45,11 @@ const Hero = ({ profile, skills, experience, education, projects, certificates, 
                     className="relative order-1 mt-16 flex w-full flex-col items-center md:mt-0 md:w-1/2 md:items-start"
                 >
                     {/* Profile Image Container with Glow */}
-                    <div className="group relative h-[220px] w-[220px] sm:h-[260px] sm:w-[260px] md:h-[400px] md:w-[400px]">
+                    <motion.div
+                        animate={prefersReducedMotion ? undefined : { y: [0, -10, 0] }}
+                        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                        className="group relative h-[220px] w-[220px] sm:h-[260px] sm:w-[260px] md:h-[400px] md:w-[400px]"
+                    >
                         <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full opacity-75 group-hover:opacity-100 transition duration-500"></div>
                         <div className="relative w-full h-full rounded-full p-[4px] bg-[#0c051f] shadow-2xl shadow-purple-900/40">
                             <div className="w-full h-full rounded-full overflow-hidden bg-black relative">
@@ -62,13 +66,13 @@ const Hero = ({ profile, skills, experience, education, projects, certificates, 
                                 />
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Social Icons - Redesigned */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1, duration: 0.5 }}
+                        transition={{ delay: 0.65, duration: 0.5 }}
                         className="flex flex-wrap gap-4 items-center mt-8 justify-center md:justify-start"
                     >
                         {profile.github && (
@@ -121,7 +125,7 @@ const Hero = ({ profile, skills, experience, education, projects, certificates, 
                             wrapper="span"
                             speed={50}
                             repeat={Infinity}
-                            className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
+                            className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400"
                         />
                     </motion.div>
 
@@ -172,6 +176,24 @@ const Hero = ({ profile, skills, experience, education, projects, certificates, 
                 </div>
             </div>
 
+
+            {/* Scroll Cue */}
+            <motion.a
+                href="#about"
+                aria-label="Scroll down to About section"
+                initial={{ opacity: 0 }}
+                animate={{
+                    opacity: 1,
+                    ...(prefersReducedMotion ? {} : { y: [0, 6, 0] }),
+                }}
+                transition={{
+                    opacity: { delay: 1.4, duration: 0.6 },
+                    y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+                }}
+                className="absolute bottom-8 left-1/2 z-[16] -translate-x-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-gray-400 backdrop-blur-sm transition-colors hover:border-cyan-400/40 hover:text-cyan-300"
+            >
+                <ChevronDown size={20} />
+            </motion.a>
 
             {/* Seamless Transition Gradient Mask */}
             <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#030014] to-transparent z-[15] pointer-events-none" />

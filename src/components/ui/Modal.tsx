@@ -42,10 +42,10 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.95, opacity: 0, y: 20 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#0f0728] border border-white/10 rounded-2xl shadow-2xl relative scrollbar-hide"
+                            className="relative z-[110] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 bg-[#0d0426]/95 shadow-[0_0_50px_rgba(112,66,248,0.15)] backdrop-blur-2xl"
                         >
                             {/* Header */}
-                            <div className="flex justify-between items-center p-6 border-b border-white/10 sticky top-0 bg-[#0f0728]/95 backdrop-blur z-10 transition-colors">
+                            <div className="flex justify-between items-center p-6 border-b border-white/10 sticky top-0 bg-[#0d0426]/95 backdrop-blur z-10 transition-colors">
                                 <h2 className="text-xl font-bold text-white tracking-wide">{title}</h2>
                                 <button
                                     onClick={onClose}

@@ -9,11 +9,11 @@ interface FooterProps {
 
 const Footer = ({ profile }: FooterProps) => {
     return (
-        <footer className="w-full bg-[#030014] text-gray-300 pt-20 pb-10 border-t border-[#2A0E61] z-[20] relative overflow-hidden">
+        <footer className="w-full bg-background text-gray-300 pt-20 pb-10 border-t border-white/10 z-[20] relative overflow-hidden">
             {/* Background Glow */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-purple-500/10 blur-[100px] rounded-full pointer-events-none" />
 
-            <div className="max-w-6xl mx-auto px-5 grid grid-cols-1 md:grid-cols-3 gap-10 mb-16 relative z-10">
+            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-10 mb-16 relative z-10">
                 {/* Brand Column */}
                 <div className="flex flex-col gap-4">
                     <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
@@ -24,17 +24,17 @@ const Footer = ({ profile }: FooterProps) => {
                     </p>
                     <div className="flex gap-4 mt-2">
                         {profile.github && (
-                            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white transition-colors">
+                            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full border border-white/10 hover:bg-white/10 hover:text-white hover:-translate-y-0.5 hover:border-purple-500/40 hover:shadow-[0_0_18px_rgba(112,66,248,0.25)] transition-all">
                                 <Github size={20} />
                             </a>
                         )}
                         {profile.linkedin && (
-                            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-[#0077b5] transition-colors">
+                            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full border border-white/10 hover:bg-white/10 hover:text-cyan-400 hover:-translate-y-0.5 hover:border-cyan-500/40 hover:shadow-[0_0_18px_rgba(0,246,255,0.2)] transition-all">
                                 <Linkedin size={20} />
                             </a>
                         )}
                         {profile.email && (
-                            <a href={`mailto:${profile.email}`} className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-cyan-400 transition-colors">
+                            <a href={`mailto:${profile.email}`} className="p-2 bg-white/5 rounded-full border border-white/10 hover:bg-white/10 hover:text-cyan-400 hover:-translate-y-0.5 hover:border-cyan-500/40 hover:shadow-[0_0_18px_rgba(0,246,255,0.2)] transition-all">
                                 <Mail size={20} />
                             </a>
                         )}
@@ -45,10 +45,10 @@ const Footer = ({ profile }: FooterProps) => {
                 <div className="flex flex-col gap-4">
                     <h3 className="text-white font-semibold text-lg">Quick Links</h3>
                     <div className="flex flex-col gap-2 text-sm text-gray-400">
-                        <a href="#about-me" className="hover:text-cyan-400 transition-colors w-fit">About Me</a>
-                        <a href="#projects" className="hover:text-cyan-400 transition-colors w-fit">Projects</a>
-                        <a href="#services" className="hover:text-cyan-400 transition-colors w-fit">Services</a>
-                        <a href="#contact" className="hover:text-cyan-400 transition-colors w-fit">Contact</a>
+                        <a href="#about-me" className="hover:text-cyan-400 hover:translate-x-1 transition-all w-fit">About Me</a>
+                        <a href="#projects" className="hover:text-cyan-400 hover:translate-x-1 transition-all w-fit">Projects</a>
+                        <a href="#services" className="hover:text-cyan-400 hover:translate-x-1 transition-all w-fit">Services</a>
+                        <a href="#contact" className="hover:text-cyan-400 hover:translate-x-1 transition-all w-fit">Contact</a>
                     </div>
                 </div>
 
@@ -60,7 +60,7 @@ const Footer = ({ profile }: FooterProps) => {
                     </p>
                     <a
                         href={`mailto:${profile.email}`}
-                        className="flex items-center justify-center gap-2 w-full py-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 hover:border-cyan-500/30 transition-all text-sm font-medium text-white"
+                        className="flex items-center justify-center gap-2 w-full py-3 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(112,66,248,0.25)] transition-all text-sm font-medium text-white"
                     >
                         <Mail size={16} />
                         {profile.email}
@@ -68,7 +68,7 @@ const Footer = ({ profile }: FooterProps) => {
                 </div>
             </div>
 
-            <div className="max-w-6xl mx-auto px-5 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
                 <div>
                     &copy; {new Date().getFullYear()} {profile.name}. All rights reserved.
                 </div>

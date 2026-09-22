@@ -66,7 +66,7 @@ export default function ScrollProgressBar() {
     >
       <div
         ref={progressRef}
-        className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 shadow-[0_0_10px_rgba(112,66,248,0.5)] will-change-transform"
+        className="h-full bg-gradient-to-r from-purple-500 to-cyan-500 shadow-[0_0_10px_rgba(112,66,248,0.5)] will-change-transform"
         style={{
           transform: "scaleX(0)",
           transformOrigin: "left center",

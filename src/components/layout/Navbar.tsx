@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import { ProfileData } from "@/lib/db";
 
 interface NavbarProps {
@@ -17,8 +18,10 @@ const Navbar = ({ profile, settings }: NavbarProps) => {
     const pathname = usePathname();
     const [activeSection, setActiveSection] = useState<SectionId>("about-me");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isHidden, setIsHidden] = useState(false);
     const rafIdRef = useRef<number | null>(null);
     const tickingRef = useRef<boolean>(false);
+    const lastScrollYRef = useRef<number>(0);
 
     const findActiveSection = useCallback((): SectionId | null => {
         if (typeof document === "undefined") return null;
@@ -48,6 +51,16 @@ const Navbar = ({ profile, settings }: NavbarProps) => {
         tickingRef.current = false;
         const current = findActiveSection();
         if (current) setActiveSection(current);
+
+        const y = window.scrollY;
+        const goingDown = y > lastScrollYRef.current + 4;
+        const goingUp = y < lastScrollYRef.current - 4;
+        if (y < 120 || goingUp) {
+            setIsHidden(false);
+        } else if (goingDown) {
+            setIsHidden(true);
+        }
+        lastScrollYRef.current = y;
     }, [findActiveSection]);
 
     const requestTick = useCallback(() => {
@@ -87,7 +100,12 @@ const Navbar = ({ profile, settings }: NavbarProps) => {
     if (pathname?.startsWith("/admin")) return null;
 
     return (
-        <div className="w-full fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001417] backdrop-blur-md z-50 px-5 md:px-10 border-b border-[#7042f861]">
+        <motion.div
+            initial={{ y: "-110%" }}
+            animate={{ y: isHidden && !isMobileMenuOpen ? "-110%" : "0%" }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full fixed top-0 shadow-lg shadow-purple-900/40 bg-background/10 backdrop-blur-md z-50 px-5 md:px-10 border-b border-primary/40"
+        >
             <div className="w-full h-[65px] flex flex-row items-center justify-between m-auto px-[10px]">
                 <a
                     href="#about-me"
@@ -108,8 +126,8 @@ const Navbar = ({ profile, settings }: NavbarProps) => {
                     </span>
                 </a>
 
-                <div className="w-[600px] h-full flex flex-row items-center justify-center md:mr-0 hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <div className="flex items-center justify-between w-full h-auto border border-[#7042f861] bg-[#0300145e] px-[20px] py-[10px] rounded-full text-gray-200 backdrop-blur-sm">
+                <div className="h-full hidden md:flex items-center justify-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="flex items-center justify-center gap-4 lg:gap-7 whitespace-nowrap border border-primary/40 bg-background/40 px-[22px] py-[10px] rounded-full text-gray-200 backdrop-blur-sm">
                         {navLinks.map((item) => (
                             <a
                                 key={item.name}
@@ -118,7 +136,7 @@ const Navbar = ({ profile, settings }: NavbarProps) => {
                                 className={`cursor-pointer transition-all duration-300 hover:scale-110 relative group ${activeSection === item.id ? "text-cyan-400 scale-110" : "hover:text-cyan-400"}`}
                             >
                                 {item.name}
-                                <span className={`absolute -bottom-1 left-0 h-0.5 bg-cyan-400 transition-all duration-300 ${activeSection === item.id ? "w-full" : "w-0 group-hover:w-full"}`}></span>
+                                <span className={`absolute -bottom-1 left-0 h-0.5 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 transition-all duration-300 ${activeSection === item.id ? "w-full" : "w-0 group-hover:w-full"}`}></span>
                             </a>
                         ))}
                     </div>
@@ -138,7 +156,7 @@ const Navbar = ({ profile, settings }: NavbarProps) => {
 
             {isMobileMenuOpen && (
                 <div className="md:hidden pb-4">
-                    <div className="rounded-2xl border border-[#7042f861] bg-[#030014f2] backdrop-blur-xl px-4 py-4 shadow-2xl shadow-[#2A0E61]/40">
+                    <div className="rounded-2xl border border-primary/40 bg-background/95 backdrop-blur-xl px-4 py-4 shadow-2xl shadow-purple-900/40">
                         <nav
                             id="mobile-navigation"
                             className="flex flex-col gap-2"
@@ -164,7 +182,7 @@ const Navbar = ({ profile, settings }: NavbarProps) => {
                     </div>
                 </div>
             )}
-        </div>
+        </motion.div>
     );
 };
 

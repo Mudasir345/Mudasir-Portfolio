@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SectionHeading from "../ui/SectionHeading";
+import Section from "../ui/Section";
 import { motion } from "framer-motion";
 import {
   Send,
@@ -279,12 +280,16 @@ const Contact = ({ profile }: ContactProps) => {
 
   const bannerEmail = banner?.copyText ?? CONTACT_EMAIL;
 
-  return (
-    <section id="contact" className="py-20 relative z-[20]">
-      <SectionHeading>Contact Me</SectionHeading>
+  const fieldBase = "w-full rounded-xl border bg-background/60 text-white placeholder:text-gray-600 transition-all focus:outline-none focus:ring-2 focus:ring-purple-500/40";
+  const fieldTone = (hasError: boolean) =>
+    hasError ? "border-red-500/50" : "border-white/10 hover:border-white/20 focus:border-purple-500/60";
 
-      <div className="max-w-6xl mx-auto px-5 w-full mt-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-20">
+  return (
+    <Section id="contact" className="scroll-mt-28">
+      <SectionHeading eyebrow="Let's Talk">Contact Me</SectionHeading>
+
+      <div className="mt-10 w-full">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:gap-20">
           {/* Left Column: Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -309,7 +314,7 @@ const Contact = ({ profile }: ContactProps) => {
                 href={gmailComposeUrl("Portfolio Inquiry")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10 hover:border-cyan-500/40 hover:bg-white/10 transition-all group cursor-pointer"
+                className="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10 hover:border-cyan-500/40 hover:bg-white/10 transition-all hover:-translate-y-0.5 group cursor-pointer"
                 title={`Email ${profile.email}`}
               >
                 <div className="p-3 rounded-full bg-gradient-to-r from-purple-500/20 to-cyan-500/20 group-hover:from-purple-500/40 group-hover:to-cyan-500/40 text-cyan-400 transition-all">
@@ -339,7 +344,7 @@ const Contact = ({ profile }: ContactProps) => {
                   href={profile.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 bg-emerald-500/5 p-4 rounded-xl border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all group cursor-pointer"
+                  className="flex items-center gap-4 bg-emerald-500/5 p-4 rounded-xl border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all hover:-translate-y-0.5 group cursor-pointer"
                   title="Chat on WhatsApp"
                 >
                   <div className="p-3 rounded-full bg-emerald-500/15 text-emerald-400 group-hover:bg-emerald-500/25 transition-all">
@@ -364,7 +369,7 @@ const Contact = ({ profile }: ContactProps) => {
                     href={profile.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 text-gray-400 hover:text-white transition-all hover:scale-105"
+                    className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 text-gray-400 hover:text-white transition-all hover:-translate-y-1 hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(112,66,248,0.25)]"
                     aria-label="GitHub"
                   >
                     <Github size={24} />
@@ -375,7 +380,7 @@ const Contact = ({ profile }: ContactProps) => {
                     href={profile.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 text-gray-400 hover:text-[#0077b5] transition-all hover:scale-105"
+                    className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 text-gray-400 hover:text-cyan-400 transition-all hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(0,246,255,0.2)]"
                     aria-label="LinkedIn"
                   >
                     <Linkedin size={24} />
@@ -393,8 +398,9 @@ const Contact = ({ profile }: ContactProps) => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
             animate={shakeKey > 0 ? { x: [0, -8, 8, -6, 6, -3, 3, 0] } : {}}
-            className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8 shadow-2xl"
+            className="card-premium card-premium-hover relative overflow-hidden p-6 sm:p-8"
           >
+            <span className="card-accent-line" aria-hidden="true" />
             <form
               ref={formRef}
               onSubmit={handleSubmit}
@@ -422,11 +428,7 @@ const Contact = ({ profile }: ContactProps) => {
                     <User className={`absolute left-3 top-3.5 ${fieldErrors.name ? "text-red-400" : "text-gray-500"}`} size={18} />
                     <input
                       id="name"
-                      className={`w-full h-12 pl-10 pr-4 rounded-lg border bg-black/20 text-white focus:outline-none transition-all placeholder:text-gray-600 ${
-                        fieldErrors.name
-                          ? "border-red-500/50 focus:border-red-500 focus:bg-red-950/20"
-                          : "border-white/10 focus:border-cyan-500/50 focus:bg-black/40"
-                      }`}
+                      className={`${fieldBase} h-12 pl-10 pr-4 ${fieldTone(Boolean(fieldErrors.name))}`}
                       name="name"
                       type="text"
                       required
@@ -452,11 +454,7 @@ const Contact = ({ profile }: ContactProps) => {
                     <Smartphone className={`absolute left-3 top-3.5 ${fieldErrors.phone ? "text-red-400" : "text-gray-500"}`} size={18} />
                     <input
                       id="phone"
-                      className={`w-full h-12 pl-10 pr-4 rounded-lg border bg-black/20 text-white focus:outline-none transition-all placeholder:text-gray-600 ${
-                        fieldErrors.phone
-                          ? "border-red-500/50 focus:border-red-500 focus:bg-red-950/20"
-                          : "border-white/10 focus:border-cyan-500/50 focus:bg-black/40"
-                      }`}
+                      className={`${fieldBase} h-12 pl-10 pr-4 ${fieldTone(Boolean(fieldErrors.phone))}`}
                       name="phone"
                       type="tel"
                       maxLength={20}
@@ -482,11 +480,7 @@ const Contact = ({ profile }: ContactProps) => {
                   <Mail className={`absolute left-3 top-3.5 ${fieldErrors.senderEmail ? "text-red-400" : "text-gray-500"}`} size={18} />
                   <input
                     id="senderEmail"
-                    className={`w-full h-12 pl-10 pr-4 rounded-lg border bg-black/20 text-white focus:outline-none transition-all placeholder:text-gray-600 ${
-                      fieldErrors.senderEmail
-                        ? "border-red-500/50 focus:border-red-500 focus:bg-red-950/20"
-                        : "border-white/10 focus:border-cyan-500/50 focus:bg-black/40"
-                    }`}
+                    className={`${fieldBase} h-12 pl-10 pr-4 ${fieldTone(Boolean(fieldErrors.senderEmail))}`}
                     name="senderEmail"
                     type="email"
                     required
@@ -511,11 +505,7 @@ const Contact = ({ profile }: ContactProps) => {
                 <label htmlFor="message" className="text-sm font-medium text-gray-400 ml-1">Message</label>
                 <textarea
                   id="message"
-                  className={`w-full h-32 p-4 rounded-lg border bg-black/20 text-white focus:outline-none transition-all placeholder:text-gray-600 resize-none ${
-                    fieldErrors.message
-                      ? "border-red-500/50 focus:border-red-500 focus:bg-red-950/20"
-                      : "border-white/10 focus:border-cyan-500/50 focus:bg-black/40"
-                  }`}
+                  className={`${fieldBase} h-32 p-4 resize-none ${fieldTone(Boolean(fieldErrors.message))}`}
                   name="message"
                   placeholder="Tell me a bit about your project or say hi!"
                   required
@@ -609,7 +599,7 @@ const Contact = ({ profile }: ContactProps) => {
               <button
                 type="submit"
                 disabled={submitDisabled}
-                className="group mt-2 flex items-center justify-center gap-2 h-12 w-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white rounded-lg font-semibold transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-70 disabled:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/25"
+                className="group mt-2 flex items-center justify-center gap-2 h-12 w-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white rounded-xl font-semibold transition-all hover:shadow-[0_0_25px_rgba(112,66,248,0.45)] active:scale-[0.98] disabled:opacity-70 disabled:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/25"
               >
                 {submitLabel}
               </button>
@@ -621,7 +611,7 @@ const Contact = ({ profile }: ContactProps) => {
           </motion.div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 
