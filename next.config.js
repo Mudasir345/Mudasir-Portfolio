@@ -10,6 +10,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Hero ka profile image quality={80} mangta hai; ye list na ho to request 400 karti hai.
+    qualities: [75, 80],
     minimumCacheTTL: 31536000,
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',

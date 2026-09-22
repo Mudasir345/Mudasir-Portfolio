@@ -120,7 +120,6 @@ export default async function Home() {
 
   return (
     <main className="h-full w-full relative">
-      <link rel="preload" as="image" href={profile.image || "/profile.jpg"} fetchPriority="high" />
       <Scroll3DWrapper />
       <ScrollProgressBar />
       <FloatingContactBtn profile={profile} />

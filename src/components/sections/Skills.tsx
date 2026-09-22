@@ -111,14 +111,22 @@ const getSimpleIconSlug = (name: string): string => {
     return key.replace(/\s+/g, "").replace(/\.js/g, "dotjs").replace(/\./g, "");
 };
 
+// Jin tech ka koi brand icon mojood nahi, unke badge bina icon ke rahenge.
+const ICONLESS_SKILLS = new Set(["rest api"]);
+
+// Icons `public/icons/tech/` se self-hosted hote hain. Pehle seedha CDN use hota tha,
+// jis par hosting ka image optimizer atka rehta hai (Vercel cdn.simpleicons.org ke
+// har cache-miss par 502 deta hai), is liye production me icons gayab ho jate the.
+function getSkillIconSources(name: string): string[] {
+    if (ICONLESS_SKILLS.has(name.toLowerCase().trim())) return [];
+    const slug = getSimpleIconSlug(name);
+    return [`/icons/tech/${slug}.svg`, `https://cdn.simpleicons.org/${slug}`];
+}
+
 function SkillBadge({ skill }: { skill: SkillData }) {
-    const [imgSrc, setImgSrc] = useState(() => {
-        if (skill.name.toLowerCase() === 'rest api') {
-            return null;
-        }
-        const slug = getSimpleIconSlug(skill.name);
-        return `https://cdn.simpleicons.org/${slug}`;
-    });
+    const sources = getSkillIconSources(skill.name);
+    const [sourceIndex, setSourceIndex] = useState(0);
+    const imgSrc = sources[sourceIndex] ?? null;
 
     return (
         <motion.div
@@ -134,9 +142,10 @@ function SkillBadge({ skill }: { skill: SkillData }) {
                         alt=""
                         fill
                         className="object-contain transition-transform duration-300 group-hover/skill:scale-110"
-                        onError={() => setImgSrc(null)}
+                        onError={() => setSourceIndex((i) => i + 1)}
                         loading="lazy"
                         sizes="16px"
+                        unoptimized={sourceIndex > 0}
                     />
                 </div>
             )}
