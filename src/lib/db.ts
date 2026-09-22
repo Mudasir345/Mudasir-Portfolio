@@ -11,11 +11,33 @@ declare global {
 let cachedDb: Db | null = null;
 let cachedClient: MongoClient | null = null;
 
+// Hosting dashboards (Vercel/Netlify) par URI aksar literal quotes ya extra
+// whitespace/newline ke saath paste ho jati hai, jis se driver ka parse fail hota
+// hai ("Invalid scheme, expected connection string to start with mongodb://").
+function normalizeMongoUri(raw: string): string {
+  let uri = raw.trim();
+  const first = uri[0];
+  if ((first === '"' || first === "'") && uri.length > 1 && uri[uri.length - 1] === first) {
+    uri = uri.slice(1, -1).trim();
+  }
+  // Value ke andar kabhi newline nahi hota — line breaks bhi quotes jaise hi footgun hain.
+  return uri.replace(/\s/g, '');
+}
+
 function getMongoUri(): string {
-  const uri = process.env.MONGODB_URI;
-  if (!uri) {
+  const raw = process.env.MONGODB_URI;
+  if (!raw) {
     throw new Error(
-      'MONGODB_URI environment variable is not set. Add it to .env.local (see .env.local.example).',
+      'MONGODB_URI environment variable is not set. Add it to .env.local (see .env.local.example), and on hosting set it as a Production variable pasted raw (no quotes).',
+    );
+  }
+
+  const uri = normalizeMongoUri(raw);
+  if (!/^mongodb(\+srv)?:\/\//.test(uri)) {
+    // Credentials log na karein — sirf shape ka andaza dein.
+    throw new Error(
+      `MONGODB_URI is not a MongoDB connection string (starts with "${uri.slice(0, 4)}", ${uri.length} characters). ` +
+        'It must start with mongodb:// or mongodb+srv:// — paste the Atlas URI raw, without quotes or line breaks.',
     );
   }
   return uri;
