@@ -15,6 +15,7 @@ interface SnapRailProps {
     gap?: string;
     ariaLabel: string;
     showDots?: boolean;
+    showCounter?: boolean;
     showProgress?: boolean;
     onActiveIndexChange?: (index: number) => void;
     className?: string;
@@ -26,6 +27,7 @@ const SnapRail = ({
     gap = "1rem",
     ariaLabel,
     showDots = false,
+    showCounter = false,
     showProgress = true,
     onActiveIndexChange,
     className = "",
@@ -168,21 +170,28 @@ const SnapRail = ({
             )}
 
             {scrollable && showDots && (
-                <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-                    {slides.map((_, index) => (
-                        <button
-                            key={index}
-                            type="button"
-                            onClick={() => goTo(index)}
-                            aria-label={`Go to slide ${index + 1} of ${count}`}
-                            aria-current={index === active}
-                            className={`h-2 rounded-full transition-all duration-300 ${
-                                index === active
-                                    ? "w-6 bg-gradient-to-r from-purple-400 to-cyan-400"
-                                    : "w-2 bg-white/25 hover:bg-white/50"
-                            }`}
-                        />
-                    ))}
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                    <div className="flex flex-wrap items-center justify-center gap-2">
+                        {slides.map((_, index) => (
+                            <button
+                                key={index}
+                                type="button"
+                                onClick={() => goTo(index)}
+                                aria-label={`Go to slide ${index + 1} of ${count}`}
+                                aria-current={index === active}
+                                className={`h-2 rounded-full transition-all duration-300 ${
+                                    index === active
+                                        ? "w-6 bg-gradient-to-r from-purple-400 to-cyan-400"
+                                        : "w-2 bg-white/25 hover:bg-white/50"
+                                }`}
+                            />
+                        ))}
+                    </div>
+                    {showCounter && (
+                        <span className="text-[11px] font-semibold tabular-nums text-gray-500" aria-hidden="true">
+                            {active + 1} of {count}
+                        </span>
+                    )}
                 </div>
             )}
         </div>

@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { TestimonialData } from "@/lib/db";
 import { submitTestimonial } from "@/actions/admin";
+import SnapRail from "../ui/SnapRail";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 
 interface TestimonialsProps {
     testimonials: TestimonialData[];
@@ -91,7 +93,20 @@ function StarPicker({
 }
 
 /** ─── Individual Review Card ──────────────────────────── */
-function TestimonialCard({ item, index }: { item: TestimonialData; index: number }) {
+function TestimonialCard({ item, index, rail = false }: {
+    item: TestimonialData;
+    index: number;
+    rail?: boolean;
+}) {
+    const [expanded, setExpanded] = useState(false);
+    const [clipped, setClipped] = useState(false);
+
+    // Refs attach after layout, which is the earliest reliable moment to know
+    // whether the clamp actually swallowed text — short reviews get no toggle.
+    const measureReview = (el: HTMLParagraphElement | null) => {
+        if (el && !expanded) setClipped(el.scrollHeight - el.clientHeight > 2);
+    };
+
     const avatarColor = getAvatarColor(item.name);
     const avatarInner =
         item.image && item.image.trim().length > 0 ? (
@@ -124,12 +139,13 @@ function TestimonialCard({ item, index }: { item: TestimonialData; index: number
     return (
         <motion.article
             key={item.id}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true, margin: "-60px" }}
-            whileHover={{ y: -8 }}
-            className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.07] via-white/[0.03] to-white/[0.01] p-6 shadow-[0_10px_40px_-16px_rgba(0,0,0,0.75)] backdrop-blur-xl transition-[border-color,box-shadow,transform] duration-300 hover:border-purple-400/40 hover:shadow-[0_24px_70px_-20px_rgba(112,66,248,0.5)] sm:p-7"
+            initial={{ opacity: 0, y: rail ? 16 : 24 }}
+            animate={rail ? { opacity: 1, y: 0 } : undefined}
+            whileInView={rail ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: rail ? 0.45 : 0.55, delay: rail ? Math.min(index, 5) * 0.05 : Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
+            viewport={rail ? undefined : { once: true, margin: "-60px" }}
+            whileHover={rail ? undefined : { y: -8 }}
+            className={`group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.07] via-white/[0.03] to-white/[0.01] shadow-[0_10px_40px_-16px_rgba(0,0,0,0.75)] backdrop-blur-xl transition-[border-color,box-shadow,transform] duration-300 hover:border-purple-400/40 hover:shadow-[0_24px_70px_-20px_rgba(112,66,248,0.5)] ${rail ? "p-5" : "p-6 sm:p-7"}`}
         >
             {/* top accent line */}
             <span
@@ -160,11 +176,25 @@ function TestimonialCard({ item, index }: { item: TestimonialData; index: number
             </div>
 
             {/* review */}
-            <p className="relative mb-6 text-[15px] leading-relaxed text-gray-200/90">
+            <p
+                ref={measureReview}
+                className={`relative mb-6 text-[15px] leading-relaxed text-gray-200/90 ${rail && !expanded ? "line-clamp-9" : ""}`}
+            >
                 <span className="mr-0.5 font-serif text-xl leading-none text-purple-300/70">&ldquo;</span>
                 {item.review}
                 <span className="ml-0.5 font-serif text-xl leading-none text-purple-300/70">&rdquo;</span>
             </p>
+
+            {rail && clipped && (
+                <button
+                    type="button"
+                    onClick={() => setExpanded(value => !value)}
+                    aria-expanded={expanded}
+                    className="relative -mt-4 mb-6 self-start text-xs font-semibold text-cyan-400 underline underline-offset-4 hover:text-cyan-300"
+                >
+                    {expanded ? "Show less" : "Read full review"}
+                </button>
+            )}
 
             {/* footer */}
             <div className="relative mt-auto flex items-center gap-3 border-t border-white/[0.07] pt-5">
@@ -474,6 +504,7 @@ function SubmitReviewForm({ onClose }: { onClose?: () => void }) {
 /** ─── Main Testimonials Section ──────────────────────────── */
 const Testimonials = ({ testimonials }: TestimonialsProps) => {
     const [showForm, setShowForm] = useState(false);
+    const isDesktop = useMediaQuery("(min-width: 768px)");
 
     const verifiedTestimonials = testimonials.filter(item => {
         const hasName = typeof item.name === "string" && item.name.trim().length > 0;
@@ -573,7 +604,7 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
                             </button>
                         )}
                     </div>
-                ) : (
+                ) : isDesktop ? (
                     <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
                         {verifiedTestimonials.map((item, index) => (
                             <TestimonialCard
@@ -583,18 +614,36 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
                             />
                         ))}
                     </div>
+                ) : (
+                    <SnapRail
+                        ariaLabel={`Client reviews, ${verifiedTestimonials.length} reviews`}
+                        slideWidth="min(calc(100% - 2.5rem), 420px)"
+                        gap="1rem"
+                        showDots
+                        showCounter
+                        showProgress={false}
+                    >
+                        {verifiedTestimonials.map((item, index) => (
+                            <TestimonialCard
+                                key={item.id}
+                                item={item}
+                                index={index}
+                                rail
+                            />
+                        ))}
+                    </SnapRail>
                 )}
 
                 {/* ─── Social Proof Footer Row ─────────── */}
                 {verifiedTestimonials.length > 0 && (
-                    <div className="mt-14 grid w-full grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
+                    <div className="mt-10 grid w-full grid-cols-3 gap-2 sm:mt-14 sm:gap-5">
                         {[
                             {
                                 value: String(verifiedTestimonials.length),
                                 label: "Happy Clients",
                                 valueClass:
                                     "bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent",
-                                icon: <User size={16} className="text-purple-300" />,
+                                icon: <User size={13} className="h-[13px] w-[13px] text-purple-300 sm:h-4 sm:w-4" />,
                             },
                             {
                                 value: (
@@ -605,7 +654,7 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
                                 ).toFixed(1),
                                 label: "Average Rating",
                                 valueClass: "text-yellow-400",
-                                icon: <Star size={16} className="fill-yellow-400 text-yellow-400" />,
+                                icon: <Star size={13} className="h-[13px] w-[13px] fill-yellow-400 text-yellow-400 sm:h-4 sm:w-4" />,
                             },
                             {
                                 value: String(
@@ -614,7 +663,7 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
                                 label: "Verified Reviews",
                                 valueClass:
                                     "bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent",
-                                icon: <CheckCircle2 size={16} className="text-emerald-400" />,
+                                icon: <CheckCircle2 size={13} className="h-[13px] w-[13px] text-emerald-400 sm:h-4 sm:w-4" />,
                             },
                         ].map((stat, i) => (
                             <motion.div
@@ -624,24 +673,24 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
                                 transition={{ duration: 0.5, delay: i * 0.1 }}
                                 viewport={{ once: true }}
                                 whileHover={{ y: -4 }}
-                                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] px-6 py-7 text-center shadow-[0_10px_36px_-18px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-colors duration-300 hover:border-cyan-400/30"
+                                className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] px-1.5 py-4 text-center shadow-[0_10px_36px_-18px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-colors duration-300 hover:border-cyan-400/30 sm:rounded-2xl sm:px-6 sm:py-7"
                             >
                                 <span
-                                    className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                                    className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent sm:inset-x-10"
                                     aria-hidden="true"
                                 />
-                                <div className="mb-3 flex items-center justify-center gap-2">
+                                <div className="mb-1.5 flex items-center justify-center gap-1 sm:mb-3 sm:gap-2">
                                     {stat.icon}
-                                    <span className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
+                                    <span className="text-[8px] font-semibold uppercase leading-tight tracking-normal text-gray-400 sm:text-[11px] sm:tracking-widest">
                                         {stat.label}
                                     </span>
                                 </div>
                                 <div
-                                    className={`flex items-center justify-center gap-1 text-4xl font-extrabold sm:text-5xl ${stat.valueClass}`}
+                                    className={`flex items-center justify-center gap-0.5 text-xl font-extrabold sm:gap-1 sm:text-4xl md:text-5xl ${stat.valueClass}`}
                                 >
                                     {stat.value}
                                     {stat.label === "Average Rating" && (
-                                        <Star size={26} className="fill-yellow-400 translate-y-[-3px]" />
+                                        <Star size={13} className="h-[13px] w-[13px] -translate-y-[1px] fill-yellow-400 sm:h-[26px] sm:w-[26px] sm:-translate-y-[3px]" />
                                     )}
                                 </div>
                             </motion.div>
