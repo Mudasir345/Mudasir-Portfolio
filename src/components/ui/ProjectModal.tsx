@@ -24,6 +24,14 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
         return () => window.removeEventListener("keydown", handleEsc);
     }, [onClose]);
 
+    // Without this the long page keeps scrolling behind the dialog on phones.
+    useEffect(() => {
+        if (!project) return;
+        const previous = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        return () => { document.body.style.overflow = previous; };
+    }, [project]);
+
     if (!project) return null;
 
     // Combine main image with gallery for a complete slideshow
@@ -67,6 +75,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                             animate={{ opacity: 1, rotate: 0 }}
                             whileHover={{ rotate: 90, scale: 1.1 }}
                             onClick={onClose}
+                            aria-label="Close project details"
                             className="absolute top-4 right-4 z-[60] p-2 bg-black/40 text-white rounded-full hover:bg-white/10 transition-colors border border-white/5 backdrop-blur-md"
                         >
                             <X size={20} />
