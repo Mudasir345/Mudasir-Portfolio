@@ -1,4 +1,5 @@
-import { MongoClient, Db, Collection, ObjectId } from 'mongodb';
+import { MongoClient, Db, Collection, ObjectId, type Document, type MongoClientOptions } from 'mongodb';
+import { promises as dnsPromises } from 'node:dns';
 import { optimizeAllMediaInObject } from '@/lib/mediaOptimizer';
 
 // ─── MongoDB Client Caching (Next.js dev hot-reload ke liye) ─────────────────
@@ -20,48 +21,210 @@ function getMongoUri(): string {
   return uri;
 }
 
-// Kuch Windows networks par Node ka c-ares resolver ek loopback DNS server
-// (127.0.0.1) par set hota hai jo queries refuse karta hai — is se mongodb+srv
-// ka SRV lookup fail hota hai aur app chup-chaap fallback data par chali jati hai.
-// Sirf tab public DNS par switch karein jab saare resolvers loopback hon
-// (production/Vercel par trigger nahi hoga, wahan DNS theek hota hai).
-let dnsPatched = false;
-async function ensureDnsResolvers(): Promise<void> {
-  if (dnsPatched) return;
-  dnsPatched = true;
-  try {
-    const dns = await import('node:dns');
-    const servers = dns.getServers();
-    const allLoopback =
-      servers.length > 0 && servers.every((s) => s.startsWith('127.') || s === '::1');
-    if (allLoopback) {
-      dns.setServers(['8.8.8.8', '1.1.1.1']);
-      console.warn(
-        `[db] Loopback DNS resolver ${JSON.stringify(servers)} refused SRV lookups → switched to public DNS (8.8.8.8, 1.1.1.1).`,
-      );
-    }
-  } catch {
-    // DNS patching is best-effort; ignore and let the driver use its defaults.
-  }
+// `mongodb+srv://` ka seed-list driver khud SRV query karke banata hai, aur kuch
+// environments (Windows ka local DNS proxy, Next build workers) par woh query
+// ECONNREFUSED kha jati hai — natija: connection fail aur app chup-chaap
+// `fallbackData.ts` ka nakli content dikha deti hai. Is liye SRV records hum khud
+// resolve karte hain (pehle system resolver, phir public DNS) aur driver ko direct
+// `mongodb://seed1,seed2,seed3/...?tls=true` URI dete hain. Dono fail hon to
+// purani driver-wali path par wapas lot jaate hain, koi naya failure nahi.
+const PUBLIC_DNS_SERVERS = ['8.8.8.8', '1.1.1.1'];
+
+type PublicResolver = InstanceType<typeof dnsPromises.Resolver>;
+
+interface SrvUriParts {
+  host: string;
+  /** `user:pass@` jaisa userinfo, bilkul as-is (already percent-encoded) */
+  userinfo: string;
+  /** `/dbname` hisse ka path, khali ho to '' */
+  dbname: string;
+  /** `?` ke baad ka query string (without `?`) */
+  search: string;
 }
 
-export async function getMongoClient(): Promise<{ client: MongoClient; db: Db }> {
-  if (cachedClient && cachedDb) {
-    return { client: cachedClient, db: cachedDb };
+function parseSrvUri(srvUri: string): SrvUriParts | null {
+  const match = /^mongodb\+srv:\/\/([^/]+)(\/[^?]*)?(.*)$/.exec(srvUri);
+  if (!match) return null;
+
+  const [, authority, dbname = '', tail = ''] = match;
+  const atIndex = authority.lastIndexOf('@');
+  const host = (atIndex >= 0 ? authority.slice(atIndex + 1) : authority).replace(/:\d+$/, '');
+  if (!host) return null;
+
+  return {
+    host,
+    userinfo: atIndex >= 0 ? authority.slice(0, atIndex + 1) : '',
+    dbname,
+    search: tail.startsWith('?') ? tail.slice(1) : '',
+  };
+}
+
+function createPublicResolver(): PublicResolver {
+  const resolver = new dnsPromises.Resolver();
+  resolver.setServers(PUBLIC_DNS_SERVERS);
+  return resolver;
+}
+
+// Driver ke `checkParentDomainMatch` ka equivalent: SRV reply ka domain (pehla
+// label hata kar) SRV host ke domain (wohi label hata kar) se match karna chahiye.
+// Atlas ka `portfolio.5izw2hs.mongodb.net` in ka *sibling* hai, parent nahi — is
+// liye plain endsWith(srvHost) har record reject kar deta.
+function sharesParentDomain(address: string, srvHost: string): boolean {
+  const stripFirstLabel = (host: string) => host.replace(/^.*?\./, '');
+  const normalizedAddress = address.replace(/\.$/, '');
+  const normalizedSrvHost = srvHost.replace(/\.$/, '');
+  const addressDomain = `.${stripFirstLabel(normalizedAddress)}`;
+  const srvIsShort = normalizedSrvHost.split('.').length < 3;
+  let srvHostDomain = srvIsShort ? normalizedSrvHost : `.${stripFirstLabel(normalizedSrvHost)}`;
+  if (!srvHostDomain.startsWith('.')) srvHostDomain = `.${srvHostDomain}`;
+  return addressDomain.endsWith(srvHostDomain);
+}
+
+// SRV records se direct replica-set URI banate hain. Credentials/dbname as-is
+// pass hote hain aur URI kabhi log nahi hoti — secret leak na ho.
+async function buildDirectUriFromSrv(resolver: PublicResolver, parts: SrvUriParts): Promise<string | null> {
+  const { host: srvHost, userinfo, dbname, search } = parts;
+
+  const records = await resolver.resolveSrv(`_mongodb._tcp.${srvHost}`);
+  const seeds = records
+    .filter((record) => sharesParentDomain(record.name, srvHost))
+    .map((record) => `${record.name.replace(/\.$/, '')}:${record.port || 27017}`);
+  if (seeds.length === 0) return null;
+
+  const params = new URLSearchParams(search);
+  try {
+    // TXT record sirf authSource/replicaSet de sakta hai (driver bhi yahi karta
+    // hai) aur jo pehle se URI mein hai us par override nahi hota.
+    const txt = await resolver.resolveTxt(srvHost);
+    const txtParams = new URLSearchParams((txt[0] ?? []).join(''));
+    for (const key of ['authSource', 'replicaSet'] as const) {
+      const value = txtParams.get(key);
+      if (value && !params.has(key)) params.set(key, value);
+    }
+  } catch {
+    // TXT records optional hain; na milne par bhi multiple seeds se driver
+    // topology khud discover kar leta hai.
+  }
+  // Direct mongodb:// par TLS default false hota hai — Atlas ke liye lazmi hai.
+  if (!params.has('tls') && !params.has('ssl')) params.set('tls', 'true');
+
+  const query = params.toString();
+  return `mongodb://${userinfo}${seeds.join(',')}${dbname}${query ? `?${query}` : ''}`;
+}
+
+// Driver ke host lookups bhi public DNS se karate hain, warna wahi ECONNREFUSED
+// shard hosts par dobara aa sakta hai.
+type LookupCallback = (
+  err: NodeJS.ErrnoException | null,
+  addresses?: string | Array<{ address: string; family: number }> | number | null,
+  family?: number,
+) => void;
+
+function createPublicLookup(resolver: PublicResolver) {
+  return (hostname: string, options: object, callback: LookupCallback): void => {
+    const opts = (options ?? {}) as { all?: boolean; family?: number };
+    resolver
+      .resolve4(hostname)
+      .then((addresses) => {
+        if (opts.all) {
+          callback(null, addresses.map((address) => ({ address, family: 4 })));
+          return;
+        }
+        if (addresses.length === 0) {
+          callback(Object.assign(new Error(`ENODATA ${hostname}`), { code: 'ENODATA' }));
+          return;
+        }
+        callback(null, addresses[0], 4);
+      })
+      .catch((error: NodeJS.ErrnoException | null) => {
+        // Public DNS fail ho to system resolver par wapas chale jayein.
+        dnsPromises
+          .lookup(hostname, { all: true, family: 4 })
+          .then((addresses) =>
+            opts.all
+              ? callback(null, addresses)
+              : callback(null, addresses[0]?.address ?? null, addresses[0]?.family)
+          )
+          .catch(() => callback(error ?? new Error(`DNS lookup failed for ${hostname}`)));
+      });
+  };
+}
+
+let connectionConfigPromise: Promise<{ uri: string; options: MongoClientOptions }> | null = null;
+
+function getConnectionConfig(): Promise<{ uri: string; options: MongoClientOptions }> {
+  if (!connectionConfigPromise) {
+    connectionConfigPromise = buildConnectionConfig().catch((error) => {
+      connectionConfigPromise = null;
+      throw error;
+    });
+  }
+  return connectionConfigPromise;
+}
+
+async function buildConnectionConfig(): Promise<{ uri: string; options: MongoClientOptions }> {
+  const baseUri = getMongoUri();
+  const options: MongoClientOptions = {
+    connectTimeoutMS: 30000,
+    serverSelectionTimeoutMS: 30000,
+    maxPoolSize: 10,
+    minPoolSize: 2,
+    family: 4, // Force IPv4 — avoids Node c-ares SRV + IPv6 lookup bugs on some Windows networks
+  };
+
+  const parts = baseUri.startsWith('mongodb+srv://') ? parseSrvUri(baseUri) : null;
+  if (!parts) return { uri: baseUri, options };
+
+  // Driver ko kabhi SRV query karne na dein — kuch environments (Windows DNS
+  // proxy, build workers) par woh ECONNREFUSED kha jata hai aur app chup-chaap
+  // fallback data par chali jati hai. Pehle system resolver se try karte hain,
+  // phir public DNS; dono fail hon to purani (driver-wali) path par wapas.
+  const attempts: Array<{ label: string; resolver: PublicResolver }> = [
+    { label: 'system DNS', resolver: new dnsPromises.Resolver() },
+    { label: 'public DNS', resolver: createPublicResolver() },
+  ];
+
+  for (const { label, resolver } of attempts) {
+    try {
+      const uri = await buildDirectUriFromSrv(resolver, parts);
+      if (!uri) continue;
+      const seedCount = uri.slice('mongodb://'.length).split('/')[0].split(',').length;
+      console.log(`[db] SRV resolved via ${label} → ${seedCount} replica-set seed host(s) for ${parts.host}.`);
+      const config: { uri: string; options: MongoClientOptions } = { uri, options };
+      if (label !== 'system DNS') {
+        // System DNS is broken yahan; shard host lookups bhi public DNS se karein.
+        config.options = { ...options, lookup: createPublicLookup(resolver) as unknown as MongoClientOptions['lookup'] };
+      }
+      return config;
+    } catch (error) {
+      console.warn(
+        `[db] SRV lookup via ${label} failed (${error instanceof Error ? error.message : error}); trying next resolver.`,
+      );
+    }
   }
 
-  await ensureDnsResolvers();
+  console.warn('[db] Could not pre-resolve SRV records; falling back to the driver SRV lookup.');
+  return { uri: baseUri, options };
+}
 
-  const uri = getMongoUri();
-  const client =
-    global._mongoClient ||
-    new MongoClient(uri, {
-      connectTimeoutMS: 30000,
-      serverSelectionTimeoutMS: 30000,
-      maxPoolSize: 10,
-      minPoolSize: 2,
-      family: 4, // Force IPv4 — avoids Node c-ares SRV + IPv6 lookup bugs on some Windows networks
+let connectingPromise: Promise<{ client: MongoClient; db: Db }> | null = null;
+
+export function getMongoClient(): Promise<{ client: MongoClient; db: Db }> {
+  if (cachedClient && cachedDb) {
+    return Promise.resolve({ client: cachedClient, db: cachedDb });
+  }
+  // Ek hi in-flight connect: 15 concurrent section fetches driver ko hammer na karein.
+  if (!connectingPromise) {
+    connectingPromise = connect().finally(() => {
+      connectingPromise = null;
     });
+  }
+  return connectingPromise;
+}
+
+async function connect(): Promise<{ client: MongoClient; db: Db }> {
+  const { uri, options } = await getConnectionConfig();
+  const client = global._mongoClient || new MongoClient(uri, options);
 
   if (process.env.NODE_ENV !== 'production') {
     global._mongoClient = client;
@@ -262,41 +425,78 @@ export interface settings {
   updatedAt: Date;
 }
 
-// ─── Typed Collections Helper (builds on demand) ────────────────────────────
-export interface TypedDb {
-  profile: Collection<profile>;
-  skill: Collection<skill>;
-  experience: Collection<experience>;
-  education: Collection<education>;
-  project: Collection<project>;
-  service: Collection<service>;
-  testimonial: Collection<testimonial>;
-  teammember: Collection<teammember>;
-  certificate: Collection<certificate>;
-  language: Collection<language>;
-  interest: Collection<interest>;
-  settings: Collection<settings>;
+// ─── Model ↔ Mongo collection mapping (single source of truth) ──────────────
+const COLLECTION_NAMES = {
+  profile: 'profile',
+  skill: 'skills',
+  experience: 'experience',
+  education: 'education',
+  project: 'projects',
+  service: 'services',
+  testimonial: 'testimonials',
+  teammember: 'team',
+  certificate: 'certificates',
+  language: 'languages',
+  interest: 'interests',
+  settings: 'settings',
+} as const;
+
+export type ModelName = keyof typeof COLLECTION_NAMES;
+
+interface ModelDocMap {
+  profile: profile;
+  skill: skill;
+  experience: experience;
+  education: education;
+  project: project;
+  service: service;
+  testimonial: testimonial;
+  teammember: teammember;
+  certificate: certificate;
+  language: language;
+  interest: interest;
+  settings: settings;
 }
 
-let typedDb: TypedDb | null = null;
-async function getCollections(): Promise<TypedDb> {
-  if (typedDb) return typedDb;
+// ─── Prisma-style delegate surface ───────────────────────────────────────────
+// `db.<model>` ek Prisma-compatible shim hai (purana admin.ts code isi surface
+// par likha tha) — ye raw Mongo Collection ke methods nahi chalata, is liye
+// types bhi yehi delegate batate hain jo runtime par sach mein maujood hai.
+export interface QueryParams {
+  where?: Document;
+  orderBy?: Document;
+  include?: Document;
+  skip?: number;
+  take?: number;
+}
+
+export interface ModelDelegate<T> {
+  findMany(params?: QueryParams): Promise<T[]>;
+  findFirst(params?: QueryParams): Promise<T | null>;
+  findOne(params?: QueryParams): Promise<T | null>;
+  count(params?: QueryParams): Promise<number>;
+  aggregate(pipeline?: Document[]): Promise<Document[]>;
+  create(params: { data: Document }): Promise<T>;
+  createMany(params: { data: Document[] }): Promise<{ count: number; insertedIds: Record<number, ObjectId> }>;
+  update(params: { where: Document; data: Document }): Promise<T | null>;
+  delete(params: { where: Document }): Promise<T | null>;
+  deleteMany(params?: QueryParams): Promise<{ count: number }>;
+}
+
+export type TypedDb = { [K in ModelName]: ModelDelegate<ModelDocMap[K]> };
+
+type TypedCollections = { [K in ModelName]: Collection<Document> };
+
+let collections: TypedCollections | null = null;
+async function getCollections(): Promise<TypedCollections> {
+  if (collections) return collections;
   const { db } = await getMongoClient();
-  typedDb = {
-    profile: db.collection<profile>('profile'),
-    skill: db.collection<skill>('skills'),
-    experience: db.collection<experience>('experience'),
-    education: db.collection<education>('education'),
-    project: db.collection<project>('projects'),
-    service: db.collection<service>('services'),
-    testimonial: db.collection<testimonial>('testimonials'),
-    teammember: db.collection<teammember>('team'),
-    certificate: db.collection<certificate>('certificates'),
-    language: db.collection<language>('languages'),
-    interest: db.collection<interest>('interests'),
-    settings: db.collection<settings>('settings'),
-  };
-  return typedDb;
+  const built = {} as TypedCollections;
+  for (const name of Object.keys(COLLECTION_NAMES) as ModelName[]) {
+    built[name] = db.collection<Document>(COLLECTION_NAMES[name]);
+  }
+  collections = built;
+  return collections;
 }
 
 /**
@@ -319,11 +519,12 @@ function toPlain<T>(doc: unknown): T | null {
  * All async methods — callers use await.
  */
 function buildDbProxy(): TypedDb {
-  const handler: ProxyHandler<unknown> = {
+  const handler: ProxyHandler<TypedDb> = {
     get(_target, prop) {
-      const colName = prop as keyof TypedDb;
-      // Build chainable query runner for this collection
-      const runner: Record<string, (...args: unknown[]) => Promise<unknown>> = {
+      const colName = prop as ModelName;
+      // Is model ke liye Prisma-jaisa query runner — methods ka set delegate
+      // (ModelDelegate) se match karta hai jo TypedDb declare karta hai.
+      const runner = {
         // ──── READ ─────────────────────────────────────────────────────
         async findOne(arg: unknown = {}, opts: unknown = {}) {
           const cols = await getCollections();
@@ -373,7 +574,7 @@ function buildDbProxy(): TypedDb {
             : arg;
           return cols[colName].countDocuments(where as object);
         },
-        async aggregate(pipeline: unknown[] = []) {
+        async aggregate(pipeline: Document[] = []) {
           const cols = await getCollections();
           const rows = await cols[colName].aggregate(pipeline).toArray();
           return rows.map((d) => toPlain(d));
@@ -391,23 +592,23 @@ function buildDbProxy(): TypedDb {
           // Project / Service embedded subdocs auto-create child ids
           if (colName === 'project' && Array.isArray((data as unknown as project).gallery)) {
             (data as unknown as project).gallery = (data as unknown as project).gallery.map((g) => ({
-              createdAt: now,
-              updatedAt: now,
-              id: createCuid(),
               ...g,
+              id: g.id || createCuid(),
+              createdAt: g.createdAt ?? now,
+              updatedAt: g.updatedAt ?? now,
               projectId: data.id,
             }));
           }
           if (colName === 'service' && Array.isArray((data as unknown as service).servicedetail)) {
             (data as unknown as service).servicedetail = (data as unknown as service).servicedetail.map((sd) => ({
-              createdAt: now,
-              updatedAt: now,
-              id: createCuid(),
               ...sd,
+              id: sd.id || createCuid(),
+              createdAt: sd.createdAt ?? now,
+              updatedAt: sd.updatedAt ?? now,
               serviceId: data.id,
             }));
           }
-          const result = await cols[colName].insertOne(data as any);
+          const result = await cols[colName].insertOne(data as Document);
           // Return inserted doc (Prisma returns full row)
           const inserted = await cols[colName].findOne({ _id: result.insertedId });
           return toPlain(inserted) ?? data;
@@ -421,7 +622,7 @@ function buildDbProxy(): TypedDb {
             createdAt: d.createdAt ?? now,
             updatedAt: d.updatedAt ?? now,
           }));
-          const res = await cols[colName].insertMany(docs as any, { ordered: false });
+          const res = await cols[colName].insertMany(docs as Document[], { ordered: false });
           return { count: res.insertedCount, insertedIds: res.insertedIds };
         },
         async update(params: { where: { id?: string }; data: Record<string, unknown> }) {
@@ -429,7 +630,7 @@ function buildDbProxy(): TypedDb {
           const { id } = params.where || {};
           if (!id) throw new Error('update() requires where.id');
           const now = new Date();
-          const setData = {
+          const setData: Record<string, unknown> = {
             ...params.data,
             updatedAt: params.data.updatedAt ?? now,
           };
@@ -480,7 +681,7 @@ function buildDbProxy(): TypedDb {
       return runner;
     },
   };
-  return new Proxy({}, handler as ProxyHandler<TypedDb>) as TypedDb;
+  return new Proxy({} as TypedDb, handler);
 }
 
 export const db = buildDbProxy();
@@ -509,7 +710,9 @@ export type ProjectData = Omit<project, 'techStack' | 'features' | 'challenges'>
 };
 
 export type ServiceDetailData = Pick<servicedetail, 'name' | 'iconUrl'>;
-export type ServiceData = Omit<service, never> & {
+// Enriched frontend shape: embedded `servicedetail` is replaced by `details`
+// (the DB document itself keeps the embedded array — see db.service writes).
+export type ServiceData = Omit<service, 'servicedetail'> & {
   details: ServiceDetailData[];
 };
 
