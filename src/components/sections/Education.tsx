@@ -36,29 +36,29 @@ const Education = ({ education }: EducationProps) => {
                         <motion.div
                             key={index}
                             {...fadeUp(index)}
-                            className={`relative flex flex-col md:flex-row gap-8 mb-16 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""}`}
+                            className={`relative flex flex-col md:flex-row gap-8 mb-10 md:mb-14 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""}`}
                         >
                             {/* Timeline Dot */}
-                            <div className="absolute left-0 md:left-1/2 w-9 h-9 bg-background border-2 border-purple-500 rounded-full z-10 flex items-center justify-center md:-translate-x-1/2 text-purple-400 shadow-[0_0_15px_rgba(112,66,248,0.5)] ml-[2px] md:ml-0">
+                            <div className="absolute left-0 md:left-1/2 w-9 h-9 bg-background border-2 border-purple-500 rounded-full z-10 flex items-center justify-center md:-translate-x-1/2 ml-[-1px] md:ml-0 text-purple-400 shadow-[0_0_15px_rgba(112,66,248,0.5)]">
                                 {getIcon(item.iconType)}
                             </div>
 
                             {/* Content Card */}
-                            <div className="w-full md:w-[calc(50%-40px)] ml-12 md:ml-0">
-                                <div className="card-premium card-premium-hover p-6 relative group overflow-hidden">
+                            <div className="ml-10 sm:ml-12 md:w-[calc(50%-40px)] md:ml-0">
+                                <div className="card-premium card-premium-hover p-5 sm:p-6 relative group overflow-hidden">
                                     <span className="card-accent-line" aria-hidden="true" />
 
                                     <div className="relative z-10">
                                         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                                            <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
+                                            <h3 className="text-lg sm:text-xl font-bold text-white break-words group-hover:text-purple-400 transition-colors">
                                                 {item.degree}
                                             </h3>
-                                            <span className="px-3 py-1 text-xs font-semibold text-purple-300 bg-purple-500/10 border border-purple-500/20 rounded-full">
+                                            <span className="px-3 py-1 text-xs font-semibold text-purple-300 bg-purple-500/10 border border-purple-500/20 rounded-full shrink-0">
                                                 {item.period}
                                             </span>
                                         </div>
 
-                                        <h4 className="text-lg font-medium text-cyan-400 mb-4 flex items-center gap-2">
+                                        <h4 className="text-base sm:text-lg font-medium text-cyan-400 mb-4 flex items-center gap-2 break-words">
                                             {item.institution}
                                         </h4>
 
