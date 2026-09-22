@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import SectionHeading from "../ui/SectionHeading";
-import { motion } from "framer-motion";
+import Portal from "../ui/Portal";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import {
     Star,
@@ -230,7 +231,7 @@ function TestimonialCard({ item, index, rail = false }: {
 }
 
 /** ─── Public Review Submission Form ──────────────────────────── */
-function SubmitReviewForm({ onClose }: { onClose?: () => void }) {
+function SubmitReviewForm({ onClose, onSuccess }: { onClose?: () => void; onSuccess?: (message: string) => void }) {
     const [isPending, startTransition] = useTransition();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -266,7 +267,9 @@ function SubmitReviewForm({ onClose }: { onClose?: () => void }) {
             if (res?.ok) {
                 setResultMsg({ ok: true, text: res.message });
                 reset();
-                if (onClose) {
+                if (onSuccess) {
+                    onSuccess(res.message);
+                } else if (onClose) {
                     setTimeout(() => onClose(), 4500);
                 }
             } else {
@@ -501,10 +504,138 @@ function SubmitReviewForm({ onClose }: { onClose?: () => void }) {
     );
 }
 
+/** ─── Mobile Bottom Sheet for the Review Form ────────────── */
+const FOCUSABLE =
+    'a[href], button:not([disabled]), input:not([tabindex="-1"]), textarea, select, [tabindex="0"]';
+
+function ReviewSheet({ open, onClose, onSuccess }: {
+    open: boolean;
+    onClose: () => void;
+    onSuccess: (message: string) => void;
+}) {
+    const panelRef = useRef<HTMLDivElement>(null);
+
+    // The parent passes a fresh closure every render; a ref keeps it out of the
+    // effect deps so the lock/focus setup isn't torn down mid-session.
+    const closeRef = useRef(onClose);
+    useEffect(() => { closeRef.current = onClose; });
+
+    useEffect(() => {
+        if (!open) return;
+        const opener = document.activeElement as HTMLElement | null;
+        const previous = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        panelRef.current?.focus();
+        const onKey = (event: KeyboardEvent) => {
+            if (event.key === "Escape") closeRef.current();
+        };
+        window.addEventListener("keydown", onKey);
+        return () => {
+            window.removeEventListener("keydown", onKey);
+            document.body.style.overflow = previous;
+            opener?.focus?.();
+        };
+    }, [open]);
+
+    const trapFocus = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key !== "Tab" || !panelRef.current) return;
+        const nodes = [...panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)]
+            .filter(el => el.tabIndex >= 0);
+        if (nodes.length === 0) return;
+        const first = nodes[0];
+        const last = nodes[nodes.length - 1];
+        const active = document.activeElement;
+        if (event.shiftKey && (active === first || active === panelRef.current)) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && active === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    };
+
+    return (
+        <AnimatePresence>
+            {open && (
+                <Portal>
+                    <div className="fixed inset-0 z-[100] flex items-end justify-center">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={onClose}
+                            className="absolute inset-0 bg-black/60 backdrop-blur-md"
+                            aria-hidden="true"
+                        />
+                        <motion.div
+                            ref={panelRef}
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="review-sheet-title"
+                            tabIndex={-1}
+                            onKeyDown={trapFocus}
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "100%" }}
+                            transition={{ type: "spring", duration: 0.5, bounce: 0.12 }}
+                            className="relative z-[110] max-h-[90vh] w-full max-w-xl overflow-y-auto overscroll-contain rounded-t-3xl border border-white/10 bg-[#0d0426]/95 shadow-[0_-16px_60px_rgba(112,66,248,0.25)] backdrop-blur-2xl focus:outline-none"
+                        >
+                            {/* Pinned header: handle + title + close stay put while the form scrolls */}
+                            <div className="sticky top-0 z-10 border-b border-white/10 bg-[#0d0426]/95 px-5 pb-4 pt-3 backdrop-blur-xl">
+                                <span
+                                    aria-hidden="true"
+                                    className="mx-auto mb-3 block h-1.5 w-12 rounded-full bg-white/25"
+                                />
+                                <div className="flex items-start justify-between gap-4">
+                                    <div>
+                                        <h3
+                                            id="review-sheet-title"
+                                            className="flex items-center gap-2 text-lg font-bold text-white"
+                                        >
+                                            <MessageCirclePlus className="text-cyan-400" size={18} />
+                                            Share Your Review
+                                        </h3>
+                                        <p className="mt-1 text-xs text-gray-400">
+                                            Every submission is personally reviewed by Mudasir before going live.
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={onClose}
+                                        className="shrink-0 rounded-lg p-2 text-gray-500 transition-colors hover:bg-white/10 hover:text-white"
+                                        aria-label="Close review form"
+                                    >
+                                        <X size={20} />
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="px-5 pt-5 pb-[calc(1.5rem_+_env(safe-area-inset-bottom))]">
+                                <SubmitReviewForm onSuccess={onSuccess} />
+                            </div>
+                        </motion.div>
+                    </div>
+                </Portal>
+            )}
+        </AnimatePresence>
+    );
+}
+
 /** ─── Main Testimonials Section ──────────────────────────── */
 const Testimonials = ({ testimonials }: TestimonialsProps) => {
     const [showForm, setShowForm] = useState(false);
+    const [notice, setNotice] = useState<string | null>(null);
     const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    useEffect(() => {
+        if (!notice) return;
+        const id = setTimeout(() => setNotice(null), 8000);
+        return () => clearTimeout(id);
+    }, [notice]);
+
+    const reviewSubmitted = (message: string) => {
+        setShowForm(false);
+        setNotice(message);
+    };
 
     const verifiedTestimonials = testimonials.filter(item => {
         const hasName = typeof item.name === "string" && item.name.trim().length > 0;
@@ -549,8 +680,8 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
                     </button>
                 </div>
 
-                {/* ─── Expanded Inline Submission Form ─────────── */}
-                {showForm && (
+                {/* ─── Inline Submission Form (md+; phones get the sheet) ─── */}
+                {showForm && isDesktop && (
                     <motion.div
                         initial={{ opacity: 0, height: 0, y: -10 }}
                         animate={{ opacity: 1, height: "auto", y: 0 }}
@@ -698,6 +829,34 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
                     </div>
                 )}
             </div>
+
+            {/* ─── Phone submission sheet + success toast ───
+                Portaled so the section's containment can't trap the fixed
+                overlays — see ui/Portal. */}
+            <ReviewSheet
+                open={showForm && !isDesktop}
+                onClose={() => setShowForm(false)}
+                onSuccess={reviewSubmitted}
+            />
+            {notice && (
+                <Portal>
+                    <div
+                        role="status"
+                        aria-live="polite"
+                        className="fixed inset-x-4 bottom-4 z-[120] mx-auto flex max-w-md items-start gap-3 rounded-2xl border border-emerald-500/30 bg-[#0d0426]/95 p-4 shadow-2xl backdrop-blur-xl"
+                    >
+                        <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-emerald-400" />
+                        <p className="flex-1 text-sm leading-relaxed text-emerald-100">{notice}</p>
+                        <button
+                            onClick={() => setNotice(null)}
+                            aria-label="Dismiss message"
+                            className="shrink-0 text-gray-500 transition-colors hover:text-white"
+                        >
+                            <X size={16} />
+                        </button>
+                    </div>
+                </Portal>
+            )}
         </section>
     );
 };
