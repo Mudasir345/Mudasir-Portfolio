@@ -15,7 +15,7 @@ interface AboutProps {
 
 export default function About({ profile }: AboutProps) {
     return (
-        <Section id="about">
+        <Section id="about" className="scroll-mt-28">
             <SectionHeading eyebrow="Who I Am">About Me</SectionHeading>
 
             <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-[1200px] mx-auto gap-10">

@@ -40,7 +40,7 @@ const steps = [
 
 export default function Process() {
     return (
-        <Section id="process">
+        <Section id="process" className="scroll-mt-28">
             <SectionHeading eyebrow="How I Work">My Process</SectionHeading>
 
             <div className="relative mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">

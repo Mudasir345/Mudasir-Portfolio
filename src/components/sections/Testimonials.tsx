@@ -646,7 +646,7 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
     return (
         <section
             id="reviews"
-            className="relative z-[20] flex flex-col items-center justify-center overflow-hidden py-20 sm:py-24"
+            className="relative z-[20] flex flex-col items-center justify-center overflow-hidden py-20 sm:py-24 scroll-mt-28"
         >
             {/* ambient background */}
             <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">

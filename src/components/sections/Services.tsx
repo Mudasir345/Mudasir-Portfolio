@@ -36,7 +36,7 @@ const Services = ({ initialServices }: ServicesProps) => {
     };
 
     return (
-        <Section id="services">
+        <Section id="services" className="scroll-mt-28">
             <SectionHeading eyebrow="What I Offer">My Services</SectionHeading>
             <motion.div
                 variants={containerVariants}

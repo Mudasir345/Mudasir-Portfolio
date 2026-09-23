@@ -104,11 +104,17 @@ canvas {
   opacity: 1;
 }
 
-/* Sections outside the viewport do not need layout/paint work until approached. */
-main > .flex > section {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 850px;
-}
+/* Sections deliberately do NOT use `content-visibility: auto`. A skipped
+   section still counts as its `contain-intrinsic-size` estimate, and the
+   scrollbar, the top progress bar and every anchor offset are measured against
+   that guess: the old flat 850px made phones report 11,880px for a 15,729px
+   page (24% short, so the track grew while you scrolled), and no static length
+   fits ten sections across five widths — a per-section table was ±4px at
+   390/1440 but 15% off at 640-767 and rotted on every content change. All it
+   bought was ~43ms of layout deferred into the scroll, at no measurable change
+   in per-step cost. It also implied paint containment, which makes a section
+   the containing block for `position: fixed` descendants; overlays stay
+   body-mounted for stacking either way — see ui/Portal.tsx. */
 
 /* Blur is visually nice but disproportionately expensive in Firefox and on
    mobile GPUs. Keep the visual language while avoiding continuous compositing. */

@@ -175,7 +175,7 @@ const Skills = ({ skills }: SkillsProps) => {
     }, {} as Record<string, SkillData[]>);
 
     return (
-        <Section id="skills">
+        <Section id="skills" className="scroll-mt-28">
             <SectionHeading eyebrow="What I Use">My Tech Stack</SectionHeading>
 
             <div className="grid w-full max-w-[1200px] mx-auto grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mt-10">
